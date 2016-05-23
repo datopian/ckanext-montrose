@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>USEDATA Dashboard -- replace with dynamic content</title>
+
+    <meta name="description" content=" -- needs to be added here -- ">
+    <!-- Not sure if we need Open Graph tags here for social media... if we do,
+    these will also need to be added here.-->
+
+    <!--Leaflet.js Stylesheets-->
+    <link rel="stylesheet" href="fanstatic/leaflet.css">
+    <!--<link rel="stylesheet" href="fanstatic/maps.css">-->
+    <!--<link rel="stylesheet" href="node_modules/leaflet-dialog/Leaflet.Dialog.css">-->
+    <!--.\ Leaflet.js Stylesheets-->
+
+    <!-- The minified Main style sheet - includes Bootstrap -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Load c3.css -->
+    <link href="c3-0.4.11/c3.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <!-- Even though some responsiveness is already implemented,
+    the final optimization for mobile devices will be completed after real data
+    is included and we have a working CKAN theme. -->
+    <header>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-5 col-md-3 country-logo">
+            <a href="#"><img class="img-responsive" src="img/usedata-country-logo-sample.svg" height="130" alt="USEDATA logo"></a>            
+            <h1 class="sr-only">USEDATA Kenya</h1>
+          </div>
+          <div class="col-sm-7 col-md-9 language-selector">
+            <ul class="list-inline">
+              <li class="active">
+                <img class="language-flag" src="img/uk-flag-23x17.png" height="17" alt="UK flag">
+                <span class="language-name">En</span>
+              </li>
+              <li>
+                <img class="language-flag" src="img/myanmar-flag-60x40.png" width="21" alt="BUR flag">
+                <a href="#">
+                  <span class="language-name">Bur</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <nav class="main-navigation">
+      <div class="container">
+        <ul class="list-inline">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Help</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="hero-map-wrap">
+      <div class="hero-controls">
+        <div class="hero-block hero-info-select">
+          <div class="media hero-info">
+            <div class="media-left">
+              <img class="language-flag" src="img/usedata-info-icon.svg" width="41" alt="icon">
+            </div>
+            <div class="media-body">Select from the menu below the data that you wish to display on the map. Zoom in for more detail using the zoom bar.
+            </div>
+          </div>
+          <div class="hero-select">
+            <select id="dataset" class="form-control"></select>
+          </div>
+        </div>
+        <div class="hero-block hero-country">
+          <h2 class="hero-country-title">Kenya</h2>
+        </div>
+      </div>
+      <div id="hero_map"></div>
+    </div>
+    <main class="container">
+      <div class="graphs">
+        <div class="row">
+          <div class="col-md-4 graph-container">
+            <h3 class="graph-title">Natural Gas Production</h3>
+            <h4 class="graph-subtitle">(billion cubic meters)</h4>
+            <div id="chart_gas" class="graph-data">Loading data...</div>
+          </div>
+          <div class="col-md-4 graph-container">
+            <h3 class="graph-title">Mining production</h3>
+            <h4 class="graph-subtitle">(USD millions)</h4>
+            <div id="chart_mining" class="graph-data">Loading data...</div>
+          </div>
+          <div class="col-md-4 graph-container">
+            <h3 class="graph-title">Annual GDP growth</h3>
+            <h4 class="graph-subtitle">(percent)</h4>
+            <div id="chart_gdp" class="graph-data">Loading data...</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 graph-container">
+            <h3 class="graph-title">Annual GDP growth Alternative (UP)</h3>
+            <h4 class="graph-subtitle">(percent)</h4>
+            <div id="chart_gdp_alt_up" class="graph-data">
+              <div class="graph-value-xl text-center">
+                <span class="graph-value-total">6.4%</span>
+                <span class="graph-value-indicator glyphicon glyphicon-triangle-top text-success"></span>
+              </div>
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th colspan="4">
+                      GDP Growth (%)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2012</td>
+                    <td>2013</td>
+                    <td>2014</td>
+                    <td>2015</td>
+                  </tr>
+                  <tr>
+                    <td>12.03</td>
+                    <td>13.84</td>
+                    <td>13.64</td>
+                    <td>8.24</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-4 graph-container">
+            <h3 class="graph-title">Annual GDP growth Alternative (DOWN)</h3>
+            <h4 class="graph-subtitle">(percent)</h4>
+            <div id="chart_gdp_alt_down" class="graph-data">
+              <div class="graph-value-xl text-center">
+                <span class="graph-value-total">-1.4%</span>
+                <span class="graph-value-indicator glyphicon glyphicon-triangle-bottom text-danger"></span>
+              </div>
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th colspan="4">
+                      GDP Growth (%)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2012</td>
+                    <td>2013</td>
+                    <td>2014</td>
+                    <td>2015</td>
+                  </tr>
+                  <tr>
+                    <td>12.03</td>
+                    <td>13.84</td>
+                    <td>13.64</td>
+                    <td>8.24</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-4 graph-container">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 graph-container">
+            <h3 class="graph-title">Blocks demarcated for Oil and Gas operations in the country</h3>
+            <h4 class="graph-subtitle"></h4>
+            <div class="graph-data">
+              <div class="graph-value-xl text-center">
+                <span class="graph-value-total">7,000</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 graph-container">
+            <h3 class="graph-title">Proportion of onshore and offshore</h3>
+            <h4 class="graph-subtitle">(by country)</h4>
+            <div id="chart_shore" class="graph-data">Loading data...</div>
+          </div>
+          <div class="col-md-4 graph-container">
+            <h3 class="graph-title">Population growth</h3>
+            <h4 class="graph-subtitle">(annual %)</h4>
+            <div id="chart_population" class="graph-data">Loading data...</div>
+          </div>
+        </div>
+      </div>
+      <div class="new-data">
+        <h2 class="data-block-heading">Newely Released Data</h2>
+        <div class="data-block">
+          <article class="data-set">
+            <div class="row">
+              <div class="col-md-4">
+                <h4 class="data-set-title"><a href="#">Institutional and Regulatory Assessment of the Extractive Industries in Myanmar 2015</a></h4>
+                <h5><a href="#">Data category goes here</a></h5>
+                <p>23 February 2016</p>
+              </div>
+              <div class="col-sm-11 col-md-7">
+                <p>This report provides a baseline institutional and regulatory assessment of the oil and gas, mining and the hydropower sectors in Myanmar.</p>
+                <ul class="list-inline data-type-buttons">
+                  <li><a href="#" class="btn btn-xs btn-success">XML</a></li>
+                  <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
+                  <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
+                </ul>
+              </div>
+              <div class="col-sm-1 col-md-1">
+                <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg" alt="Download"></a>
+              </div>
+            </div>
+          </article>
+          <article class="data-set">
+            <div class="row">
+              <div class="col-md-4">
+                <h4 class="data-set-title"><a href="#">Institutional and Regulatory Assessment of the Extractive Industries in Myanmar 2015</a></h4>
+                <h5><a href="#">Data category goes here</a></h5>
+                <p>23 February 2016</p>
+              </div>
+              <div class="col-sm-11 col-md-7">
+                <p>Etiam vestibulum nibh sed nibh egestas, nec semper justo condimentum. Nulla congue tellus non erat viverra fringilla. Duis malesuada tellus et ornare volutpat. Duis ultrices cursus felis.</p>
+                <ul class="list-inline data-type-buttons">
+                  <li><a href="#" class="btn btn-xs btn-success">XSLX</a></li>
+                  <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
+                  <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
+                </ul>
+              </div>
+              <div class="col-sm-1 col-md-1">
+                <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg" alt="Download"></a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="all-data">
+        <div class="data-block-header">
+          <div class="row">
+            <div class="col-md-2">
+              <h2 class="data-block-heading">Data [##]</h2>
+            </div>
+            <div class="col-md-2">
+              <ul class="list-inline list-data-sets-number">
+                <li>Show:</li>
+                <!-- How many different clickable values we need to show here?
+                     Further adaptation of this block is probably needed. -->
+                <li class="active">25</li>
+                <li><a href="#">50</a></li>
+                <li><a href="#">100</a></li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <input class="form-control input-search-data" placeholder="Search ## datasets and indicators">
+            </div>
+          </div>
+        </div>
+        <div class="data-block-header">
+          <div class="row">
+            <div class="col-md-2">
+              <h3 class="data-block-heading">Filter Data by:</h3>
+            </div>
+            <div class="col-md-2">
+              <select class="form-control">
+                <option selected="selected">Themes</option>
+                <option>Theme 1</option>
+                <option>Theme 2</option>
+                <option>Theme 3</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <select class="form-control">
+                <option selected="selected">Tags</option>
+                <option>Tag 1</option>
+                <option>Tag 2</option>
+                <option>Tag 3</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <select class="form-control">
+                <option selected="selected">Formats</option>
+                <option>Format 1</option>
+                <option>Format 2</option>
+                <option>Format 3</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <select class="form-control">
+                <option selected="selected">Licenses</option>
+                <option>License 1</option>
+                <option>License 2</option>
+                <option>License 3</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <select class="form-control">
+                <option selected="selected">Publishers</option>
+                <option>Publisher 1</option>
+                <option>Publisher 2</option>
+                <option>Publisher 3</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="data-block">
+          <article class="data-set">
+            <div class="row">
+              <div class="col-md-4">
+                <h4 class="data-set-title"><a href="#">Institutional and Regulatory Assessment of the Extractive Industries in Myanmar 2015</a></h4>
+                <h5><a href="#">Data category goes here</a></h5>
+                <p>23 February 2016</p>
+              </div>
+              <div class="col-sm-11 col-md-7">
+                <p>This report provides a baseline institutional and regulatory assessment of the oil and gas, mining and the hydropower sectors in Myanmar.</p>
+                <ul class="list-inline data-type-buttons">
+                  <!-- If needed I can specify different styles for each data format or restyle the default CKAN classes. -->
+                  <li><a href="#" class="btn btn-xs btn-success">XML</a></li>
+                  <li><a href="#" class="btn btn-xs btn-success">XSLX</a></li>
+                  <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
+                  <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
+                </ul>
+              </div>
+              <div class="col-sm-1 col-md-1">
+                <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg" alt="Download"></a>
+              </div>
+            </div>
+          </article>
+          <article class="data-set">
+            <div class="row">
+              <div class="col-md-4">
+                <h4 class="data-set-title"><a href="#">Institutional and Regulatory Assessment in Myanmar 2015</a></h4>
+                <h5><a href="#">Data category goes here</a></h5>
+                <p>23 February 2016</p>
+              </div>
+              <div class="col-sm-11 col-md-7">
+                <p>This report provides a baseline institutional and regulatory assessment of the oil and gas, mining and the hydropower sectors in Myanmar.</p>
+                <ul class="list-inline data-type-buttons">
+                  <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
+                  <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
+                </ul>
+              </div>
+              <div class="col-sm-1 col-md-1">
+                <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg" alt="Download"></a>
+              </div>
+            </div>
+          </article>
+          <article class="data-set">
+            <div class="row">
+              <div class="col-md-4">
+                <h4 class="data-set-title"><a href="#">Extractive Industries in Myanmar 2015</a></h4>
+                <h5><a href="#">Data category goes here</a></h5>
+                <p>23 February 2016</p>
+              </div>
+              <div class="col-sm-11 col-md-7">
+                <p>This report provides a baseline institutional and regulatory assessment of the oil and gas, mining and the hydropower sectors in Myanmar.</p>
+                <ul class="list-inline data-type-buttons">
+                  <li><a href="#" class="btn btn-xs btn-success">XML</a></li>
+                  <li><a href="#" class="btn btn-xs btn-success">XSLX</a></li>
+                  <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
+                  <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
+                </ul>
+              </div>
+              <div class="col-sm-1 col-md-1">
+                <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg" alt="Download"></a>
+              </div>
+            </div>
+          </article>
+          <article class="data-set">
+            <div class="row">
+              <div class="col-md-4">
+                <h4 class="data-set-title"><a href="#">Institutional and Regulatory Assessment in Myanmar 2015</a></h4>
+                <h5><a href="#">Data category goes here</a></h5>
+                <p>23 February 2016</p>
+              </div>
+              <div class="col-sm-11 col-md-7">
+                <p>This report provides a baseline institutional and regulatory assessment of the oil and gas, mining and the hydropower sectors in Myanmar.</p>
+                <ul class="list-inline data-type-buttons">
+                  <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
+                  <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
+                </ul>
+              </div>
+              <div class="col-sm-1 col-md-1">
+                <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg" alt="Download"></a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2 col-lg-4">
+            <ul class="list-unstyled list-footer-nav">
+              <li><a href="#">About USEDATA</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Terms of Use</a></li>
+            </ul>
+          </div>
+          <div class="col-md-2 col-lg-3">
+            <ul class="list-inline list-social-buttons">
+              <li><a class="btn-animated" href="#"><img src="img/facebook-circle-color.svg" width="50" height="50" alt="Share on Facebook"></a></li>
+              <li><a class="btn-animated" href="#"><img src="img/instagram-circle-color.svg" width="50" height="50" alt="Share on Instagram"></a></li>
+              <li><a class="btn-animated" href="#"><img src="img/twitter-circle-color.svg" width="50" height="50" alt="Tweet"></a></li>
+              <li><a class="btn-animated" href="#"><img src="img/linkedin-circle-color.svg" width="50" height="50" alt="Share on LinkedIn"></a></li>
+            </ul>
+          </div>
+          <div class="col-md-8 col-lg-5">
+            <ul class="list-inline list-footer-logos">
+              <li><a href="#"><img src="img/ukaid-logo-246x260.png" height="130" alt="UKAID logo"></a></li>
+              <li><a href="#"><img src="img/montrose-logo-720x240.png" height="100" alt="Montrose logo"></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">© USEDATA programme</div>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!--<script src="/bootstrap-3.3.6/js/bootstrap.min.js"></script>-->
+
+    <!--Leaflet.js Scripts-->
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script src="fanstatic/leaflet-src.js"></script>
+    <script src="node_modules/leaflet-dialog/Leaflet.Dialog.js"></script>
+    <script src="fanstatic/dialogs.js"></script>
+
+    <!-- Load d3.js and c3.js -->
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="c3-0.4.11/c3.min.js"></script>
+    <!--Leaflet.js Scripts-->
+
+    <script src="js/charts.js"></script>
+
+    <!-- Load the Roboto font from Google Fonts -->
+    <script type="text/javascript">
+      WebFontConfig = {
+        google: {families: ['Roboto:400,400italic,700,700italic:latin,latin-ext']}
+      };
+      (function () {
+        var wf = document.createElement('script');
+        wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();</script>
+  </body>
+</html>
