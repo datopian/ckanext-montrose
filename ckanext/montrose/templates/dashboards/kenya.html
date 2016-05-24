@@ -1,0 +1,349 @@
+{% extends "page.html" %}
+{% import 'macros/form.html' as form %}
+
+{% block styles %}
+    {% resource 'montrose/main' %}
+{% endblock %}
+
+{% block page %}
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 col-md-3 country-logo">
+                    <a href="#"><img class="img-responsive" src="img/usedata-country-logo-sample.svg" height="130"
+                                     alt="USEDATA logo"></a>
+                    <h1 class="sr-only">USEDATA Kenya</h1>
+                </div>
+                <div class="col-sm-7 col-md-9 language-selector">
+                    <ul class="list-inline">
+                        <li class="active">
+                            <img class="language-flag" src="img/uk-flag-23x17.png" height="17" alt="UK flag">
+                            <span class="language-name">En</span>
+                        </li>
+                        <li>
+                            <img class="language-flag" src="img/myanmar-flag-60x40.png" width="21" alt="BUR flag">
+                            <a href="#">
+                                <span class="language-name">Bur</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav class="main-navigation">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    {# snippet 'dashboards/snippets/resource_view.html',
+                         resource_view=map_resource_view,
+                         resource=map_resource,
+                         package=map_package #}
+    <main class="container">
+        <div class="graphs">
+            <div class="row">
+                <div class="col-md-4 graph-container">
+                    <h3 class="graph-title">Annual GDP growth Alternative (UP)</h3>
+                    <h4 class="graph-subtitle">(percent)</h4>
+                    {% snippet 'dashboards/snippets/resource_view.html',
+                         resource_view=charts[0][0],
+                         resource=charts[0][1],
+                         package=charts[0][2] %}
+                </div>
+                <div class="col-md-4 graph-container">
+                    <h3 class="graph-title">Annual GDP growth Alternative (DOWN)</h3>
+                    <h4 class="graph-subtitle">(percent)</h4>
+                    {% snippet 'dashboards/snippets/resource_view.html',
+                         resource_view=charts[1][0],
+                         resource=charts[1][1],
+                         package=charts[1][2] %}
+                </div>
+                <div class="col-md-4 graph-container">
+                    <h3 class="graph-title">Annual GDP growth Alternative (DOWN)</h3>
+                    <h4 class="graph-subtitle">(percent)</h4>
+                    {% snippet 'dashboards/snippets/resource_view.html',
+                         resource_view=charts[2][0],
+                         resource=charts[2][1],
+                         package=charts[2][2] %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 graph-container">
+                    <h3 class="graph-title">Blocks demarcated</h3>
+                    <h4 class="graph-subtitle">Abre Ubre</h4>
+                    {% snippet 'dashboards/snippets/resource_view.html',
+                         resource_view=charts[3][0],
+                         resource=charts[3][1],
+                         package=charts[3][2] %}
+                </div>
+                <div class="col-md-4 graph-container">
+                    <h3 class="graph-title">Blocks demarcated for Oil</h3>
+                    <h4 class="graph-subtitle">Abre Ubre</h4>
+                    {% snippet 'dashboards/snippets/resource_view.html',
+                         resource_view=charts[4][0],
+                         resource=charts[4][1],
+                         package=charts[4][2] %}
+                </div>
+                <div class="col-md-4 graph-container">
+                    <h3 class="graph-title">Population growth</h3>
+                    <h4 class="graph-subtitle">(annual %)</h4>
+                    {% snippet 'dashboards/snippets/resource_view.html',
+                         resource_view=charts[5][0],
+                         resource=charts[5][1],
+                         package=charts[5][2] %}
+                </div>
+            </div>
+        </div>
+        <div class="new-data">
+            <h2 class="data-block-heading">Newly Released Data</h2>
+            <div class="data-block">
+                {% for dataset in h.montrose_get_newly_released_data() %}
+                    <article class="data-set">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4 class="data-set-title"><a href="#">{{ dataset.title }}</a></h4>
+                                <!-- <h5><a href="#">Themes here</a></h5> -->
+                                <p>{{ dataset.human_metadata_modified }}</p>
+                            </div>
+                            <div class="col-sm-11 col-md-7">
+                                <p>{{ dataset.notes }}</p>
+                                <ul class="list-inline data-type-buttons">
+                                    {% for resource in dataset.resources[:3] %}
+                                        {% if resource.format == 'ODS' %}
+                                            <li><a href="#"
+                                                   class="noclick btn btn-xs btn-success">{{ resource.format }}</a></li>
+                                        {% elif resource.format == 'PDF' %}
+                                            <li><a href="#"
+                                                   class="noclick btn btn-xs btn-warning">{{ resource.format }}</a></li>
+                                        {% elif resource.format == 'GeoJSON' %}
+                                            <li><a href="#"
+                                                   class="noclick btn btn-xs btn-primary">{{ resource.format }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-sm-1 col-md-1">
+                                <a class="btn-animated btn-download" href="{{ dataset.resources[-1].url }}"><img
+                                        src="img/usedata-download-icon.svg"
+                                        alt="Download"></a>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="all-data">
+            <div class="data-block-header">
+                <div class="row">
+                    <div class="col-md-2">
+                        <h2 class="data-block-heading">Data [##]</h2>
+                    </div>
+                    <div class="col-md-2">
+                        <ul class="list-inline list-data-sets-number">
+                            <li>Show:</li>
+                            <!-- How many different clickable values we need to show here?
+                                 Further adaptation of this block is probably needed. -->
+                            <li class="active">25</li>
+                            <li><a href="#">50</a></li>
+                            <li><a href="#">100</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <input class="form-control input-search-data" placeholder="Search ## datasets and indicators">
+                    </div>
+                </div>
+            </div>
+            <div class="data-block-header">
+                <div class="row">
+                    <div class="col-md-2">
+                        <h3 class="data-block-heading">Filter Data by:</h3>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control">
+                            <option selected="selected">Themes</option>
+                            <option>Theme 1</option>
+                            <option>Theme 2</option>
+                            <option>Theme 3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control">
+                            <option selected="selected">Tags</option>
+                            <option>Tag 1</option>
+                            <option>Tag 2</option>
+                            <option>Tag 3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control">
+                            <option selected="selected">Formats</option>
+                            <option>Format 1</option>
+                            <option>Format 2</option>
+                            <option>Format 3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control">
+                            <option selected="selected">Licenses</option>
+                            <option>License 1</option>
+                            <option>License 2</option>
+                            <option>License 3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control">
+                            <option selected="selected">Publishers</option>
+                            <option>Publisher 1</option>
+                            <option>Publisher 2</option>
+                            <option>Publisher 3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="data-block">
+                <article class="data-set">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4 class="data-set-title"><a href="#">Institutional and Regulatory Assessment of the
+                                Extractive
+                                Industries in Myanmar 2015</a></h4>
+                            <h5><a href="#">Data category goes here</a></h5>
+                            <p>23 February 2016</p>
+                        </div>
+                        <div class="col-sm-11 col-md-7">
+                            <p>This report provides a baseline institutional and regulatory assessment of the oil and
+                                gas,
+                                mining and the hydropower sectors in Myanmar.</p>
+                            <ul class="list-inline data-type-buttons">
+                                <!-- If needed I can specify different styles for each data format or restyle the default CKAN classes. -->
+                                <li><a href="#" class="btn btn-xs btn-success">XML</a></li>
+                                <li><a href="#" class="btn btn-xs btn-success">XSLX</a></li>
+                                <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
+                                <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-1 col-md-1">
+                            <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg"
+                                                                               alt="Download"></a>
+                        </div>
+                    </div>
+                </article>
+                <article class="data-set">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4 class="data-set-title"><a href="#">Institutional and Regulatory Assessment in Myanmar
+                                2015</a></h4>
+                            <h5><a href="#">Data category goes here</a></h5>
+                            <p>23 February 2016</p>
+                        </div>
+                        <div class="col-sm-11 col-md-7">
+                            <p>This report provides a baseline institutional and regulatory assessment of the oil and
+                                gas,
+                                mining and the hydropower sectors in Myanmar.</p>
+                            <ul class="list-inline data-type-buttons">
+                                <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
+                                <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-1 col-md-1">
+                            <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg"
+                                                                               alt="Download"></a>
+                        </div>
+                    </div>
+                </article>
+                <article class="data-set">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4 class="data-set-title"><a href="#">Extractive Industries in Myanmar 2015</a></h4>
+                            <h5><a href="#">Data category goes here</a></h5>
+                            <p>23 February 2016</p>
+                        </div>
+                        <div class="col-sm-11 col-md-7">
+                            <p>This report provides a baseline institutional and regulatory assessment of the oil and
+                                gas,
+                                mining and the hydropower sectors in Myanmar.</p>
+                            <ul class="list-inline data-type-buttons">
+                                <li><a href="#" class="btn btn-xs btn-success">XML</a></li>
+                                <li><a href="#" class="btn btn-xs btn-success">XSLX</a></li>
+                                <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
+                                <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-1 col-md-1">
+                            <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg"
+                                                                               alt="Download"></a>
+                        </div>
+                    </div>
+                </article>
+                <article class="data-set">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4 class="data-set-title"><a href="#">Institutional and Regulatory Assessment in Myanmar
+                                2015</a></h4>
+                            <h5><a href="#">Data category goes here</a></h5>
+                            <p>23 February 2016</p>
+                        </div>
+                        <div class="col-sm-11 col-md-7">
+                            <p>This report provides a baseline institutional and regulatory assessment of the oil and
+                                gas,
+                                mining and the hydropower sectors in Myanmar.</p>
+                            <ul class="list-inline data-type-buttons">
+                                <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
+                                <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-1 col-md-1">
+                            <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg"
+                                                                               alt="Download"></a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-lg-4">
+                    <ul class="list-unstyled list-footer-nav">
+                        <li><a href="#">About USEDATA</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-lg-3">
+                    <ul class="list-inline list-social-buttons">
+                        <li><a class="btn-animated" href="#"><img src="img/facebook-circle-color.svg" width="50"
+                                                                  height="50"
+                                                                  alt="Share on Facebook"></a></li>
+                        <li><a class="btn-animated" href="#"><img src="img/instagram-circle-color.svg" width="50"
+                                                                  height="50" alt="Share on Instagram"></a></li>
+                        <li><a class="btn-animated" href="#"><img src="img/twitter-circle-color.svg" width="50"
+                                                                  height="50"
+                                                                  alt="Tweet"></a></li>
+                        <li><a class="btn-animated" href="#"><img src="img/linkedin-circle-color.svg" width="50"
+                                                                  height="50"
+                                                                  alt="Share on LinkedIn"></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-8 col-lg-5">
+                    <ul class="list-inline list-footer-logos">
+                        <li><a href="#"><img src="img/ukaid-logo-246x260.png" height="130" alt="UKAID logo"></a></li>
+                        <li><a href="#"><img src="img/montrose-logo-720x240.png" height="100" alt="Montrose logo"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">© USEDATA programme</div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+
+{% endblock %}
