@@ -131,7 +131,7 @@
                                 </ul>
                             </div>
                             <div class="col-sm-1 col-md-1">
-                                <a class="btn-animated btn-download" href="{{ dataset.resources[-1].url }}"><img
+                                <a class="btn-animated btn-download" href="{{ h.url_for(controller='package', action='read', id=dataset.name) }}"><img
                                         src="img/usedata-download-icon.svg"
                                         alt="Download"></a>
                             </div>

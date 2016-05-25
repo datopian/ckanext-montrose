@@ -43,7 +43,7 @@ Example:
             </ul>
         </div>
         <div class="col-sm-1 col-md-1">
-            <a class="btn-animated btn-download" href="{{ package.resources[-1].url }}"><img
+            <a class="btn-animated btn-download" href="{{h.url_for(controller='package', action='read', id=package.name)}}"><img
                     src="img/usedata-download-icon.svg"
                     alt="Download"></a>
         </div>
