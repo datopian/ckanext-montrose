@@ -41,32 +41,32 @@
         </div>
     </nav>
 
-    {# snippet 'dashboards/snippets/resource_view.html',
-                         resource_view=map_resource_view,
-                         resource=map_resource,
-                         package=map_package #}
+    {% snippet 'dashboards/snippets/resource_view.html',
+                         resource_view=map.map_resource_view,
+                         resource=map.map_resource,
+                         package=map.map_package %}
     <main class="container">
         <div class="graphs">
             <div class="row">
                 <div class="col-md-4 graph-container">
-                    <h3 class="graph-title">Annual GDP growth Alternative (UP)</h3>
-                    <h4 class="graph-subtitle">(percent)</h4>
+                    <h3 class="graph-title">{{ charts[0][1].name }}</h3>
+                    <h4 class="graph-subtitle">(kg)</h4>
                     {% snippet 'dashboards/snippets/resource_view.html',
                          resource_view=charts[0][0],
                          resource=charts[0][1],
                          package=charts[0][2] %}
-                </div>
+                   </div>
                 <div class="col-md-4 graph-container">
-                    <h3 class="graph-title">Annual GDP growth Alternative (DOWN)</h3>
-                    <h4 class="graph-subtitle">(percent)</h4>
+                    <h3 class="graph-title">{{ charts[1][1].name }}</h3>
+                    <h4 class="graph-subtitle">(total employed)</h4>
                     {% snippet 'dashboards/snippets/resource_view.html',
                          resource_view=charts[1][0],
                          resource=charts[1][1],
                          package=charts[1][2] %}
                 </div>
                 <div class="col-md-4 graph-container">
-                    <h3 class="graph-title">Annual GDP growth Alternative (DOWN)</h3>
-                    <h4 class="graph-subtitle">(percent)</h4>
+                    <h3 class="graph-title">{{ charts[2][1].name }}</h3>
+                    <h4 class="graph-subtitle">(kg)</h4>
                     {% snippet 'dashboards/snippets/resource_view.html',
                          resource_view=charts[2][0],
                          resource=charts[2][1],
@@ -75,24 +75,24 @@
             </div>
             <div class="row">
                 <div class="col-md-4 graph-container">
-                    <h3 class="graph-title">Blocks demarcated</h3>
-                    <h4 class="graph-subtitle">Abre Ubre</h4>
+                    <h3 class="graph-title">{{ charts[3][1].name }}</h3>
+                    <h4 class="graph-subtitle">(kg)</h4>
                     {% snippet 'dashboards/snippets/resource_view.html',
                          resource_view=charts[3][0],
                          resource=charts[3][1],
                          package=charts[3][2] %}
                 </div>
                 <div class="col-md-4 graph-container">
-                    <h3 class="graph-title">Blocks demarcated for Oil</h3>
-                    <h4 class="graph-subtitle">Abre Ubre</h4>
+                    <h3 class="graph-title">{{ charts[4][1].name }}</h3>
+                    <h4 class="graph-subtitle">(kg)</h4>
                     {% snippet 'dashboards/snippets/resource_view.html',
                          resource_view=charts[4][0],
                          resource=charts[4][1],
                          package=charts[4][2] %}
                 </div>
                 <div class="col-md-4 graph-container">
-                    <h3 class="graph-title">Population growth</h3>
-                    <h4 class="graph-subtitle">(annual %)</h4>
+                    <h3 class="graph-title">{{ charts[5][1].name }}</h3>
+                    <h4 class="graph-subtitle">(kg)</h4>
                     {% snippet 'dashboards/snippets/resource_view.html',
                          resource_view=charts[5][0],
                          resource=charts[5][1],
@@ -107,7 +107,9 @@
                     <article class="data-set">
                         <div class="row">
                             <div class="col-md-4">
-                                <h4 class="data-set-title"><a href="#">{{ dataset.title }}</a></h4>
+                                <h4 class="data-set-title"><a
+                                        href="{{ h.url_for(controller='package', action='read', id=dataset.name) }}">{{ dataset.title }}</a>
+                                </h4>
                                 <!-- <h5><a href="#">Themes here</a></h5> -->
                                 <p>{{ dataset.human_metadata_modified }}</p>
                             </div>
@@ -138,172 +140,46 @@
                 {% endfor %}
             </div>
         </div>
+
         <div class="all-data">
-            <div class="data-block-header">
-                <div class="row">
-                    <div class="col-md-2">
-                        <h2 class="data-block-heading">Data [##]</h2>
-                    </div>
-                    <div class="col-md-2">
-                        <ul class="list-inline list-data-sets-number">
-                            <li>Show:</li>
-                            <!-- How many different clickable values we need to show here?
-                                 Further adaptation of this block is probably needed. -->
-                            <li class="active">25</li>
-                            <li><a href="#">50</a></li>
-                            <li><a href="#">100</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4">
-                        <input class="form-control input-search-data" placeholder="Search ## datasets and indicators">
-                    </div>
-                </div>
-            </div>
+            {% set facets = {
+          'fields': c.fields_grouped,
+          'search': c.search_facets,
+          'titles': [{"value": "groups", "name": "Themes"},
+                     {"value": "tags", "name": "Tags"},
+                     {"value": "res_format", "name": "Resource Format"},
+                     {"value": "license_id", "name": "Licenses"},
+                     {"value": "organization", "name": "Organizations"},],
+          'translated_fields': c.translated_fields,
+          'remove_field': c.remove_field } %}
+            {% set sorting = [
+          (_('Relevance'), 'score desc, metadata_modified desc'),
+          (_('Name Ascending'), 'title_string asc'),
+          (_('Name Descending'), 'title_string desc'),
+          (_('Last Modified'), 'metadata_modified desc'),
+          (_('Popular'), 'views_recent desc') if g.tracking_enabled else (false, false) ] %}
+            {% snippet 'dashboards/snippets/search_form.html', form_id='dataset-search-form',
+                                                           type='dataset',
+                                                           query=c.q,
+                                                           sorting=sorting,
+                                                           sorting_selected=c.sort_by_selected,
+                                                           count=c.page.item_count,
+                                                           facets=facets,
+                                                           show_empty=request.params,
+                                                           error=c.query_error, fields=c.fields %}
             <div class="data-block-header">
                 <div class="row">
                     <div class="col-md-2">
                         <h3 class="data-block-heading">Filter Data by:</h3>
                     </div>
-                    <div class="col-md-2">
-                        <select class="form-control">
-                            <option selected="selected">Themes</option>
-                            <option>Theme 1</option>
-                            <option>Theme 2</option>
-                            <option>Theme 3</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="form-control">
-                            <option selected="selected">Tags</option>
-                            <option>Tag 1</option>
-                            <option>Tag 2</option>
-                            <option>Tag 3</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="form-control">
-                            <option selected="selected">Formats</option>
-                            <option>Format 1</option>
-                            <option>Format 2</option>
-                            <option>Format 3</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="form-control">
-                            <option selected="selected">Licenses</option>
-                            <option>License 1</option>
-                            <option>License 2</option>
-                            <option>License 3</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="form-control">
-                            <option selected="selected">Publishers</option>
-                            <option>Publisher 1</option>
-                            <option>Publisher 2</option>
-                            <option>Publisher 3</option>
-                        </select>
-                    </div>
+                    {% for facet in facets.titles %}
+                        {{ h.snippet('dashboards/snippets/facet_list.html', title=c.facet_titles[facet], name=facet) }}
+                    {% endfor %}
                 </div>
             </div>
             <div class="data-block">
-                <article class="data-set">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h4 class="data-set-title"><a href="#">Institutional and Regulatory Assessment of the
-                                Extractive
-                                Industries in Myanmar 2015</a></h4>
-                            <h5><a href="#">Data category goes here</a></h5>
-                            <p>23 February 2016</p>
-                        </div>
-                        <div class="col-sm-11 col-md-7">
-                            <p>This report provides a baseline institutional and regulatory assessment of the oil and
-                                gas,
-                                mining and the hydropower sectors in Myanmar.</p>
-                            <ul class="list-inline data-type-buttons">
-                                <!-- If needed I can specify different styles for each data format or restyle the default CKAN classes. -->
-                                <li><a href="#" class="btn btn-xs btn-success">XML</a></li>
-                                <li><a href="#" class="btn btn-xs btn-success">XSLX</a></li>
-                                <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
-                                <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-1 col-md-1">
-                            <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg"
-                                                                               alt="Download"></a>
-                        </div>
-                    </div>
-                </article>
-                <article class="data-set">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h4 class="data-set-title"><a href="#">Institutional and Regulatory Assessment in Myanmar
-                                2015</a></h4>
-                            <h5><a href="#">Data category goes here</a></h5>
-                            <p>23 February 2016</p>
-                        </div>
-                        <div class="col-sm-11 col-md-7">
-                            <p>This report provides a baseline institutional and regulatory assessment of the oil and
-                                gas,
-                                mining and the hydropower sectors in Myanmar.</p>
-                            <ul class="list-inline data-type-buttons">
-                                <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
-                                <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-1 col-md-1">
-                            <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg"
-                                                                               alt="Download"></a>
-                        </div>
-                    </div>
-                </article>
-                <article class="data-set">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h4 class="data-set-title"><a href="#">Extractive Industries in Myanmar 2015</a></h4>
-                            <h5><a href="#">Data category goes here</a></h5>
-                            <p>23 February 2016</p>
-                        </div>
-                        <div class="col-sm-11 col-md-7">
-                            <p>This report provides a baseline institutional and regulatory assessment of the oil and
-                                gas,
-                                mining and the hydropower sectors in Myanmar.</p>
-                            <ul class="list-inline data-type-buttons">
-                                <li><a href="#" class="btn btn-xs btn-success">XML</a></li>
-                                <li><a href="#" class="btn btn-xs btn-success">XSLX</a></li>
-                                <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
-                                <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-1 col-md-1">
-                            <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg"
-                                                                               alt="Download"></a>
-                        </div>
-                    </div>
-                </article>
-                <article class="data-set">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h4 class="data-set-title"><a href="#">Institutional and Regulatory Assessment in Myanmar
-                                2015</a></h4>
-                            <h5><a href="#">Data category goes here</a></h5>
-                            <p>23 February 2016</p>
-                        </div>
-                        <div class="col-sm-11 col-md-7">
-                            <p>This report provides a baseline institutional and regulatory assessment of the oil and
-                                gas,
-                                mining and the hydropower sectors in Myanmar.</p>
-                            <ul class="list-inline data-type-buttons">
-                                <li><a href="#" class="btn btn-xs btn-warning">CSV</a></li>
-                                <li><a href="#" class="btn btn-xs btn-primary">TXT</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-1 col-md-1">
-                            <a class="btn-animated btn-download" href="#"><img src="img/usedata-download-icon.svg"
-                                                                               alt="Download"></a>
-                        </div>
-                    </div>
-                </article>
+                {{ h.snippet('dashboards/snippets/package_list.html', packages=c.page.items) }}
+
             </div>
         </div>
     </main>
@@ -345,5 +221,17 @@
     </footer>
 
     <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script>
+        $(function () {
+            // bind change event to select
+            $('.montrose-filters').on('change', function () {
+                var url = $(this).val(); // get selected value
+                if (url) { // require a URL
+                    window.location = url; // redirect
+                }
+                return false;
+            });
+        });
+    </script>
 
 {% endblock %}
