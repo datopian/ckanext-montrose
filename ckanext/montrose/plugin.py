@@ -311,7 +311,7 @@ def get_resourceview_resource_package(resource_view_id):
     return [resource_view, resource, package]
 
 
-def montrose_get_newly_released_data(limit=5):
+def montrose_get_newly_released_data(limit=4):
     try:
         pkg_search_results = toolkit.get_action('package_search')(data_dict={
             'sort': 'metadata_modified desc',
