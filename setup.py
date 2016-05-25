@@ -21,7 +21,7 @@ setup(
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/visar/ckanext-montrose',
+    url='https://github.com/keitaroinc/ckanext-montrose',
 
     # Author details
     author='''Visar Zejnullahu''',
@@ -79,7 +79,8 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points='''
         [ckan.plugins]
-        montrose=ckanext.montrose.plugin:MontrosePlugin
+        montrose=ckanext.montrose.plugins:MontrosePlugin
+        montrose_country=ckanext.montrose.plugins:MontroseCountryPlugin
 	[babel.extractors]
 	ckan = ckan.lib.extract:extract_ckan
     ''',
