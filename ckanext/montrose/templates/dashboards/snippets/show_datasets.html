@@ -65,7 +65,7 @@ Example:
           {% for resource in package.resources %}
             <div class="row">
               <div class="col-md-4 resources-dropdown-name">
-                <a href="{{ resource.url }}"><p>{{ resource.name }}</p></a>
+                <p><a href="{{ resource.url }}">{{ resource.name }}</a></p>
               </div>
               <div class="col-md-7">
                   {% if resource.description %}
