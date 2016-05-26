@@ -45,7 +45,7 @@ within_tertiary
                     <option value="{{ h.remove_url_param(key=name.value) }}">{{ name.name }}</option>
                     {% if items %}
                         {% for item in items %}
-                            {% set href = h.replace_or_add_url_param(name.value, item.name) %}
+                            {% set href = h.montrose_replace_or_add_url_param(name.value, item.name) %}
                             {% set label = label_function(item) if label_function else item.display_name %}
                             {% set label_truncated = h.truncate(label, 22) if not label_function else label %}
                             {% if item.active %}
