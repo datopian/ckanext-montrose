@@ -14,70 +14,42 @@ Example:
 
 #}
 
-{% with truncate=truncate or 0, url=h.url_for(controller='organization', action='read', id=organization.name) %}
-  <div class="module context-info">
+{% set truncate = truncate or 0 %}
+{% set url = h.url_for(controller='organization', action='read', id=organization.name) %}
+
+  {% block info %}
+  <div class="module module-narrow module-shallow context-info">
     {% if has_context_title %}
-      <h2 class="module-heading"><i class="icon-building"></i> {{ _('Country') }}</h2>
+      <h2 class="module-heading"><i class="icon-building"></i> {{ _('Organization') }}</h2>
     {% endif %}
     <section class="module-content">
-      <div class="image">
-        <a href="{{ url }}">
-          <img src="{{ organization.image_url or h.url_for_static('/base/images/placeholder-organization.png') }}" width="200" alt="{{ organization.name }}" />
-        </a>
-      </div>
-      <h1 class="heading">{{ organization.title or organization.name }}</h1>
-
-      <p></p>
-
-      {% if organization.publisher_iati_id %}
-      <div>
-        <p>Identifier: {{ organization.publisher_iati_id }}</p>
-      </div>
+      {% block inner %}
+      {% block image %}
+        <div class="image">
+          <a href="{{ url }}">
+            <img src="{{ organization.image_display_url or h.url_for_static('/base/images/placeholder-organization.png') }}" width="200" alt="{{ organization.name }}" />
+          </a>
+        </div>
+      {% endblock %}
+      {% block heading %}
+      <h1 class="heading">{{ organization.title or organization.name }}
+        {% if organization.state == 'deleted' %}
+          [{{ _('Deleted') }}]
+        {% endif %}
+      </h1>
+      {% endblock %}
+      {% block description %}
+      {% if organization.description %}
+        <p>
+          {{ h.markdown_extract(organization.description, 180) }}
+          {% link_for _('read more'), controller='organization', action='about', id=organization.name %}
+        </p>
+      {% else %}
+        <p class="empty">{{ _('There is no description for this organization') }}</p>
       {% endif %}
+      {% endblock %}
 
-      {% if organization.publisher_country %}
-      <div>
-        <p>HQ Country: {{ h.get_country_title(organization.publisher_country) }}</p>
-      </div>
-      {% endif %}
-
-      {% if organization.publisher_url %}
-      <div>
-        <p><a href="{{ organization.publisher_url }}" />Organization website</a></p>
-      </div>
-      {% endif %}
-
-
-
-
+      {% endblock %}
     </section>
   </div>
-
-  <div class="module context-info">
-
-    <section class="module-content">
-
-      <h1 class="heading">Publisher IATI data</h1>
-
-      <p></p>
-
-      <div>
-        <p><i class="icon-dashboard"></i> <a href="http://dashboard.iatistandard.org/publisher/{{ organization.name }}.html" />IATI Dashboard</a></p>
-      </div>
-
-      {% if organization.publisher_iati_id %}
-      <div>
-        <p><i class="icon-bar-chart"></i> <a href="http://d-portal.org/ctrack.html?publisher={{ organization.publisher_iati_id }}" />Publisher d-portal</a></p>
-      </div>
-      {% endif %}
-
-      {% if organization.publisher_ui_url %}
-      <div>
-        <p><i class="icon-globe"></i> <a href="{{ organization.publisher_ui_url }}" />Publisher's data platform</a></p>
-      </div>
-      {% endif %}
-
-    </section>
-  </div>
-
-{% endwith %}
+  {% endblock %}

@@ -3,7 +3,7 @@
 {% block subtitle %}{{ _('Countries') }}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li class="active">{% link_for _('Publishers'), controller='organization', action='index' %}</li>
+  <li class="active">{% link_for _('Countries'), controller='organization', action='index' %}</li>
 {% endblock %}
 
 {% block page_primary_action %}
@@ -25,6 +25,9 @@
 
 {% block organizations_list %}
 {% if c.page.items or request.params %}
+  {{c.page.items}}
+  {{c.page}}
+
   {% snippet "organization/snippets/organization_list.html", organizations=h.organization_list() %}
 {% else %}
   <p class="empty">
