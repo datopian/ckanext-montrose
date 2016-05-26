@@ -1,0 +1,89 @@
+{#
+Displays a list of datasets.
+
+packages            - A list of packages to display.
+datasets_group_name - Name for the datasets group used for js handling
+list_class          - The class name for the list item.
+item_class          - The class name to use on each item.
+truncate            - The length to trucate the description to (default: 300)
+truncate_title      - The length to truncate the title to (default: 150).
+
+Example:
+
+  {% snippet 'snippets/package_list.html', packages=c.datasets, datasets_group_name='new_data' %}
+
+#}
+
+{% set truncate = truncate or 300 %}
+{% set truncate_title = truncate_title or 150 %}
+{% set datasets_group_name = datasets_group_name or 'anonymous' %}
+
+{% if packages %}
+  {% for package in packages %}
+    {% set title = package.title or package.name %}
+    {% set notes = h.markdown_extract(package.notes, extract_length=truncate) %}
+    <article class="data-set">
+      <div class="row">
+        <div class="col-md-4">
+          <h4 class="data-set-title">
+            <a href="#"
+               onclick="toggleResources('{{ datasets_group_name }}-resources-{{ package.id }}'); return false;">
+              {{ package.title }}
+            </a>
+          </h4>
+          <p>{{ h.montrose_convert_time_format(package) }}</p>
+        </div>
+        <div class="col-sm-11 col-md-7">
+          <p>{{ package.notes }}</p>
+          <ul class="list-inline data-type-buttons">
+            {% for resource in package.resources[:3] %}
+              {% if resource.format == 'ODS' %}
+                <li><a href="#"
+                       class="noclick btn btn-xs btn-success">{{ resource.format }}</a></li>
+              {% elif resource.format == 'PDF' %}
+                <li><a href="#"
+                       class="noclick btn btn-xs btn-warning">{{ resource.format }}</a></li>
+              {% elif resource.format == 'GeoJSON' %}
+                <li><a href="#"
+                       class="noclick btn btn-xs btn-primary">{{ resource.format }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="col-sm-1 col-md-1">
+          <a class="btn-animated btn-download"
+             href="#"
+             onclick="toggleResources('{{ datasets_group_name }}-resources-{{ package.id }}'); return false;">
+            <img
+                src="img/usedata-download-icon.svg"
+                alt="Download">
+          </a>
+        </div>
+      </div>
+      <div class="hidden resources-dropdown" id="{{ datasets_group_name }}-resources-{{ package.id }}">
+        {% if package.resources %}
+          {% for resource in package.resources %}
+            <div class="row">
+              <div class="col-md-4 resources-dropdown-name">
+                <a href="{{ resource.url }}"><p>{{ resource.name }}</p></a>
+              </div>
+              <div class="col-md-7">
+                  {% if resource.description %}
+                    <p>{{ resource.description }}</p>
+                  {% else %}
+                    <p class="resources-dropdown-description">This resource does not contain any description.</p>
+                  {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="row">
+            <div class="col-md-12">
+              This dataset does not contain any resources yet.
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </article>
+  {% endfor %}
+{% endif %}

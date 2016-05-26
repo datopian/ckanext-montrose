@@ -3,6 +3,7 @@
 
 {% block styles %}
     {% resource 'montrose/main' %}
+    {% resource 'montrose/jqueryui' %}
 {% endblock %}
 
 {% block page %}
@@ -103,41 +104,9 @@
         <div class="new-data">
             <h2 class="data-block-heading">Newly Released Data</h2>
             <div class="data-block">
-                {% for dataset in h.montrose_get_newly_released_data() %}
-                    <article class="data-set">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h4 class="data-set-title"><a
-                                        href="{{ h.url_for(controller='package', action='read', id=dataset.name) }}">{{ dataset.title }}</a>
-                                </h4>
-                                <!-- <h5><a href="#">Themes here</a></h5> -->
-                                <p>{{ dataset.human_metadata_modified }}</p>
-                            </div>
-                            <div class="col-sm-11 col-md-7">
-                                <p>{{ dataset.notes }}</p>
-                                <ul class="list-inline data-type-buttons">
-                                    {% for resource in dataset.resources[:3] %}
-                                        {% if resource.format == 'ODS' %}
-                                            <li><a href="#"
-                                                   class="noclick btn btn-xs btn-success">{{ resource.format }}</a></li>
-                                        {% elif resource.format == 'PDF' %}
-                                            <li><a href="#"
-                                                   class="noclick btn btn-xs btn-warning">{{ resource.format }}</a></li>
-                                        {% elif resource.format == 'GeoJSON' %}
-                                            <li><a href="#"
-                                                   class="noclick btn btn-xs btn-primary">{{ resource.format }}</a></li>
-                                        {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <div class="col-sm-1 col-md-1">
-                                <a class="btn-animated btn-download" href="{{ h.url_for(controller='package', action='read', id=dataset.name) }}"><img
-                                        src="img/usedata-download-icon.svg"
-                                        alt="Download"></a>
-                            </div>
-                        </div>
-                    </article>
-                {% endfor %}
+                {{ h.snippet('dashboards/snippets/show_datasets.html',
+                                                                      packages=h.montrose_get_newly_released_data(),
+                                                                      datasets_group_name='newdata') }}
             </div>
         </div>
 
@@ -173,13 +142,16 @@
                         <h3 class="data-block-heading">Filter Data by:</h3>
                     </div>
                     {% for facet in facets.titles %}
-                        {{ h.snippet('dashboards/snippets/facet_list.html', title=c.facet_titles[facet], name=facet) }}
+                        {{ h.snippet('dashboards/snippets/facet_list.html',
+                                                                           title=c.facet_titles[facet],
+                                                                           name=facet) }}
                     {% endfor %}
                 </div>
             </div>
             <div class="data-block">
-                {{ h.snippet('dashboards/snippets/package_list.html', packages=c.page.items) }}
-
+                {{ h.snippet('dashboards/snippets/show_datasets.html',
+                                                                      packages=c.page.items,
+                                                                      datasets_group_name='search') }}
             </div>
         </div>
     </main>
@@ -232,6 +204,10 @@
                 return false;
             });
         });
+
+        function toggleResources(resourceId) {
+          $('#' + resourceId).toggleClass('hidden');
+        }
     </script>
 
 {% endblock %}

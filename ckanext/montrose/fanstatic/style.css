@@ -7263,4 +7263,20 @@ footer .container {
     cursor: default;
 }
 
+.resources-dropdown {
+    padding-top: 25px;
+}
+
+.resources-dropdown .row {
+    margin-top: 10px;
+}
+
+.resources-dropdown-name {
+    text-decoration: underline;
+}
+
+.resources-dropdown-description {
+    font-style: italic;
+}
+
 /*# sourceMappingURL=style.css.map */
