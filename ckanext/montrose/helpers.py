@@ -2,7 +2,7 @@ import ckan.plugins.toolkit as toolkit
 from datetime import datetime
 from ckan.common import OrderedDict, _, json, request, c, g, response
 from urllib import urlencode
-
+import ckan.plugins as p
 
 def montrose_get_newly_released_data(limit=4):
     try:
@@ -49,3 +49,6 @@ def montrose_replace_or_add_url_param(name, value):
     params = [(k, v.encode('utf-8') if isinstance(v, basestring) else str(v))
                   for k, v in params]
     return url + u'?' + urlencode(params)
+
+def organization_list():
+    return p.toolkit.get_action('organization_list')({}, {'all_fields': True, 'include_extras': True})

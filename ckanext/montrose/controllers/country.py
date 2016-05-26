@@ -1,4 +1,5 @@
 import logging
+import re
 from pylons import config
 
 import ckan.plugins as p
@@ -19,20 +20,20 @@ log = logging.getLogger(__name__)
 render = base.render
 abort = base.abort
 redirect = base.redirect
+NotAuthorized = logic.NotAuthorized
 
-class CountryController(OrganizationController, lib_plugins.DefaultOrganizationForm):
-    
-    def group_form(self):
-        pass
+class CountryController(base.BaseController):
+    def members_read(self, id):
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user or c.author}
 
-    def setup_template_variables(self, context, data_dict):
-        pass
-
-    def new_template(self):
-        pass
-
-    def index_template(self):
-        pass
-
-    def edit_template(self):
-        pass
+        try:
+            c.members = logic.get_action('member_list')(
+                context, {'id': id, 'object_type': 'user'}
+            )
+            c.group_dict = logic.get_action('organization_show')(context, {'id': id})
+        except logic.NotAuthorized:
+            p.toolkit.abort(401, p.toolkit._('Unauthorized to read group members %s') % '')
+        except logic.NotFound:
+            p.toolkit.abort(404, p.toolkit._('Group not found'))
+        return render('organization/members_read.html')
