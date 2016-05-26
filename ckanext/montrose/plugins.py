@@ -6,6 +6,8 @@ from ckan.controllers.package import (PackageController,
                                       url_with_params,
                                       _encode_params)
 
+from routes.mapper import SubMapper
+
 import logging
 from urllib import urlencode
 from datetime import datetime
@@ -67,22 +69,42 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
             'montrose_convert_time_format':
                 montrose_helpers.montrose_convert_time_format,
             'montrose_replace_or_add_url_param':
-                montrose_helpers.montrose_replace_or_add_url_param
+                montrose_helpers.montrose_replace_or_add_url_param,
+            'organization_list': montrose_helpers.organization_list
         }
         
 class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationForm):
 
-    p.implements(p.IRoutes, inherit=True)
-    p.implements(p.IGroupForm, inherit=True)
-    p.implements(p.IConfigurer)
+    plugins.implements(plugins.IRoutes, inherit=True)
+    plugins.implements(plugins.IGroupForm, inherit=True)
+    plugins.implements(plugins.IConfigurer)
 
     ## IRoutes
 
     def before_map(self, map):
-        country_controller = 'ckanext.montrose.controllers.country:CountryController'
-        with SubMapper(map, controller=country_controller) as m:
+
+        # TODO: forward all requests made to groups & ogranizations to country
+        
+        org_controller = 'ckan.controllers.organization:OrganizationController'
+        with SubMapper(map, controller=org_controller) as m:
             # TODO: add route mappings
-            pass
+            m.connect('organization_index', action='index')
+            m.connect('/country/list', action='list')
+            m.connect('/country/new', action='new')
+            m.connect('country_read', '/country/{id}', action='read')
+            m.connect('country_activity', '/country/activity/{id}',
+                      action='activity', ckan_icon='time')
+            m.connect('/country/{action}/{id}',
+                      requirements=dict(action='|'.join([
+                          'delete',
+                          'admins',
+                          'member_new',
+                          'member_delete',
+                          'history'
+                          'followers',
+                          'follow',
+                          'unfollow',
+                      ])))
 
         return map
 
@@ -90,9 +112,9 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
 
     def is_fallback(self):
         return True
-
+    
     def group_types(self):
-        return ['country']
+        return ['organization']
 
     def form_to_db_schema_options(self, options):
         ''' This allows us to select different schemas for different
@@ -115,33 +137,36 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
             return self.form_to_db_schema()
 
     def form_to_db_schema_api_create(self):
-        schema = super(MontroseCountry, self).form_to_db_schema_api_create()
+        schema = super(MontroseCountryPlugin, self).form_to_db_schema_api_create()
         schema = self._modify_group_schema(schema)
         return schema
 
     def form_to_db_schema_api_update(self):
-        schema = super(MontroseCountry, self).form_to_db_schema_api_update()
+        schema = super(MontroseCountryPlugin, self).form_to_db_schema_api_update()
         schema = self._modify_group_schema(schema)
         return schema
 
     def form_to_db_schema(self):
-        schema = super(MontroseCountry, self).form_to_db_schema()
+        schema = super(MontroseCountryPlugin, self).form_to_db_schema()
         schema = self._modify_group_schema(schema)
         return schema
 
     def _modify_group_schema(self, schema):
 
         # Import core converters and validators
-        # _convert_to_extras = p.toolkit.get_converter('convert_to_extras')
-        # _ignore_missing = p.toolkit.get_validator('ignore_missing')
+        _convert_to_extras = toolkit.get_converter('convert_to_extras')
+        _ignore_missing = toolkit.get_validator('ignore_missing')
 
-        default_validators = []
+        default_validators = [_convert_to_extras]
         schema.update({
-            'montrose_country_header': [default_validators],
-            'montrose_country_footer': [default_validators],
-            'montrose_country_copyright': [default_validators],
-            'montrose_datasets_per_page': [default_validators],
-            'montrose_charts': [],
+            'montrose_country_header': [_convert_to_extras],
+            'montrose_country_footer': [],
+            'montrose_country_copyright': [_ignore_missing],
+            'montrose_lang_is_active': [_convert_to_extras],
+            'montrose_dashboard_base_color': [_convert_to_extras],
+            'montrose_dashboard_is_active': [_convert_to_extras],
+            'montrose_datasets_per_page': [_convert_to_extras],
+            'montrose_charts': [_ignore_missing, _convert_to_extras],
         })
 
         return schema
@@ -149,24 +174,27 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
     def db_to_form_schema(self):
 
         # Import core converters and validators
-        # _convert_from_extras = p.toolkit.get_converter('convert_from_extras')
-        # _ignore_missing = p.toolkit.get_validator('ignore_missing')
+        _convert_from_extras = toolkit.get_converter('convert_from_extras')
+        _ignore_missing = toolkit.get_validator('ignore_missing')
         # _ignore = p.toolkit.get_validator('ignore')
         # _not_empty = p.toolkit.get_validator('not_empty')
 
-        schema = super(MontroseCountry, self).form_to_db_schema()
+        schema = super(MontroseCountryPlugin, self).form_to_db_schema()
 
-        default_validators = []
+        default_validators = [_convert_from_extras]
         schema.update({
-            'montrose_country_header': [default_validators],
-            'montrose_country_footer': [default_validators],
-            'montrose_country_copyright': [default_validators],
-            'montrose_datasets_per_page': [default_validators],
-            'montrose_charts': [],
+            'montrose_country_header': [_convert_from_extras],
+            'montrose_country_footer': [_convert_from_extras],
+            'montrose_dashboard_is_active': [_convert_from_extras],
+            'montrose_lang_is_active': [_convert_from_extras],
+            'montrose_dashboard_base_color': [_convert_from_extras],
+            'montrose_country_copyright': [_ignore_missing],
+            'montrose_datasets_per_page': [_convert_from_extras],
+            'montrose_charts': [_ignore_missing, _convert_from_extras],
         })
 
         return schema
 
     # IConfigurer
     def update_config(self, config):
-        p.toolkit.add_template_directory(config, 'templates')
+        toolkit.add_template_directory(config, 'templates')

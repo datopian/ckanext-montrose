@@ -1,0 +1,36 @@
+{#
+Display a grid of organization items.
+
+organizations - A list of organizations.
+
+Example:
+
+    {% snippet "organization/snippets/organization_list.html" %}
+
+#}
+<table class="table table-hover table-bordered table-striped table-sorted" data-module="table-sorter">
+  <thead>
+    <tr>
+      <th>Country</th>
+      <th>Is dashboard active?</th>
+      <th>Is language selector active?</th>
+      <th>Datasets per page</th>
+      <th>Dashboard base color</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+  {% for organization in organizations %}
+
+      <tr>
+        <td><a href="/country/{{ organization.name }}">{{ organization.name }}</a></td>
+        <td>{% if organization.montrose_dashboard_is_active %}{{ organization.montrose_dashboard_is_active }}{% endif %}</td>
+        <td>{% if organization.montrose_lang_is_active %}{{ organization.montrose_lang_is_active }}{% endif %}</td>
+        <td>{% if organization.montrose_datasets_per_page %}{{ organization.montrose_datasets_per_page }}{% endif %}</td>
+        <td><div style="height: 20px;width: 100px; background-color: {% if organization.montrose_dashboard_base_color %} {{ organization.montrose_dashboard_base_color }}; {% endif %}"></div></td>
+      </tr>
+
+  {% endfor %}
+  </tbody>
+</table>
