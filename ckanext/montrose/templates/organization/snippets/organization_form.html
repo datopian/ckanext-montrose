@@ -1,0 +1,44 @@
+{% ckan_extends %}
+
+{% macro select(name, label='', data='', autocomplete=false) %}
+  {% set options, selected = h.return_select_options(name, data) %}
+  {% set id = 'field_' ~ name %}
+  {% set attrs = {'data-module': 'autocomplete'} if autocomplete else {} %}
+  {{ form.select(name, id=id, label=label, options=options, selected=selected, attrs=attrs) }}
+{% endmacro %}
+
+{% block basic_fields %}
+    {{ super() }}
+  <fieldset>
+    <legend>{{ _('Dashboard fields') }}</legend>
+
+    {{form.select('montrose_dashboard_is_active', 'montrose_dashboard_is_active', _('Is dashboard active?'), options=[{'value': '1', 'text': 'Yes'}, {'value': '0', 'text': 'No'}], selected='1')}}
+
+    {{form.select('montrose_lang_is_active', 'montrose_lang_is_active', _('Show language selector'), options=[{'value': '1', 'text': 'Yes'}, {'value': '0', 'text': 'No'}], selected='0')}}
+
+    {{ form.markdown('montrose_country_header', label=_('Dashboard header'), id='montrose_country_header', placeholder=_('Set the dashboard header text'), value=data.montrose_country_header, error=errors.montrose_country_header) }}
+
+    {{ form.markdown('montrose_country_footer', label=_('Dashboard footer'), id='montrose_country_footer', placeholder=_('Set the dashboard header footer'), value=data.montrose_country_footer, error=errors.montrose_country_footer) }}
+
+    {{form.select('montrose_dashboard_base_color', 'montrose_dashboard_base_color', _('Choose dashboard base color'), options=[
+    {'value': '#B80000', 'text': 'Kenya'}, {'value': '#008751', 'text': 'Nigeria'},
+    {'value': '#0EAAB2', 'text': 'Uganda'}, {'value': '#0070C0', 'text': 'Tanzania'},
+    {'value': '#FECB00', 'text': 'Myanmar'}], selected='#B80000')}}
+
+    {{form.select('montrose_datasets_per_page', 'montrose_datasets_per_page', _('Datasets per page'), options=[
+    {'value': '5', 'text': '5'}, {'value': '10', 'text': '10'},
+    {'value': '15', 'text': '15'}, {'value': '#20', 'text': '20'},
+    {'value': '25', 'text': '25'}, {'value': '50', 'text': '50'}], selected='5')}}
+
+ </fieldset>
+
+
+{% endblock %}
+
+
+{% block custom_fields %}
+{{super}}
+{% endblock %}
+
+{% block save_text %}{{ _('Save Country') }}{% endblock %}
+
