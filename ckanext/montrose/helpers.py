@@ -53,4 +53,4 @@ def montrose_replace_or_add_url_param(name, value):
     return url + u'?' + urlencode(params)
 
 def organization_list():
-    return p.toolkit.get_action('organization_list')({}, {'all_fields': True, 'include_extras': True})
+    return p.toolkit.get_action('organization_list')({}, {'all_fields': True, 'include_extras': True, 'include_followers': True})

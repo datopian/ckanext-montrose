@@ -83,12 +83,19 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
 
     def before_map(self, map):
 
-        # TODO: forward all requests made to groups & ogranizations to country
+        map.redirect('/group/{url:.*}', '/country/{url}',
+                     _redirect_code='301 Moved Permanently')
+        map.redirect('/group', '/country',
+                     _redirect_code='301 Moved Permanently')
+        map.redirect('/organization/{url:.*}', '/country/{url}',
+                     _redirect_code='301 Moved Permanently')
+        map.redirect('/organization', '/country',
+                     _redirect_code='301 Moved Permanently')
         
         org_controller = 'ckan.controllers.organization:OrganizationController'
         with SubMapper(map, controller=org_controller) as m:
             # TODO: add route mappings
-            m.connect('organization_index', action='index')
+            m.connect('organization_index', '/country', action='index')
             m.connect('/country/list', action='list')
             m.connect('/country/new', action='new')
             m.connect('country_read', '/country/{id}', action='read')
@@ -105,6 +112,8 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
                           'follow',
                           'unfollow',
                       ])))
+            m.connect('country_edit', '/country/edit/{id}',
+                      action='edit', ckan_icon='edit')
 
         return map
 
@@ -157,16 +166,16 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
         _convert_to_extras = toolkit.get_converter('convert_to_extras')
         _ignore_missing = toolkit.get_validator('ignore_missing')
 
-        default_validators = [_convert_to_extras]
+        default_validators = [_convert_to_extras,_ignore_missing]
         schema.update({
-            'montrose_country_header': [_convert_to_extras],
-            'montrose_country_footer': [],
-            'montrose_country_copyright': [_ignore_missing],
-            'montrose_lang_is_active': [_convert_to_extras],
-            'montrose_dashboard_base_color': [_convert_to_extras],
-            'montrose_dashboard_is_active': [_convert_to_extras],
-            'montrose_datasets_per_page': [_convert_to_extras],
-            'montrose_charts': [_ignore_missing, _convert_to_extras],
+            'montrose_country_header': [default_validators],
+            'montrose_country_footer': [default_validators],
+            'montrose_country_copyright': [default_validators],
+            'montrose_lang_is_active': [default_validators],
+            'montrose_dashboard_base_color': [default_validators],
+            'montrose_dashboard_is_active': [default_validators],
+            'montrose_datasets_per_page': [default_validators],
+            'montrose_charts': [default_validators],
         })
 
         return schema
@@ -181,16 +190,16 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
 
         schema = super(MontroseCountryPlugin, self).form_to_db_schema()
 
-        default_validators = [_convert_from_extras]
+        default_validators = [_ignore_missing, _convert_from_extras]
         schema.update({
-            'montrose_country_header': [_convert_from_extras],
-            'montrose_country_footer': [_convert_from_extras],
-            'montrose_dashboard_is_active': [_convert_from_extras],
-            'montrose_lang_is_active': [_convert_from_extras],
-            'montrose_dashboard_base_color': [_convert_from_extras],
+            'montrose_country_header': [_ignore_missing],
+            'montrose_country_footer': [_ignore_missing],
+            'montrose_dashboard_is_active': [_ignore_missing],
+            'montrose_lang_is_active': [_ignore_missing],
+            'montrose_dashboard_base_color': [_ignore_missing],
             'montrose_country_copyright': [_ignore_missing],
-            'montrose_datasets_per_page': [_convert_from_extras],
-            'montrose_charts': [_ignore_missing, _convert_from_extras],
+            'montrose_datasets_per_page': [_ignore_missing],
+            'montrose_charts': [_ignore_missing],
         })
 
         return schema
