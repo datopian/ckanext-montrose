@@ -42,15 +42,15 @@
         </div>
     </nav>
 
-    {# snippet 'dashboards/snippets/resource_view.html',
+    {%  snippet 'dashboards/snippets/resource_view.html',
                          resource_view=map.map_resource_view,
                          resource=map.map_resource,
-                         package=map.map_package #}
+                         package=map.map_package %}
     <main class="container">
         <div class="graphs">
             <div class="row">
                 <div class="col-md-4 graph-container">
-                    <h3 class="graph-title">{{ charts[0][1].name }}</h3>
+                    <h3 class="graph-title"><a href="{{ charts[0][1].url  }}">{{ charts[0][1].name }}</a></h3>
                     <h4 class="graph-subtitle">(kg)</h4>
                     {% snippet 'dashboards/snippets/resource_view.html',
                          resource_view=charts[0][0],

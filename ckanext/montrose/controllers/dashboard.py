@@ -44,7 +44,7 @@ logger = getLogger(__name__)
 
 class DashboardsController(PackageController):
     def kenya(self):
-        '''map_resource_view_id = '72f7154b-1659-4b87-b1fe-f7dd11b2ef03'
+        map_resource_view_id = 'df3f24ae-f8f1-453b-b3ee-0da87a230b06'
         data_dict = {
             'id': map_resource_view_id
         }
@@ -62,8 +62,7 @@ class DashboardsController(PackageController):
 
         map_extra = {'map_package': map_package,
                  'map_resource': map_resource,
-                 'map_resource_view': map_resource_view}'''
-        map_extra = None
+                 'map_resource_view': map_resource_view}
 
         ids = ['f111fa89-44f3-47d8-a584-eecbea046cd8',
                'f0186ced-847c-4367-88f0-d5641bf0117e',

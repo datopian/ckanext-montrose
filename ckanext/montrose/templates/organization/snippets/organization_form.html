@@ -1,7 +1,8 @@
 {% import 'macros/form.html' as form %}
 {% resource 'montrose/jscolor' %}
 
-<form id='organization-edit-form' class="dataset-form form-horizontal" method="post" data-module="basic-form" enctype="multipart/form-data">
+<form id='organization-edit-form' class="dataset-form form-horizontal" method="post" data-module="basic-form"
+      enctype="multipart/form-data">
   {% block error_summary %}
     {{ form.errors(error_summary) }}
   {% endblock %}
@@ -55,12 +56,12 @@
 
   {{ form.required_message() }}
 
-    <fieldset>
+  <fieldset>
     <legend>{{ _('Dashboard fields') }}</legend>
 
-    {{form.select('montrose_dashboard_is_active', 'montrose_dashboard_is_active', _('Is dashboard active?'), options=[{'value': '1', 'text': 'Yes'}, {'value': '0', 'text': 'No'}], selected='1')}}
+    {{ form.select('montrose_dashboard_is_active', 'montrose_dashboard_is_active', _('Is dashboard active?'), options=[{'value': '1', 'text': 'Yes'}, {'value': '0', 'text': 'No'}], selected='1') }}
 
-    {{form.select('montrose_lang_is_active', 'montrose_lang_is_active', _('Show language selector'), options=[{'value': '1', 'text': 'Yes'}, {'value': '0', 'text': 'No'}], selected='0')}}
+    {{ form.select('montrose_lang_is_active', 'montrose_lang_is_active', _('Show language selector'), options=[{'value': '1', 'text': 'Yes'}, {'value': '0', 'text': 'No'}], selected='0') }}
 
     {{ form.markdown('montrose_country_header', label=_('Dashboard header'), id='montrose_country_header', placeholder=_('Set the dashboard header text'), value=data.montrose_country_header, error=errors.montrose_country_header) }}
 
@@ -69,42 +70,49 @@
     <div class="control-group control-full">
       <label class="control-label" for="montrose_dashboard_base_color">Dashboard base color</label>
       <div class="controls ">
-        <input id="montrose_dashboard_base_color" name="montrose_dashboard_base_color" class="jscolor" value="{{data.montrose_dashboard_base_color}}">
+        <input id="montrose_dashboard_base_color" name="montrose_dashboard_base_color" class="jscolor"
+               value="{{ data.montrose_dashboard_base_color }}">
       </div>
     </div>
 
-    {{form.select('montrose_datasets_per_page', 'montrose_datasets_per_page', _('Datasets per page'), options=[
+    {{ form.select('montrose_datasets_per_page', 'montrose_datasets_per_page', _('Datasets per page'), options=[
     {'value': '5', 'text': '5'}, {'value': '10', 'text': '10'},
     {'value': '15', 'text': '15'}, {'value': '#20', 'text': '20'},
-    {'value': '25', 'text': '25'}, {'value': '50', 'text': '50'}], selected=data.montrose_datasets_per_page)}}
+    {'value': '25', 'text': '25'}, {'value': '50', 'text': '50'}], selected=data.montrose_datasets_per_page) }}
 
 
-  <!-- TODO: Create snippet for rendering chart input fields -->
+    <!-- TODO: Create snippet for rendering chart input fields -->
 
-  {{form.select('montrose_chart_1', 'montrose_chart_1', _('Chart position 1'), options=h.get_org_chart_views(data.id))}}
-  {{ form.input('montrose_chart_1_subheader', label=_('Chart 1 subheader'), id='montrose_chart_1_subheader', placeholder=_('Chart 1 subheader'), value=data.montrose_chart_1_subheader, error=errors.montrose_chart_1_subheader) }}
-  {{form.select('montrose_chart_2', 'montrose_chart_2', _('Chart position 2'), options=h.get_org_chart_views(data.id))}}
-  {{ form.input('montrose_chart_2_subheader', label=_('Chart 2 subheader'), id='montrose_chart_2_subheader', placeholder=_('Chart 2 subheader'), value=data.montrose_chart_2_subheader, error=errors.montrose_chart_2_subheader) }}
-  {{form.select('montrose_chart_3', 'montrose_chart_3', _('Chart position 3'), options=h.get_org_chart_views(data.id))}}
-  {{ form.input('montrose_chart_3_subheader', label=_('Chart 3 subheader'), id='montrose_chart_3_subheader', placeholder=_('Chart 3 subheader'), value=data.montrose_chart_3_subheader, error=errors.montrose_chart_3_subheader) }}
-  {{form.select('montrose_chart_4', 'montrose_chart_4', _('Chart position 4'), options=h.get_org_chart_views(data.id))}}
-  {{ form.input('montrose_chart_4_subheader', label=_('Chart 4 subheader'), id='montrose_chart_4_subheader', placeholder=_('Chart 4  subheader'), value=data.montrose_chart_4_subheader, error=errors.montrose_chart_4_subheader) }}
-  {{form.select('montrose_chart_5', 'montrose_chart_5', _('Chart position 5'), options=h.get_org_chart_views(data.id))}}
-  {{ form.input('montrose_chart_5_subheader', label=_('Chart 5 subheader'), id='montrose_chart_5_subheader', placeholder=_('Chart 5 subheader'), value=data.montrose_chart_5_subheader, error=errors.montrose_chart_5_subheader) }}
-  {{form.select('montrose_chart_6', 'montrose_chart_6', _('Chart position 6'), options=h.get_org_chart_views(data.id))}}
-  {{ form.input('montrose_chart_6_subheader', label=_('Chart 6 subheader'), id='montrose_chart_6_subheader', placeholder=_('Chart 6 subheader'), value=data.montrose_chart_6_subheader, error=errors.montrose_chart_6_subheader) }}
+    {% if data %}
 
-  <!-- TODO: Create snippet for rendering chart input fields -->
+      {{ form.select('montrose_chart_1', 'montrose_chart_1', _('Chart position 1'), options=h.get_org_chart_views(data.id)) }}
+      {{ form.input('montrose_chart_1_subheader', label=_('Chart 1 subheader'), id='montrose_chart_1_subheader', placeholder=_('Chart 1 subheader'), value=data.montrose_chart_1_subheader, error=errors.montrose_chart_1_subheader) }}
+      {{ form.select('montrose_chart_2', 'montrose_chart_2', _('Chart position 2'), options=h.get_org_chart_views(data.id)) }}
+      {{ form.input('montrose_chart_2_subheader', label=_('Chart 2 subheader'), id='montrose_chart_2_subheader', placeholder=_('Chart 2 subheader'), value=data.montrose_chart_2_subheader, error=errors.montrose_chart_2_subheader) }}
+      {{ form.select('montrose_chart_3', 'montrose_chart_3', _('Chart position 3'), options=h.get_org_chart_views(data.id)) }}
+      {{ form.input('montrose_chart_3_subheader', label=_('Chart 3 subheader'), id='montrose_chart_3_subheader', placeholder=_('Chart 3 subheader'), value=data.montrose_chart_3_subheader, error=errors.montrose_chart_3_subheader) }}
+      {{ form.select('montrose_chart_4', 'montrose_chart_4', _('Chart position 4'), options=h.get_org_chart_views(data.id)) }}
+      {{ form.input('montrose_chart_4_subheader', label=_('Chart 4 subheader'), id='montrose_chart_4_subheader', placeholder=_('Chart 4  subheader'), value=data.montrose_chart_4_subheader, error=errors.montrose_chart_4_subheader) }}
+      {{ form.select('montrose_chart_5', 'montrose_chart_5', _('Chart position 5'), options=h.get_org_chart_views(data.id)) }}
+      {{ form.input('montrose_chart_5_subheader', label=_('Chart 5 subheader'), id='montrose_chart_5_subheader', placeholder=_('Chart 5 subheader'), value=data.montrose_chart_5_subheader, error=errors.montrose_chart_5_subheader) }}
+      {{ form.select('montrose_chart_6', 'montrose_chart_6', _('Chart position 6'), options=h.get_org_chart_views(data.id)) }}
+      {{ form.input('montrose_chart_6_subheader', label=_('Chart 6 subheader'), id='montrose_chart_6_subheader', placeholder=_('Chart 6 subheader'), value=data.montrose_chart_6_subheader, error=errors.montrose_chart_6_subheader) }}
+
+    {% endif %}
+    <!-- TODO: Create snippet for rendering chart input fields -->
 
   </fieldset>
 
   <div class="form-actions">
     {% block delete_button %}
-      {% if h.check_access('organization_delete', {'id': data.id})  %}
+      {% if h.check_access('organization_delete', {'id': data.id}) %}
         {% set locale = h.dump_json({'content': _('Are you sure you want to delete this Organization? This will delete all the public and private datasets belonging to this organization.')}) %}
-        <a class="btn btn-danger pull-left" href="{% url_for controller='organization', action='delete', id=data.id %}" data-module="confirm-action" data-module-i18n="{{ locale }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>
+        <a class="btn btn-danger pull-left" href="{% url_for controller='organization', action='delete', id=data.id %}"
+           data-module="confirm-action" data-module-i18n="{{ locale }}">
+          {% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>
       {% endif %}
     {% endblock %}
-    <button class="btn btn-primary" name="save" type="submit">{% block save_text %}{{ _('Save Organization') }}{% endblock %}</button>
+    <button class="btn btn-primary" name="save" type="submit">
+      {% block save_text %}{{ _('Save Organization') }}{% endblock %}</button>
   </div>
 </form>
