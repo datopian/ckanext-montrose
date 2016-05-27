@@ -70,7 +70,8 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
                 montrose_helpers.montrose_convert_time_format,
             'montrose_replace_or_add_url_param':
                 montrose_helpers.montrose_replace_or_add_url_param,
-            'organization_list': montrose_helpers.organization_list
+            'organization_list': montrose_helpers.organization_list,
+            'get_org_chart_views': montrose_helpers.chart_views.lookup,
         }
         
 class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationForm):
@@ -101,20 +102,15 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
             m.connect('country_read', '/country/{id}', action='read')
             m.connect('country_activity', '/country/activity/{id}',
                       action='activity', ckan_icon='time')
-            m.connect('/country/{action}/{id}',
-                      requirements=dict(action='|'.join([
-                          'delete',
-                          'admins',
-                          'member_new',
-                          'member_delete',
-                          'history'
-                          'followers',
-                          'follow',
-                          'unfollow',
-                      ])))
+
             m.connect('country_edit', '/country/edit/{id}',
                       action='edit', ckan_icon='edit')
-
+            
+        ctrl = 'ckanext.montrose.controllers.country:CountryController'
+        map.connect('/country/datasets/{name}', controller=ctrl, action='show_resources')
+        map.connect('/country/show/datasets/{name}', controller=ctrl, action='show_resource_views')
+        map.connect('/country/show/chart_views/{name}', controller=ctrl, action='show_chart_views')
+            
         return map
 
     ## IGroupForm
@@ -177,7 +173,13 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
             'montrose_datasets_per_page': default_validators,
             'montrose_charts': default_validators,
         })
-
+        
+        charts = {}
+        for _ in range(1, 7):
+            charts.update({'montrose_chart_{idx}'.format(idx=_): default_validators,
+                          'montrose_chart_{idx}_subheader'.format(idx=_): default_validators})
+            
+        schema.update(charts)
         return schema
 
     def db_to_form_schema(self):
@@ -203,10 +205,17 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
             'num_followers': [_not_empty],
             'package_count': [_not_empty],
         })
-
+        
+        charts = {}
+        for _ in range(1, 7):
+            charts.update({'montrose_chart_{idx}'.format(idx=_): default_validators,
+                          'montrose_chart_{idx}_subheader'.format(idx=_): default_validators})
+            
+        schema.update(charts)
         return schema
 
     # IConfigurer
     def update_config(self, config):
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_resource('fanstatic', 'montrose')
+        
