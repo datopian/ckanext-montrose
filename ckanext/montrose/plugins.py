@@ -166,16 +166,16 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
         _convert_to_extras = toolkit.get_converter('convert_to_extras')
         _ignore_missing = toolkit.get_validator('ignore_missing')
 
-        default_validators = [_convert_to_extras,_ignore_missing]
+        default_validators = [_ignore_missing,_convert_to_extras]
         schema.update({
-            'montrose_country_header': [default_validators],
-            'montrose_country_footer': [default_validators],
-            'montrose_country_copyright': [default_validators],
-            'montrose_lang_is_active': [default_validators],
-            'montrose_dashboard_base_color': [default_validators],
-            'montrose_dashboard_is_active': [default_validators],
-            'montrose_datasets_per_page': [default_validators],
-            'montrose_charts': [default_validators],
+            'montrose_country_header': default_validators,
+            'montrose_country_footer': default_validators,
+            'montrose_country_copyright': default_validators,
+            'montrose_lang_is_active': default_validators,
+            'montrose_dashboard_base_color': default_validators,
+            'montrose_dashboard_is_active': default_validators,
+            'montrose_datasets_per_page': default_validators,
+            'montrose_charts': default_validators,
         })
 
         return schema
@@ -185,21 +185,23 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
         # Import core converters and validators
         _convert_from_extras = toolkit.get_converter('convert_from_extras')
         _ignore_missing = toolkit.get_validator('ignore_missing')
-        # _ignore = p.toolkit.get_validator('ignore')
-        # _not_empty = p.toolkit.get_validator('not_empty')
+        _ignore = toolkit.get_validator('ignore')
+        _not_empty = toolkit.get_validator('not_empty')
 
         schema = super(MontroseCountryPlugin, self).form_to_db_schema()
 
-        default_validators = [_ignore_missing, _convert_from_extras]
+        default_validators = [_convert_from_extras, _ignore_missing]
         schema.update({
-            'montrose_country_header': [_ignore_missing],
-            'montrose_country_footer': [_ignore_missing],
-            'montrose_dashboard_is_active': [_ignore_missing],
-            'montrose_lang_is_active': [_ignore_missing],
-            'montrose_dashboard_base_color': [_ignore_missing],
-            'montrose_country_copyright': [_ignore_missing],
-            'montrose_datasets_per_page': [_ignore_missing],
-            'montrose_charts': [_ignore_missing],
+            'montrose_country_header': default_validators,
+            'montrose_country_footer': default_validators,
+            'montrose_country_copyright': default_validators,
+            'montrose_lang_is_active': default_validators,
+            'montrose_dashboard_base_color': default_validators,
+            'montrose_dashboard_is_active': default_validators,
+            'montrose_datasets_per_page': default_validators,
+            'montrose_charts': default_validators,
+            'num_followers': [_not_empty],
+            'package_count': [_not_empty],
         })
 
         return schema
