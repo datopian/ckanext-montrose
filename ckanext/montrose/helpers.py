@@ -5,6 +5,8 @@ from urllib import urlencode
 import ckan.lib.helpers as h
 import ckan.plugins as p
 
+def _get_action(action, context_dict, data_dict):
+    return p.toolkit.get_action(action)(context_dict, data_dict)
 
 def montrose_get_newly_released_data(limit=4):
     try:
@@ -53,4 +55,29 @@ def montrose_replace_or_add_url_param(name, value):
     return url + u'?' + urlencode(params)
 
 def organization_list():
-    return p.toolkit.get_action('organization_list')({}, {'all_fields': True, 'include_extras': True, 'include_followers': True})
+    return _get_action('organization_list', {},
+                      {'all_fields': True, 
+                       'include_extras': True, 
+                       'include_followers': True})
+
+def get_organization_views(name):
+    data = _get_action('organization_show',{},
+                      {'id':name, 
+                       'include_datasets': True})
+        
+    result = []
+    package_names = data.pop('packages', [])
+    if any(package_names):
+        for _ in package_names:
+            package = _get_action('package_show', {}, {'id': _['name']})
+            if not package['num_resources'] > 0:
+                continue
+            
+            resource_views = map(lambda p: _get_action('resource_view_list', {}, 
+                                                      {'id': p['id']}), package['resources'])
+            if any(resource_views):
+                map(lambda l: result.extend(l), resource_views)
+            
+    return result
+
+        
