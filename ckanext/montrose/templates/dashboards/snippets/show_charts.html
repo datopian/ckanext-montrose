@@ -1,0 +1,11 @@
+
+{% set chart = h.montrose_get_chart_resources(resource_view_id) %}
+
+<div class="col-md-4 graph-container">
+  <h3 class="graph-title"><a href="{{ chart[1].url }}">{{ chart[1].name }}</a></h3>
+  <h4 class="graph-subtitle">{{ subheader }}</h4>
+  {% snippet 'dashboards/snippets/resource_view.html',
+                         resource_view=chart[0],
+                         resource=chart[1],
+                         package=chart[2] %}
+</div>

@@ -56,6 +56,25 @@ def montrose_replace_or_add_url_param(name, value):
                   for k, v in params]
     return url + u'?' + urlencode(params)
 
+
+def get_resourceview_resource_package(resource_view_id):
+    data_dict = {
+        'id': resource_view_id
+    }
+    resource_view = toolkit.get_action('resource_view_show')({}, data_dict)
+
+    data_dict = {
+        'id': resource_view['resource_id']
+    }
+    resource = toolkit.get_action('resource_show')({}, data_dict)
+
+    data_dict = {
+        'id': resource['package_id']
+    }
+    package = toolkit.get_action('package_show')({}, data_dict)
+
+    return [resource_view, resource, package]
+
 def organization_list():
     return _get_action('organization_list', {},
                       {'all_fields': True, 

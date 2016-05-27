@@ -70,8 +70,12 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
                 montrose_helpers.montrose_convert_time_format,
             'montrose_replace_or_add_url_param':
                 montrose_helpers.montrose_replace_or_add_url_param,
-            'organization_list': montrose_helpers.organization_list,
-            'get_org_chart_views': montrose_helpers.chart_views.lookup,
+            'organization_list':
+                montrose_helpers.organization_list,
+            'get_org_chart_views':
+                montrose_helpers.chart_views.lookup,
+            'montrose_get_chart_resources':
+                montrose_helpers.get_resourceview_resource_package
         }
         
 class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationForm):
@@ -110,6 +114,9 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
         map.connect('/country/datasets/{name}', controller=ctrl, action='show_resources')
         map.connect('/country/show/datasets/{name}', controller=ctrl, action='show_resource_views')
         map.connect('/country/show/chart_views/{name}', controller=ctrl, action='show_chart_views')
+        map.connect('/country/{name}/dashboard',
+                    controller='ckanext.montrose.controllers.dashboard:DashboardsController',
+                    action='kenya')
             
         return map
 

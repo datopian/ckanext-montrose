@@ -43,7 +43,9 @@ lookup_package_plugin = ckan.lib.plugins.lookup_package_plugin
 logger = getLogger(__name__)
 
 class DashboardsController(PackageController):
-    def kenya(self):
+    def kenya(self, name):
+        org = get_action('organization_show')({}, {'id': name, 'include_extras': True})
+        logger.debug(org)
         map_resource_view_id = 'df3f24ae-f8f1-453b-b3ee-0da87a230b06'
         data_dict = {
             'id': map_resource_view_id
@@ -73,7 +75,7 @@ class DashboardsController(PackageController):
 
         charts = []
         for id in ids:
-            charts.append(get_resourceview_resource_package(id))
+            charts.append(self._get_resourceview_resource_package(id))
 
         from ckan.lib.search import SearchError
 
@@ -91,7 +93,7 @@ class DashboardsController(PackageController):
         c.query_error = False
         page = self._get_page_number(request.params)
 
-        limit = g.datasets_per_page
+        limit = int(org['montrose_datasets_per_page'])
 
         # most search operations should reset the page counter:
         params_nopage = [(k, v) for k, v in request.params.items()
@@ -248,27 +250,27 @@ class DashboardsController(PackageController):
                                        package_type=package_type)
 
         return plugins.toolkit.render('dashboards/kenya.html', extra_vars={'charts': charts,
+                                                                           'country': org,
                                                                            'dataset_type': package_type,
                                                                            'map': map_extra})
 
     def _guess_package_type(self, expecting_name=False):
         return 'dataset'
 
+    def _get_resourceview_resource_package(self, resource_view_id):
+        data_dict = {
+            'id': resource_view_id
+        }
+        resource_view = toolkit.get_action('resource_view_show')({}, data_dict)
 
-def get_resourceview_resource_package(resource_view_id):
-    data_dict = {
-        'id': resource_view_id
-    }
-    resource_view = toolkit.get_action('resource_view_show')({}, data_dict)
+        data_dict = {
+            'id': resource_view['resource_id']
+        }
+        resource = toolkit.get_action('resource_show')({}, data_dict)
 
-    data_dict = {
-        'id': resource_view['resource_id']
-    }
-    resource = toolkit.get_action('resource_show')({}, data_dict)
+        data_dict = {
+            'id': resource['package_id']
+        }
+        package = toolkit.get_action('package_show')({}, data_dict)
 
-    data_dict = {
-        'id': resource['package_id']
-    }
-    package = toolkit.get_action('package_show')({}, data_dict)
-
-    return [resource_view, resource, package]
+        return [resource_view, resource, package]

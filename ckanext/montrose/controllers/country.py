@@ -37,3 +37,4 @@ class CountryController(base.BaseController):
         except logic.NotFound:
             p.toolkit.abort(404, p.toolkit._('Group not found'))
         return render('organization/members_read.html')
+

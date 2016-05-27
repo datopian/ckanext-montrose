@@ -12,14 +12,12 @@
             <h2 class="data-block-heading">Data [{{ count }}]</h2>
         </div>
         <div class="col-md-2">
-            <ul class="list-inline list-data-sets-number">
+           <!-- <ul class="list-inline list-data-sets-number">
                 <li>Show:</li>
-                <!-- How many different clickable values we need to show here?
-                     Further adaptation of this block is probably needed. -->
                 <li class="active">25</li>
                 <li><a href="#">50</a></li>
                 <li><a href="#">100</a></li>
-            </ul>
+            </ul>-->
         </div>
         <div class="col-md-4">
             <form {% if form_id %}id="{{ form_id }}" {% endif %}class="search-form{% if no_bottom_border %} no-bottom-border{% endif %}"
