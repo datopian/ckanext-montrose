@@ -78,6 +78,8 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
                 montrose_helpers.get_resourceview_resource_package,
             'get_org_map_views': 
                 montrose_helpers.country_views.get_maps,
+            'montrose_get_resource_url':
+                montrose_helpers.montrose_get_resource_url
         }
         
 class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationForm):

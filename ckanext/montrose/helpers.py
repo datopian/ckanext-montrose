@@ -102,7 +102,7 @@ def get_organization_views(name, type='Chart builder'):
                     map(lambda l: result.extend(filter(lambda i: i['view_type'] == type, l)), resource_views)
                     
             elif type.lower() == 'maps':
-                result.extend(filter(lambda r: r['resource_type'].lower() in ['geojson', 'gjson'], package['resources']))
+                result.extend(filter(lambda r: r['format'].lower() in ['geojson', 'gjson'], package['resources']))
             
             else:
                 pass
@@ -155,3 +155,7 @@ class CountryViews(object):
         return self.maps_cache.get(name)
         
 country_views = CountryViews()
+
+def montrose_get_resource_url(id):
+    data = _get_action('resource_show', {}, {'id': id})
+    return data['url']
