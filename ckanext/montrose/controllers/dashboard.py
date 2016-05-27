@@ -45,37 +45,6 @@ logger = getLogger(__name__)
 class DashboardsController(PackageController):
     def kenya(self, name):
         org = get_action('organization_show')({}, {'id': name, 'include_extras': True})
-        logger.debug(org)
-        map_resource_view_id = 'df3f24ae-f8f1-453b-b3ee-0da87a230b06'
-        data_dict = {
-            'id': map_resource_view_id
-        }
-        map_resource_view = toolkit.get_action('resource_view_show')({}, data_dict)
-
-        data_dict = {
-            'id': map_resource_view['resource_id']
-        }
-        map_resource = toolkit.get_action('resource_show')({}, data_dict)
-
-        data_dict = {
-            'id': map_resource['package_id']
-        }
-        map_package = toolkit.get_action('package_show')({}, data_dict)
-
-        map_extra = {'map_package': map_package,
-                 'map_resource': map_resource,
-                 'map_resource_view': map_resource_view}
-
-        ids = ['f111fa89-44f3-47d8-a584-eecbea046cd8',
-               'f0186ced-847c-4367-88f0-d5641bf0117e',
-               'f0186ced-847c-4367-88f0-d5641bf0117e',
-               '0a844f3b-a0a4-4ba1-af07-302607105b3e',
-               '015abce5-7102-4457-b912-861491bef523',
-               'd97f098f-37fe-4ec5-a058-6bb41bcb28d0']
-
-        charts = []
-        for id in ids:
-            charts.append(self._get_resourceview_resource_package(id))
 
         from ckan.lib.search import SearchError
 
@@ -249,10 +218,8 @@ class DashboardsController(PackageController):
         self._setup_template_variables(context, {},
                                        package_type=package_type)
 
-        return plugins.toolkit.render('dashboards/kenya.html', extra_vars={'charts': charts,
-                                                                           'country': org,
-                                                                           'dataset_type': package_type,
-                                                                           'map': map_extra})
+        return plugins.toolkit.render('dashboards/kenya.html', extra_vars={'country': org,
+                                                                           'dataset_type': package_type})
 
     def _guess_package_type(self, expecting_name=False):
         return 'dataset'
