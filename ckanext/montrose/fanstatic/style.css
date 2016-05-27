@@ -7271,8 +7271,9 @@ footer .container {
     margin-top: 10px;
 }
 
-.resources-dropdown-name {
+.resources-dropdown-name a {
     text-decoration: underline;
+    font-weight: bold;
 }
 
 .resources-dropdown-description {
