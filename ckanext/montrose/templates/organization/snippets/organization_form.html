@@ -76,7 +76,25 @@
     {{form.select('montrose_datasets_per_page', 'montrose_datasets_per_page', _('Datasets per page'), options=[
     {'value': '5', 'text': '5'}, {'value': '10', 'text': '10'},
     {'value': '15', 'text': '15'}, {'value': '#20', 'text': '20'},
-    {'value': '25', 'text': '25'}, {'value': '50', 'text': '50'}], selected='5')}}
+    {'value': '25', 'text': '25'}, {'value': '50', 'text': '50'}], selected=data.montrose_datasets_per_page)}}
+
+
+  <!-- TODO: Create snippet for rendering chart input fields -->
+
+  {{form.select('montrose_chart_1', 'montrose_chart_1', _('Chart position 1'), options=h.get_org_chart_views(data.id))}}
+  {{ form.input('montrose_chart_1_subheader', label=_('Chart 1 subheader'), id='montrose_chart_1_subheader', placeholder=_('Chart 1 subheader'), value=data.montrose_chart_1_subheader, error=errors.montrose_chart_1_subheader) }}
+  {{form.select('montrose_chart_2', 'montrose_chart_2', _('Chart position 2'), options=h.get_org_chart_views(data.id))}}
+  {{ form.input('montrose_chart_2_subheader', label=_('Chart 2 subheader'), id='montrose_chart_2_subheader', placeholder=_('Chart 2 subheader'), value=data.montrose_chart_2_subheader, error=errors.montrose_chart_2_subheader) }}
+  {{form.select('montrose_chart_3', 'montrose_chart_3', _('Chart position 3'), options=h.get_org_chart_views(data.id))}}
+  {{ form.input('montrose_chart_3_subheader', label=_('Chart 3 subheader'), id='montrose_chart_3_subheader', placeholder=_('Chart 3 subheader'), value=data.montrose_chart_3_subheader, error=errors.montrose_chart_3_subheader) }}
+  {{form.select('montrose_chart_4', 'montrose_chart_4', _('Chart position 4'), options=h.get_org_chart_views(data.id))}}
+  {{ form.input('montrose_chart_4_subheader', label=_('Chart 4 subheader'), id='montrose_chart_4_subheader', placeholder=_('Chart 4  subheader'), value=data.montrose_chart_4_subheader, error=errors.montrose_chart_4_subheader) }}
+  {{form.select('montrose_chart_5', 'montrose_chart_5', _('Chart position 5'), options=h.get_org_chart_views(data.id))}}
+  {{ form.input('montrose_chart_5_subheader', label=_('Chart 5 subheader'), id='montrose_chart_5_subheader', placeholder=_('Chart 5 subheader'), value=data.montrose_chart_5_subheader, error=errors.montrose_chart_5_subheader) }}
+  {{form.select('montrose_chart_6', 'montrose_chart_6', _('Chart position 6'), options=h.get_org_chart_views(data.id))}}
+  {{ form.input('montrose_chart_6_subheader', label=_('Chart 6 subheader'), id='montrose_chart_6_subheader', placeholder=_('Chart 6 subheader'), value=data.montrose_chart_6_subheader, error=errors.montrose_chart_6_subheader) }}
+
+  <!-- TODO: Create snippet for rendering chart input fields -->
 
   </fieldset>
 

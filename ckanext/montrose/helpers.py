@@ -5,6 +5,8 @@ from urllib import urlencode
 import ckan.lib.helpers as h
 import ckan.plugins as p
 
+# TODO: Re-organize and re-factor helpers
+
 def _get_action(action, context_dict, data_dict):
     return p.toolkit.get_action(action)(context_dict, data_dict)
 
@@ -76,8 +78,41 @@ def get_organization_views(name):
             resource_views = map(lambda p: _get_action('resource_view_list', {}, 
                                                       {'id': p['id']}), package['resources'])
             if any(resource_views):
-                map(lambda l: result.extend(l), resource_views)
+                map(lambda l: result.extend(filter(lambda i: i['view_type'] == 'Chart builder', l)), resource_views)
             
     return result
 
+
+def get_resource_views(package):
+    result = []
+    resource_views = map(lambda p: _get_action('resource_view_list', {}, 
+                                              {'id': p['id']}), package['resources'])
+    if any(resource_views):
+        map(lambda l: result.extend(l), resource_views)
         
+    return result
+    
+
+def get_dataset_resource_views(package_id):
+    dataset = _get_action('package_show', {}, {'id': package_id})
+    return get_resource_views(dataset)
+    
+def get_dataset_chart_resource_views(package_id):
+    return filter(lambda i: i['view_type'] == 'Chart builder', 
+                  get_dataset_resource_views(package_id))
+    
+class OrgChartViews(object):
+    def __init__(self):
+        self.charts_cache = {}
+        
+    def lookup(self, name):
+        if name not in self.charts_cache:
+            result = []
+            for item in get_organization_views(name):
+                result.append({'value': item['id'], 'text': item['title']})
+                
+            self.charts_cache.update({name: result})
+            
+        return self.charts_cache.get(name)
+        
+chart_views = OrgChartViews()
