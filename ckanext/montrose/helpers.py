@@ -94,10 +94,19 @@ def get_organization_views(name, type='Chart builder'):
             if not package['num_resources'] > 0:
                 continue
             
-            resource_views = map(lambda p: _get_action('resource_view_list', {}, 
-                                                      {'id': p['id']}), package['resources'])
-            if any(resource_views):
-                map(lambda l: result.extend(filter(lambda i: i['view_type'] == type, l)), resource_views)
+            if type.lower() == 'chart builder':
+                resource_views = map(lambda p: _get_action('resource_view_list', {}, 
+                                                          {'id': p['id']}), package['resources'])
+                if any(resource_views):
+                    # TODO: Fix string comparison
+                    map(lambda l: result.extend(filter(lambda i: i['view_type'] == type, l)), resource_views)
+                    
+            elif type.lower() == 'maps':
+                result.extend(filter(lambda r: r['resource_type'].lower() in ['geojson', 'gjson'], package['resources']))
+            
+            else:
+                pass
+            # Raise not handled exception
             
     return result
 
@@ -139,7 +148,7 @@ class CountryViews(object):
         if name not in self.maps_cache:
             result = []
             for item in get_organization_views(name, type='Maps'):
-                result.append({'value': item['id'], 'text': item['title']})
+                result.append({'value': item['id'], 'text': 'UNNAMED' if item['name'] == '' else item['name']})
                 
             self.maps_cache.update({name: result})
             
