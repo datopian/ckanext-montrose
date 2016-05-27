@@ -1,8 +1,8 @@
 {% extends "page.html" %}
-{% import 'macros/form.html' as form %}
 
 {% block styles %}
     {% resource 'montrose/main' %}
+    {% resource 'montrose/map' %}
     {% resource 'montrose/jqueryui' %}
 {% endblock %}
 
@@ -14,7 +14,7 @@
                     <a href="#"><img class="img-responsive" src="img/usedata-country-logo-sample.svg" height="130"
                                      alt="USEDATA logo"></a>
                     <h1 class="sr-only">USEDATA Kenya</h1>
-                </div>
+                </div><!--
                 <div class="col-sm-7 col-md-9 language-selector">
                     <ul class="list-inline">
                         <li class="active">
@@ -28,7 +28,7 @@
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div>-->
             </div>
         </div>
     </header>
@@ -41,6 +41,32 @@
             </ul>
         </div>
     </nav>
+    <div class="hero-map-wrap">
+      <div class="hero-controls">
+          <div class="hero-block hero-info-select">
+              <div class="media hero-info">
+                  <div class="media-left">
+                      <img id="map-info-img" class="language-flag" src="/images/usedata-info-icon.svg" width="41" alt="icon">
+                  </div>
+                  <div class="media-body">Select from the menu below the data that you wish to display on the map. Zoom in
+                      for more detail using the zoom bar.
+                  </div>
+              </div>
+              <div class="hero-select">
+                  <select id="dataset" class="form-control"></select>
+              </div>
+          </div>
+          <div class="hero-block hero-country">
+              <h2 class="hero-country-title">Kenya</h2>
+          </div>
+      </div>
+      <div
+              data-module="montrose_map"
+              data-module-id="hero_map"
+              id="hero_map"
+      >
+      </div>
+    </div>
 
     {# snippet 'dashboards/snippets/resource_view.html',
                          resource_view=map.map_resource_view,

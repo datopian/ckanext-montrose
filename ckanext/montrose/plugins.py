@@ -175,7 +175,7 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
             'montrose_dashboard_base_color': [default_validators],
             'montrose_dashboard_is_active': [default_validators],
             'montrose_datasets_per_page': [default_validators],
-            'montrose_charts': [default_validators],
+            'montrose_charts': [default_validators]
         })
 
         return schema
@@ -199,7 +199,7 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
             'montrose_dashboard_base_color': [_ignore_missing],
             'montrose_country_copyright': [_ignore_missing],
             'montrose_datasets_per_page': [_ignore_missing],
-            'montrose_charts': [_ignore_missing],
+            'montrose_charts': [_ignore_missing]
         })
 
         return schema
