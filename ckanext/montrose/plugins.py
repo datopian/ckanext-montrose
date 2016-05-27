@@ -73,9 +73,11 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
             'organization_list':
                 montrose_helpers.organization_list,
             'get_org_chart_views':
-                montrose_helpers.chart_views.lookup,
+                montrose_helpers.country_views.get_charts,
             'montrose_get_chart_resources':
-                montrose_helpers.get_resourceview_resource_package
+                montrose_helpers.get_resourceview_resource_package,
+            'get_org_map_views': 
+                montrose_helpers.country_views.get_maps,
         }
         
 class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationForm):
@@ -173,12 +175,14 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
         schema.update({
             'montrose_country_header': default_validators,
             'montrose_country_footer': default_validators,
+            'montrose_contry_map': default_validators,
             'montrose_country_copyright': default_validators,
             'montrose_lang_is_active': default_validators,
             'montrose_dashboard_base_color': default_validators,
             'montrose_dashboard_is_active': default_validators,
             'montrose_datasets_per_page': default_validators,
             'montrose_charts': default_validators,
+            'montrose_map': default_validators,
         })
         
         charts = {}
@@ -202,6 +206,7 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
         default_validators = [_convert_from_extras, _ignore_missing]
         schema.update({
             'montrose_country_header': default_validators,
+            'montrose_country_map': default_validators,
             'montrose_country_footer': default_validators,
             'montrose_country_copyright': default_validators,
             'montrose_lang_is_active': default_validators,
@@ -209,6 +214,7 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
             'montrose_dashboard_is_active': default_validators,
             'montrose_datasets_per_page': default_validators,
             'montrose_charts': default_validators,
+            'montrose_map': default_validators,
             'num_followers': [_not_empty],
             'package_count': [_not_empty],
         })

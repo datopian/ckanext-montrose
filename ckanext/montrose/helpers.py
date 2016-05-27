@@ -81,7 +81,7 @@ def organization_list():
                        'include_extras': True, 
                        'include_followers': True})
 
-def get_organization_views(name):
+def get_organization_views(name, type='Chart builder'):
     data = _get_action('organization_show',{},
                       {'id':name, 
                        'include_datasets': True})
@@ -97,7 +97,7 @@ def get_organization_views(name):
             resource_views = map(lambda p: _get_action('resource_view_list', {}, 
                                                       {'id': p['id']}), package['resources'])
             if any(resource_views):
-                map(lambda l: result.extend(filter(lambda i: i['view_type'] == 'Chart builder', l)), resource_views)
+                map(lambda l: result.extend(filter(lambda i: i['view_type'] == type, l)), resource_views)
             
     return result
 
@@ -120,11 +120,12 @@ def get_dataset_chart_resource_views(package_id):
     return filter(lambda i: i['view_type'] == 'Chart builder', 
                   get_dataset_resource_views(package_id))
     
-class OrgChartViews(object):
+class CountryViews(object):
     def __init__(self):
         self.charts_cache = {}
+        self.maps_cache = {}
         
-    def lookup(self, name):
+    def get_charts(self, name):
         if name not in self.charts_cache:
             result = []
             for item in get_organization_views(name):
@@ -133,5 +134,15 @@ class OrgChartViews(object):
             self.charts_cache.update({name: result})
             
         return self.charts_cache.get(name)
+    
+    def get_maps(self, name):
+        if name not in self.maps_cache:
+            result = []
+            for item in get_organization_views(name, type='Maps'):
+                result.append({'value': item['id'], 'text': item['title']})
+                
+            self.maps_cache.update({name: result})
+            
+        return self.maps_cache.get(name)
         
-chart_views = OrgChartViews()
+country_views = CountryViews()
