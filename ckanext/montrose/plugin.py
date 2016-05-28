@@ -180,10 +180,13 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
             'get_org_map_views': 
                 montrose_helpers.country_views.get_maps,
             'montrose_get_resource_url':
-                montrose_helpers.montrose_get_resource_url
+                montrose_helpers.montrose_get_resource_url,
+            'montrose_get_geojson_properties': 
+                montrose_helpers.montrose_get_geojson_properties
         }
         
-    # IConfigurer
+    ## IConfigurer
+    
     def update_config(self, config):
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_resource('fanstatic', 'montrose')
