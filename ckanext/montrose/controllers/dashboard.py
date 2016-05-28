@@ -43,7 +43,7 @@ lookup_package_plugin = ckan.lib.plugins.lookup_package_plugin
 logger = getLogger(__name__)
 
 class DashboardsController(PackageController):
-    def kenya(self, name):
+    def montrose_country_dashboard(self, name):
         org = get_action('organization_show')({}, {'id': name, 'include_extras': True})
 
         from ckan.lib.search import SearchError
@@ -218,7 +218,7 @@ class DashboardsController(PackageController):
         self._setup_template_variables(context, {},
                                        package_type=package_type)
 
-        return plugins.toolkit.render('dashboards/kenya.html', extra_vars={'country': org,
+        return plugins.toolkit.render('dashboards/index.html', extra_vars={'country': org,
                                                                            'dataset_type': package_type})
 
     def _guess_package_type(self, expecting_name=False):

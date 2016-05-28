@@ -58,7 +58,7 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
     def before_map(self, map_):
         controller = 'ckanext.montrose.controllers.dashboard:DashboardsController'
 
-        map_.connect('/kenya', controller=controller, action='kenya')
+        #map_.connect('/kenya', controller=controller, action='kenya')
 
         return map_
 
@@ -120,7 +120,7 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
         map.connect('/country/show/chart_views/{name}', controller=ctrl, action='show_chart_views')
         map.connect('/country/{name}/dashboard',
                     controller='ckanext.montrose.controllers.dashboard:DashboardsController',
-                    action='kenya')
+                    action='montrose_country_dashboard')
             
         return map
 

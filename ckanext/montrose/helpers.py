@@ -50,7 +50,7 @@ def montrose_replace_or_add_url_param(name, value):
     controller = c.controller
     action = c.action
 
-    url = h.url_for(controller=controller, action=action)
+    url = h.url_for(controller=controller, action=c.action, name=c.name)
 
     params = [(k, v.encode('utf-8') if isinstance(v, basestring) else str(v))
                   for k, v in params]
