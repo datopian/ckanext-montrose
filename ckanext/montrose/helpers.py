@@ -109,8 +109,7 @@ def get_organization_views(name, type='chart builder'):
                 resource_views = map(lambda p: _get_action('resource_view_list', {}, 
                                                           {'id': p['id']}), package['resources'])
                 if any(resource_views):
-                    # TODO: Fix string comparison
-                    map(lambda l: result.extend(filter(lambda i: i['view_type'] == type, l)), resource_views)
+                    map(lambda l: result.extend(filter(lambda i: i['view_type'].lower() == type, l)), resource_views)
                     
             elif type.lower() == 'maps':
                 result.extend(filter(lambda r: r['format'].lower() in ['geojson', 'gjson'], package['resources']))
