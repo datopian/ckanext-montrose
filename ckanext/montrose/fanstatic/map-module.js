@@ -4,7 +4,10 @@ ckan.module('montrose_map', function ($, _) {
   return {
     initialize: function () {
       
-      ckan.montrose.dashboardmap.init(this.options.id, this.options.countryname, this.options.mapurl);
+      ckan.montrose.dashboardmap.init(this.options.id,
+                                      this.options.countryname,
+                                      this.options.mapurl,
+                                      this.options.color);
     }
   }
 });

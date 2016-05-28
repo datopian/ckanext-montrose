@@ -4,11 +4,11 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
 
 (function (self, $) {
 
-  self.init = function init(elementId, countryName, mapURL) {
-    renderMap(elementId, countryName, mapURL);
+  self.init = function init(elementId, countryName, mapURL, color) {
+    renderMap(elementId, countryName, mapURL, color);
   };
 
-  function renderMap(elementId, countryName, mapURL) {
+  function renderMap(elementId, countryName, mapURL, color) {
     console.log(elementId);
     console.log(countryName);
     console.log(mapURL);
@@ -26,7 +26,7 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
     });
 
     function initLeaflet(elementId, lat, lng, zoom) {
-      var map = new L.Map(elementId, {scrollWheelZoom: false}).setView([lat, lng], zoom);
+      var map = new L.Map(elementId, {scrollWheelZoom: false, inertiaMaxSpeed: 200}).setView([lat, lng], zoom);
       var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
       var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
       var osm = new L.TileLayer(osmUrl, {
@@ -85,12 +85,15 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
         //map.fitBounds(geoL.getBounds());
 
         map.on('popupopen', function (e) {
-          var px = map.project(e.popup._latlng); // find the pixel location on the map where the popup anchor is
-          px.y -= e.popup._container.clientHeight / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
-          map.panTo(map.unproject(px), {animate: true}); // pan to new center
+          var px = map.project(e.popup._latlng);
+          map.setView(e.popup._latlng, 8, {animate: false});
+          px = map.project(e.popup._latlng);
+          px.y -= e.popup._container.clientHeight / 2;
+          map.panTo(map.unproject(px), {animate: true, duration: 1});
         });
 
         var select_dataset = $('#dataset');
+        $('.leaflet-popup-content-wrapper').css({'color': '#000'});
 
         select_dataset.append('<option>Select Data Set</option>');
         for (var elem in layers) {
@@ -106,14 +109,19 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
               }
             }
           }
-        )
+        );
 
         $('#map-info').removeClass('hidden');
 
-
       }).fail(function (data) {
+        console.log("GeoJSON could not be loaded");
       });
 
+      $(document).ready(function () {
+        console.log("ready");
+        $('.leaflet-control-zoom-in').css({'color': color});
+        $('.leaflet-control-zoom-out').css({'color': color});
+      });
     }
   }
 })(this.ckan.montrose.dashboardmap, this.jQuery);
