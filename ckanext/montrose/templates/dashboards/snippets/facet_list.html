@@ -42,7 +42,9 @@ within_tertiary
         <select class="form-control montrose-filters">
             {% block facet_list_items %}
                 {% with items = items or h.get_facet_items_dict(name.value) %}
-                    <option value="{{ h.remove_url_param(key=name.value) }}">{{ name.name }}</option>
+                    
+                    {% set extras={'name': c.name} %}
+                    <option value="{{ h.remove_url_param(key=name.value, controller=c.controller, action=c.action, extras=extras) }}">{{ name.name }}</option>
                     {% if items %}
                         {% for item in items %}
                             {% set href = h.montrose_replace_or_add_url_param(name.value, item.name) %}
