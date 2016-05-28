@@ -48,7 +48,7 @@ class DashboardsController(PackageController):
 
         from ckan.lib.search import SearchError
 
-        package_type = self._guess_package_type()
+        package_type = 'dataset'
 
         try:
             context = {'model': model, 'user': c.user or c.author,
@@ -221,8 +221,6 @@ class DashboardsController(PackageController):
         return plugins.toolkit.render('dashboards/index.html', extra_vars={'country': org,
                                                                            'dataset_type': package_type})
 
-    def _guess_package_type(self, expecting_name=False):
-        return 'dataset'
 
     def _get_resourceview_resource_package(self, resource_view_id):
         data_dict = {
