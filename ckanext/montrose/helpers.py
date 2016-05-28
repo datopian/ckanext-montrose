@@ -4,8 +4,16 @@ from ckan.common import OrderedDict, _, json, request, c, g, response
 from urllib import urlencode
 import ckan.lib.helpers as h
 import ckan.plugins as p
+import ckan.model as model
+
+from ckan.logic.validators import resource_id_exists, package_id_exists
 
 # TODO: Re-organize and re-factor helpers
+
+def _get_ctx():
+    return {'model': model, 
+            'session': model.Session,
+            'user': 'sysadmin'}
 
 def _get_action(action, context_dict, data_dict):
     return p.toolkit.get_action(action)(context_dict, data_dict)
@@ -58,6 +66,9 @@ def montrose_replace_or_add_url_param(name, value):
 
 
 def get_resourceview_resource_package(resource_view_id):
+    if not resource_view_id:
+        return None
+    
     data_dict = {
         'id': resource_view_id
     }
@@ -81,7 +92,7 @@ def organization_list():
                        'include_extras': True, 
                        'include_followers': True})
 
-def get_organization_views(name, type='Chart builder'):
+def get_organization_views(name, type='chart builder'):
     data = _get_action('organization_show',{},
                       {'id':name, 
                        'include_datasets': True})
@@ -94,7 +105,7 @@ def get_organization_views(name, type='Chart builder'):
             if not package['num_resources'] > 0:
                 continue
             
-            if type.lower() == 'chart builder':
+            if type == 'chart builder':
                 resource_views = map(lambda p: _get_action('resource_view_list', {}, 
                                                           {'id': p['id']}), package['resources'])
                 if any(resource_views):
@@ -122,10 +133,16 @@ def get_resource_views(package):
     
 
 def get_dataset_resource_views(package_id):
+    if not package_id_exists(package_id, _get_ctx()):
+        return []
+    
     dataset = _get_action('package_show', {}, {'id': package_id})
     return get_resource_views(dataset)
     
 def get_dataset_chart_resource_views(package_id):
+    if not package_id_exists(package_id, _get_ctx()):
+        return []
+    
     return filter(lambda i: i['view_type'] == 'Chart builder', 
                   get_dataset_resource_views(package_id))
     
@@ -157,5 +174,8 @@ class CountryViews(object):
 country_views = CountryViews()
 
 def montrose_get_resource_url(id):
+    if not resource_id_exists(id, _get_ctx()):
+        return None
+    
     data = _get_action('resource_show', {}, {'id': id})
     return data['url']
