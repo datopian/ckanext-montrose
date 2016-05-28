@@ -1,5 +1,6 @@
 {% import 'macros/form.html' as form %}
 {% resource 'montrose/jscolor' %}
+{% resource 'montrose/country.js' %}
 
 <form id='organization-edit-form' class="dataset-form form-horizontal" method="post" data-module="basic-form"
       enctype="multipart/form-data">
@@ -88,6 +89,13 @@
     {% if data %}
 
       {{ form.select('montrose_map', 'montrose_map', _('Choose dashboard map view'), options=h.get_org_map_views(data.id), selected=data.montrose_map) }}
+
+      <div class="control-group control-select montrose_map_main_property hidden">
+          <label class="control-label" for="montrose_map_main_property">Select map main property</label>
+          <div class="controls ">
+            <select id="montrose_map_main_property" name="montrose_map_main_property"></select>
+          </div>
+      </div>
 
       {{ form.select('montrose_chart_1', 'montrose_chart_1', _('Chart position 1'), options=h.get_org_chart_views(data.id), selected=data.montrose_chart_1) }}
       {{ form.input('montrose_chart_1_subheader', label=_('Chart 1 subheader'), id='montrose_chart_1_subheader', placeholder=_('Chart 1 subheader'), value=data.montrose_chart_1_subheader, error=errors.montrose_chart_1_subheader) }}
