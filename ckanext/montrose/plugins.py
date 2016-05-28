@@ -85,6 +85,7 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultDatasetForm):
 class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationForm):
 
     plugins.implements(plugins.IRoutes, inherit=True)
+    plugins.implements(plugins.IActions)
     plugins.implements(plugins.IGroupForm, inherit=True)
     plugins.implements(plugins.IConfigurer)
 
@@ -232,9 +233,30 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
             
         schema.update(charts)
         return schema
+    
+    ## IActions
+
+    def get_actions(self):
+
+        module_root = 'ckanext.montrose.logic.action'
+        action_functions = _get_logic_functions(module_root)
+
+        return action_functions
 
     # IConfigurer
     def update_config(self, config):
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_resource('fanstatic', 'montrose')
+        
+def _get_logic_functions(module_root, logic_functions = {}):
+    module = __import__(module_root)
+    for part in module_root.split('.')[1:]:
+        module = getattr(module, part)
+
+    for key, value in module.__dict__.items():
+        if not key.startswith('_') and  (hasattr(value, '__call__')
+                    and (value.__module__ == module_root)):
+            logic_functions[key] = value
+            
+    return logic_functions
         
