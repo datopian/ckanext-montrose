@@ -24,8 +24,8 @@ setup(
     url='https://github.com/keitaroinc/ckanext-montrose',
 
     # Author details
-    author='''Visar Zejnullahu''',
-    author_email='''visar.zejnullahu@gmail.com''',
+    author='''KeitaroInc''',
+    author_email=''' info@keitaro.info''',
 
     # Choose your license
     license='AGPL',
@@ -79,8 +79,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points='''
         [ckan.plugins]
-        montrose=ckanext.montrose.plugins:MontrosePlugin
-        montrose_country=ckanext.montrose.plugins:MontroseCountryPlugin
+        montrose=ckanext.montrose.plugin:MontrosePlugin
 	[babel.extractors]
 	ckan = ckan.lib.extract:extract_ckan
     ''',
