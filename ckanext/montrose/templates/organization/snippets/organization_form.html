@@ -87,7 +87,7 @@
 
     {% if data %}
 
-      {{ form.select('montrose_map', 'montrose_map', _('Choose dashboard map view'), options=h.get_org_map_views(data.id)) }}
+      {{ form.select('montrose_map', 'montrose_map', _('Choose dashboard map view'), options=h.get_org_map_views(data.id), selected=data.montrose_map) }}
 
       {{ form.select('montrose_chart_1', 'montrose_chart_1', _('Chart position 1'), options=h.get_org_chart_views(data.id), selected=data.montrose_chart_1) }}
       {{ form.input('montrose_chart_1_subheader', label=_('Chart 1 subheader'), id='montrose_chart_1_subheader', placeholder=_('Chart 1 subheader'), value=data.montrose_chart_1_subheader, error=errors.montrose_chart_1_subheader) }}
