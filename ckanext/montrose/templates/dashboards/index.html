@@ -78,29 +78,52 @@
     <main class="container">
         <div class="graphs">
           <div class="row">
-                {% snippet 'dashboards/snippets/show_charts.html', resource_view_id=country.montrose_chart_1,
-                                                                   subheader=country.montrose_chart_1_subheader %}
-                {% snippet 'dashboards/snippets/show_charts.html', resource_view_id=country.montrose_chart_2,
-                                                                   subheader=country.montrose_chart_2_subheader %}
-                {% snippet 'dashboards/snippets/show_charts.html', resource_view_id=country.montrose_chart_3,
-                                                                   subheader=country.montrose_chart_3_subheader %}
-
+            {% if country.montrose_chart_1 %}
+                {% snippet 'dashboards/snippets/show_charts.html', 
+                    resource_view_id=country.montrose_chart_1,
+                    subheader=country.montrose_chart_1_subheader 
+                %}
+            {% endif %}
+            {% if country.montrose_chart_2 %}
+                {% snippet 'dashboards/snippets/show_charts.html', 
+                    resource_view_id=country.montrose_chart_2,
+                    subheader=country.montrose_chart_2_subheader 
+                %}
+            {% endif %}
+            {% if country.montrose_chart_3 %}
+                {% snippet 'dashboards/snippets/show_charts.html', 
+                    resource_view_id=country.montrose_chart_3,
+                    subheader=country.montrose_chart_3_subheader 
+                %}
+            {% endif %}
               </div>
           <div class="row">
-                {% snippet 'dashboards/snippets/show_charts.html', resource_view_id=country.montrose_chart_4,
-                                                                   subheader=country.montrose_chart_4_subheader %}
-                {% snippet 'dashboards/snippets/show_charts.html', resource_view_id=country.montrose_chart_5,
-                                                                   subheader=country.montrose_chart_5_subheader %}
-                {% snippet 'dashboards/snippets/show_charts.html', resource_view_id=country.montrose_chart_6,
-                                                                   subheader=country.montrose_chart_6_subheader %}
+            {% if country.montrose_chart_4 %}
+                {% snippet 'dashboards/snippets/show_charts.html', 
+                    resource_view_id=country.montrose_chart_4,
+                    subheader=country.montrose_chart_4_subheader 
+                %}
+            {% endif %}
+            {% if country.montrose_chart_5 %}
+                {% snippet 'dashboards/snippets/show_charts.html', 
+                    resource_view_id=country.montrose_chart_5,
+                    subheader=country.montrose_chart_5_subheader 
+                %}
+            {% endif %}
+            {% if country.montrose_chart_6 %}
+                {% snippet 'dashboards/snippets/show_charts.html', 
+                    resource_view_id=country.montrose_chart_6,
+                    subheader=country.montrose_chart_6_subheader 
+                %}
+            {% endif %}
           </div>
         </div>
         <div class="new-data">
             <h2 class="data-block-heading">Newly Released Data</h2>
             <div class="data-block">
                 {{ h.snippet('dashboards/snippets/show_datasets.html',
-                                                                      packages=h.montrose_get_newly_released_data(),
-                                                                      datasets_group_name='newdata') }}
+                              packages=h.montrose_get_newly_released_data(),
+                              datasets_group_name='newdata') }}
             </div>
         </div>
 
