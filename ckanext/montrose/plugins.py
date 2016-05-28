@@ -103,23 +103,27 @@ class MontroseCountryPlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganiza
         
         org_controller = 'ckan.controllers.organization:OrganizationController'
         with SubMapper(map, controller=org_controller) as m:
-            # TODO: add route mappings
             m.connect('organization_index', '/country', action='index')
             m.connect('/country/list', action='list')
             m.connect('/country/new', action='new')
             m.connect('country_read', '/country/{id}', action='read')
             m.connect('country_activity', '/country/activity/{id}',
                       action='activity', ckan_icon='time')
-
             m.connect('country_edit', '/country/edit/{id}',
                       action='edit', ckan_icon='edit')
             
+        # Country controller routes
         ctrl = 'ckanext.montrose.controllers.country:CountryController'
-        map.connect('/country/datasets/{name}', controller=ctrl, action='show_resources')
-        map.connect('/country/show/datasets/{name}', controller=ctrl, action='show_resource_views')
-        map.connect('/country/show/chart_views/{name}', controller=ctrl, action='show_chart_views')
-        map.connect('/country/{name}/dashboard',
-                    controller='ckanext.montrose.controllers.dashboard:DashboardsController',
+        map.connect('/country/datasets/{name}', controller=ctrl, 
+                    action='show_resources')
+        map.connect('/country/show/datasets/{name}', controller=ctrl, 
+                    action='show_resource_views')
+        map.connect('/country/show/chart_views/{name}', controller=ctrl, 
+                    action='show_chart_views')
+        
+        # Dashboard controller routes
+        ctrl = 'ckanext.montrose.controllers.dashboard:DashboardsController'
+        map.connect('/country/{name}/dashboard', controller=ctrl, 
                     action='montrose_country_dashboard')
             
         return map
