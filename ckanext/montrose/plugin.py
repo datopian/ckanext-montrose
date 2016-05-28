@@ -111,6 +111,7 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
             'montrose_datasets_per_page': default_validators,
             'montrose_charts': default_validators,
             'montrose_map': default_validators,
+            'montrose_map_main_property': default_validators,
         })
         
         charts = {}
@@ -142,6 +143,7 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
             'montrose_datasets_per_page': default_validators,
             'montrose_charts': default_validators,
             'montrose_map': default_validators,
+            'montrose_map_main_property': default_validators,
             'num_followers': [_not_empty],
             'package_count': [_not_empty],
         })
@@ -180,10 +182,13 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
             'get_org_map_views': 
                 montrose_helpers.country_views.get_maps,
             'montrose_get_resource_url':
-                montrose_helpers.montrose_get_resource_url
+                montrose_helpers.montrose_get_resource_url,
+            'montrose_get_geojson_properties': 
+                montrose_helpers.montrose_get_geojson_properties
         }
         
-    # IConfigurer
+    ## IConfigurer
+    
     def update_config(self, config):
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_resource('fanstatic', 'montrose')

@@ -1,3 +1,5 @@
+import logging
+
 import ckan.plugins.toolkit as toolkit
 from datetime import datetime
 from ckan.common import OrderedDict, _, json, request, c, g, response
@@ -7,6 +9,8 @@ import ckan.plugins as p
 import ckan.model as model
 
 from ckan.logic.validators import resource_id_exists, package_id_exists
+
+log = logging.getLogger(__name__)
 
 # TODO: Re-organize and re-factor helpers
 
@@ -178,3 +182,20 @@ def montrose_get_resource_url(id):
     
     data = _get_action('resource_show', {}, {'id': id})
     return data['url']
+
+def montrose_get_geojson_properties(resource_id):
+    import urllib
+    
+    url = montrose_get_resource_url(resource_id)
+    r = urllib.urlopen(url)
+    
+    data = unicode(r.read(), errors='ignore')
+    geojson = json.loads(data)
+        
+    result = []
+    for k, v in geojson.get('features')[0].get('properties').iteritems():
+        result.append({'value':k, 'text': v})
+        
+    return result
+           
+        
