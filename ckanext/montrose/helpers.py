@@ -184,20 +184,13 @@ def montrose_get_resource_url(id):
     return data['url']
 
 def montrose_get_geojson_properties(resource_id):
-    from urllib.error import HTTPError, URLError
+    import urllib
     
     url = montrose_get_resource_url(resource_id)
-    try:
-        r = urllib.urlopen(url)
-    except (HTTPError, URLError) as e:
-        log.error(str(e))
-        return None
-        
-    try:
-        geojson = json.loads(r.read())
-    except ValueError:
-        log.error('Unable to decode geojson object')
-        return None
+    r = urllib.urlopen(url)
+    
+    data = unicode(r.read(), errors='ignore')
+    geojson = json.loads(data)
         
     result = []
     for k, v in geojson.get('features')[0].get('properties').iteritems():
