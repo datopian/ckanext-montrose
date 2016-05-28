@@ -7,7 +7,7 @@ from ckan import logic
 import ckan.plugins as p
 import ckan.lib.helpers as h
 
-from ckanext.montrose.helpers import _get_action 
+from ckanext.montrose.helpers import _get_action, montrose_get_geojson_properties
 
 log = logging.getLogger(__name__)
 
@@ -31,3 +31,7 @@ def montrose_resource_show_resource_views(context, data_dict):
     data = filter(lambda i: i['view_type'] == 'Chart builder', data)
     
     return data
+
+@p.toolkit.side_effect_free
+def montrose_resource_show_map_properties(context, data_dict):
+    return montrose_get_geojson_properties(data_dict['id'])
