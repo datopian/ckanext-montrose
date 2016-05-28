@@ -187,6 +187,7 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
     def update_config(self, config):
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_resource('fanstatic', 'montrose')
+        toolkit.add_public_directory(config, 'public')
         
 def _get_logic_functions(module_root, logic_functions = {}):
     module = __import__(module_root)
