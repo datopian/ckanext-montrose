@@ -63,13 +63,23 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
               headerText = document.createTextNode(feature.properties[mainField]),
               list = document.createElement("ul"),
               listElement,
-              listElementText;
+              listElementText,
+              boldElement,
+              boldElementText;
             header.appendChild(headerText);
             for (var info in feature.properties) {
-              listElementText = document.createTextNode(feature.properties[info]);
-              listElement = document.createElement("li");
-              listElement.appendChild(listElementText);
-              list.appendChild(listElement);
+              if (info != mainField) {
+                boldElementText = document.createTextNode(info + ': ');
+                boldElement = document.createElement("b");
+                boldElement.appendChild(boldElementText);
+
+                listElementText = document.createTextNode(feature.properties[info]);
+                listElement = document.createElement("li");
+                listElement.appendChild(boldElement);
+                listElement.appendChild(listElementText);
+                
+                list.appendChild(listElement);
+              }
             }
             popup.appendChild(header);
             popup.appendChild(list);
@@ -79,7 +89,7 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
           }
         }).addTo(map);
 
-        //map.fitBounds(geoL.getBounds());
+        map.fitBounds(geoL.getBounds());
 
         map.on('popupopen', function (e) {
           if (map._zoom == 10) {
