@@ -2,6 +2,44 @@
   <fieldset>
     <legend>{{ _('Chart') }} {{ n }}</legend>
 
+    {% if loop.index == 1 %}
+
+      {% set chart_subheader =  data.montrose_chart_1_subheader %}
+      {% set hidden_name = 'montrose_chart_1' %}
+      {% set hidden_value = data.montrose_chart_1 %}
+
+    {% elif loop.index == 2 %}
+
+      {% set chart_subheader =  data.montrose_chart_2_subheader %}
+      {% set hidden_name = 'montrose_chart_2' %}
+      {% set hidden_value = data.montrose_chart_2 %}
+
+    {% elif loop.index == 3 %}
+
+      {% set chart_subheader =  data.montrose_chart_3_subheader %}
+      {% set hidden_name = 'montrose_chart_3' %}
+      {% set hidden_value = data.montrose_chart_3 %}
+
+    {% elif loop.index == 4 %}
+
+      {% set chart_subheader =  data.montrose_chart_4_subheader %}
+      {% set hidden_name = 'montrose_chart_4' %}
+      {% set hidden_value = data.montrose_chart_4 %}
+
+    {% elif loop.index == 5 %}
+
+      {% set chart_subheader =  data.montrose_chart_5_subheader %}
+      {% set hidden_name = 'montrose_chart_5' %}
+      {% set hidden_value = data.montrose_chart_5 %}
+
+    {% elif loop.index ==  6 %}
+
+      {% set chart_subheader =  data.montrose_chart_6_subheader %}
+      {% set hidden_name = 'montrose_chart_6' %}
+      {% set hidden_value = data.montrose_chart_6 %}
+
+    {% endif %}
+
     {% set chart_number_key =  ['montrose_chart_', n]|join('') %}
 
     {% if data[chart_number_key] %}
@@ -27,6 +65,8 @@
        </button>
     {% endif %}
 
+    <input type="hidden" id="{{hidden_name}}" name="{{hidden_name}}" value="{{hidden_value}}"/>
+
     <div id="change_chart_{{ n }}" class="hidden">
       <div class="control-group control-select">
         <label class="control-label" for="chart_dataset_{{ n }}">Select dataset</label>
@@ -49,7 +89,7 @@
       <div class="control-group control-select chart_resourceview_{{ n }} hidden">
         <label class="control-label" for="chart_resourceview_{{ n }}">Select resource view</label>
         <div class="controls ">
-          <select id="chart_resourceview_{{ n }}" name="montrose_chart_{{ n }}">
+          <select id="chart_resourceview_{{ n }}" name="select_montrose_chart_{{ n }}">
             <option value="">Choose resource view</option>
           </select>
         </div>
@@ -58,7 +98,7 @@
       <div class="control-group ">
         <label class="control-label" for="montrose_chart_{{ n }}_subheader">Subheader</label>
         <div class="controls ">
-          <input id="montrose_chart_{{ n }}_subheader" name="montrose_chart_{{ n }}_subheader" value=""
+          <input id="montrose_chart_{{ n }}_subheader" name="montrose_chart_{{ n }}_subheader" value="{{chart_subheader}}"
                  placeholder="Enter chart subheader" type="text">
         </div>
       </div>

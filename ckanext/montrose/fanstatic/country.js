@@ -10,7 +10,6 @@
 		post: function(action, data, api_ver=3){
 					var base_url = ckan.sandbox().client.endpoint;
 					var url = base_url + '/api/' + api_ver + '/action/' + action;
-					console.log(url);
 					return $.post(url, JSON.stringify(data), "json");
 		}
 	};
@@ -35,13 +34,11 @@
 			  	var dataset_select_id = elem.attr('id');
 			  	var resource_select_id = dataset_select_id.replace('dataset', 'resource');
 			  	var resourceview_select_id = resource_select_id.replace('resource', 'resource_view');
-			  	console.log(resourceview_select_id);
 
 			  	// Empty all child selects
 			  	if ($('#'+resource_select_id+' option').length > 0)
 			  		$('#'+resource_select_id).find('option').not(':first').remove();
 
-			  	console.log('#' + resourceview_select_id + '_preview');
 			  	$('#' + resourceview_select_id + '_preview').empty();
 
 			  	// Fetch and populate resources drop down
@@ -94,14 +91,18 @@
 
 			  	var elem = $(this);
 			  	var resourceview_id = elem.find(":selected").val();
+
 			  	var resourceview_select_id = elem.attr('id');
+			  	var chart_nr = resourceview_select_id.substr(resourceview_select_id.lastIndexOf('_') + 1);
+
+			  	$('#montrose_chart_' + chart_nr).val(resourceview_id)
 
 				var base_url = ckan.sandbox().client.endpoint;
 			  	var src = base_url + '/dataset/' + dataset_name + '/resource/' + resource_id + '/view/' + resourceview_id;
 
 			  	ckan.sandbox().client.getTemplate('iframe.html', {source: src})
 			  	.done(function(data){
-					console.log(data);
+
 					$('#' + resourceview_select_id + '_preview').html();
 					$('#' + resourceview_select_id + '_preview').html(data);
 				});
