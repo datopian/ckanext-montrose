@@ -97,18 +97,49 @@
           </div>
       </div>
 
-      {{ form.select('montrose_chart_1', 'montrose_chart_1', _('Chart position 1'), options=h.get_org_chart_views(data.id), selected=data.montrose_chart_1) }}
-      {{ form.input('montrose_chart_1_subheader', label=_('Chart 1 subheader'), id='montrose_chart_1_subheader', placeholder=_('Chart 1 subheader'), value=data.montrose_chart_1_subheader, error=errors.montrose_chart_1_subheader) }}
-      {{ form.select('montrose_chart_2', 'montrose_chart_2', _('Chart position 2'), options=h.get_org_chart_views(data.id), selected=data.montrose_chart_2) }}
-      {{ form.input('montrose_chart_2_subheader', label=_('Chart 2 subheader'), id='montrose_chart_2_subheader', placeholder=_('Chart 2 subheader'), value=data.montrose_chart_2_subheader, error=errors.montrose_chart_2_subheader) }}
-      {{ form.select('montrose_chart_3', 'montrose_chart_3', _('Chart position 3'), options=h.get_org_chart_views(data.id), selected=data.montrose_chart_3) }}
-      {{ form.input('montrose_chart_3_subheader', label=_('Chart 3 subheader'), id='montrose_chart_3_subheader', placeholder=_('Chart 3 subheader'), value=data.montrose_chart_3_subheader, error=errors.montrose_chart_3_subheader) }}
-      {{ form.select('montrose_chart_4', 'montrose_chart_4', _('Chart position 4'), options=h.get_org_chart_views(data.id), selected=data.montrose_chart_4) }}
-      {{ form.input('montrose_chart_4_subheader', label=_('Chart 4 subheader'), id='montrose_chart_4_subheader', placeholder=_('Chart 4  subheader'), value=data.montrose_chart_4_subheader, error=errors.montrose_chart_4_subheader) }}
-      {{ form.select('montrose_chart_5', 'montrose_chart_5', _('Chart position 5'), options=h.get_org_chart_views(data.id), selected=data.montrose_chart_5) }}
-      {{ form.input('montrose_chart_5_subheader', label=_('Chart 5 subheader'), id='montrose_chart_5_subheader', placeholder=_('Chart 5 subheader'), value=data.montrose_chart_5_subheader, error=errors.montrose_chart_5_subheader) }}
-      {{ form.select('montrose_chart_6', 'montrose_chart_6', _('Chart position 6'), options=h.get_org_chart_views(data.id), selected=data.montrose_chart_6) }}
-      {{ form.input('montrose_chart_6_subheader', label=_('Chart 6 subheader'), id='montrose_chart_6_subheader', placeholder=_('Chart 6 subheader'), value=data.montrose_chart_6_subheader, error=errors.montrose_chart_6_subheader) }}
+      {% for n in range(1,7) %}
+        <fieldset>
+          <legend>{{ _('Chart') }} {{n}}</legend>
+
+          <div class="control-group control-select">
+              <label class="control-label" for="chart_dataset_{{n}}">Select dataset</label>
+              <div class="controls ">
+                <select id="chart_dataset_{{n}}">
+                  <option value="">Choose dataset</option>
+                </select>
+              </div>
+          </div>
+
+          <div class="control-group control-select chart_resource_{{n}} hidden">
+              <label class="control-label" for="chart_resource_{{n}}">Select resource</label>
+              <div class="controls ">
+                <select id="chart_resource_{{n}}">
+                  <option value="">Choose resource</option>
+                </select>
+              </div>
+          </div>
+
+          <div class="control-group control-select chart_resourceview_{{n}} hidden">
+              <label class="control-label" for="chart_resourceview_{{n}}">Select resource view</label>
+              <div class="controls ">
+                <select id="chart_resourceview_{{n}}" name="montrose_chart_{{n}}">
+                  <option value="">Choose resource view</option>
+                </select>
+              </div>
+          </div>
+
+          <div class="control-group ">
+              <label class="control-label" for="montrose_chart_{{n}}_subheader">Subheader</label>
+              <div class="controls ">
+                 <input id="montrose_chart_{{n}}_subheader" name="montrose_chart_{{n}}_subheader" value="" placeholder="Enter chart subheader" type="text">
+              </div>
+          </div>
+
+          <div id="chart_resourceview_{{n}}_preview"></div>
+
+        </fieldset>
+
+      {% endfor %}
 
     {% endif %}
     <!-- TODO: Create snippet for rendering chart input fields -->

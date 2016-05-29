@@ -50,7 +50,7 @@ def montrose_convert_time_format(package):
 
 def montrose_replace_or_add_url_param(name, value):
     params = request.params.items()
-    #params = set(params)
+    # params = set(params)
 
     for k, v in params:
         if k != name:
@@ -124,6 +124,11 @@ def get_organization_views(name, type='chart builder'):
             
     return result
 
+def get_resource_resource_views(resource_id, type='chart builder'):
+    result = filter(lambda rv: rv['view_type'].lower() == type, 
+                    _get_action('resource_view_list', {}, 
+                                {'id': resource_id}))
+    return result
 
 def get_resource_views(package):
     result = []
