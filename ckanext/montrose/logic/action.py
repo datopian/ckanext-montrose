@@ -7,7 +7,9 @@ from ckan import logic
 import ckan.plugins as p
 import ckan.lib.helpers as h
 
-from ckanext.montrose.helpers import _get_action, montrose_get_geojson_properties
+from ckanext.montrose.helpers import _get_action, montrose_get_geojson_properties,\
+                             get_resourceview_resource_package, montrose_get_resource_url,\
+                             get_resource_resource_views
 
 log = logging.getLogger(__name__)
 
@@ -34,4 +36,16 @@ def montrose_resource_show_resource_views(context, data_dict):
 
 @p.toolkit.side_effect_free
 def montrose_resource_show_map_properties(context, data_dict):
-    return montrose_get_geojson_properties(data_dict['id'])
+    return montrose_get_geojson_properties(data_dict.get('id'))
+
+@p.toolkit.side_effect_free
+def montrose_resource_show_resource_views(context, data_dict):
+    return get_resource_resource_views(data_dict.get('id'))
+
+@p.toolkit.side_effect_free
+def montrose_get_resourceview_resource_package(context, data_dict):
+    return get_resourceview_resource_package(data_dict.get('resource_view_id'))
+
+@p.toolkit.side_effect_free
+def montrose_show_resource_url(context, data_dict):
+    return montrose_get_resource_url(data_dict.get('id'))
