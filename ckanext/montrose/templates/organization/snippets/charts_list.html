@@ -2,108 +2,45 @@
   <fieldset>
     <legend>{{ _('Chart') }} {{ n }}</legend>
 
-    {% if loop.index == 1 %}
-
-      {% set chart_subheader =  data.montrose_chart_1_subheader %}
-      {% set hidden_name = 'montrose_chart_1' %}
-      {% set hidden_value = data.montrose_chart_1 %}
-
-    {% elif loop.index == 2 %}
-
-      {% set chart_subheader =  data.montrose_chart_2_subheader %}
-      {% set hidden_name = 'montrose_chart_2' %}
-      {% set hidden_value = data.montrose_chart_2 %}
-
-    {% elif loop.index == 3 %}
-
-      {% set chart_subheader =  data.montrose_chart_3_subheader %}
-      {% set hidden_name = 'montrose_chart_3' %}
-      {% set hidden_value = data.montrose_chart_3 %}
-
-    {% elif loop.index == 4 %}
-
-      {% set chart_subheader =  data.montrose_chart_4_subheader %}
-      {% set hidden_name = 'montrose_chart_4' %}
-      {% set hidden_value = data.montrose_chart_4 %}
-
-    {% elif loop.index == 5 %}
-
-      {% set chart_subheader =  data.montrose_chart_5_subheader %}
-      {% set hidden_name = 'montrose_chart_5' %}
-      {% set hidden_value = data.montrose_chart_5 %}
-
-    {% elif loop.index ==  6 %}
-
-      {% set chart_subheader =  data.montrose_chart_6_subheader %}
-      {% set hidden_name = 'montrose_chart_6' %}
-      {% set hidden_value = data.montrose_chart_6 %}
-
-    {% endif %}
-
     {% set chart_number_key =  ['montrose_chart_', n]|join('') %}
+    {% set chart_subheader_key =  ['montrose_chart_', n, '_subheader']|join('') %}
+    {% set chart_subheader = data[chart_subheader_key] %}
+    {% set hidden_value = data[chart_number_key] %}
 
     {% if data[chart_number_key] %}
       {% set chart = h.montrose_get_chart_resources(data[chart_number_key]) %}
-      {% set chart_subheader_key =  ['montrose_chart_', n, '_subheader']|join('') %}
       {% set dataset_name = chart[2].title %}
       {% set resource_name = chart[1].name %}
       {% set view_name = chart[0].title %}
 
-      <div class="graph-container"  id="chart_resourceview_{{ n }}_preview">
+      <div class="graph-container" id="chart_resourceview_{{ n }}_preview">
         <b>Dataset:</b> {{ dataset_name }} <br>
-        <b>Resource:</b> {% if resource_name  %}{{ chart[1].name }}{% else %}Unnamed resourcce{% endif %} <br>
+        <b>Resource:</b> {% if resource_name %}{{ chart[1].name }}{% else %}Unnamed resourcce{% endif %} <br>
         <b>View name:</b> {{ view_name }} <br>
+        <b>Subheader:</b> {{ chart_subheader }} <br>
+
         {% snippet 'dashboards/snippets/resource_view.html',
                          resource_view=chart[0],
                          resource=chart[1],
                          package=chart[2] %}
       </div>
 
-       <button type="button"
-               onclick="$('#change_chart_{{ n }}').removeClass('hidden'); $(this).addClass('hidden')">
-         Change
-       </button>
+      <button type="button"
+              onclick="$('#change_chart_{{ n }}').removeClass('hidden'); $(this).addClass('hidden')">
+        Change
+      </button>
+
+      {% snippet 'organization/snippets/charts_fields.html',
+                  n=n,
+                  class='hidden' %}
+
+    {% else %}
+      <div class="graph-container" id="chart_resourceview_{{ n }}_preview"></div>
+      {% snippet 'organization/snippets/charts_fields.html',
+                  n=n %}
     {% endif %}
 
-    <input type="hidden" id="{{hidden_name}}" name="{{hidden_name}}" value="{{hidden_value}}"/>
-
-    <div id="change_chart_{{ n }}" class="hidden">
-      <div class="control-group control-select">
-        <label class="control-label" for="chart_dataset_{{ n }}">Select dataset</label>
-        <div class="controls ">
-          <select id="chart_dataset_{{ n }}">
-            <option value="">Choose dataset</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="control-group control-select chart_resource_{{ n }} hidden">
-        <label class="control-label" for="chart_resource_{{ n }}">Select resource</label>
-        <div class="controls ">
-          <select id="chart_resource_{{ n }}">
-            <option value="">Choose resource</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="control-group control-select chart_resourceview_{{ n }} hidden">
-        <label class="control-label" for="chart_resourceview_{{ n }}">Select resource view</label>
-        <div class="controls ">
-          <select id="chart_resourceview_{{ n }}" name="select_montrose_chart_{{ n }}">
-            <option value="">Choose resource view</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="control-group ">
-        <label class="control-label" for="montrose_chart_{{ n }}_subheader">Subheader</label>
-        <div class="controls ">
-          <input id="montrose_chart_{{ n }}_subheader" name="montrose_chart_{{ n }}_subheader" value="{{chart_subheader}}"
-                 placeholder="Enter chart subheader" type="text">
-        </div>
-      </div>
-
-    </div>
+    <input type="hidden" id="{{ chart_number_key }}" name="{{ chart_number_key }}" value="{{ hidden_value }}"/>
 
   </fieldset>
 
