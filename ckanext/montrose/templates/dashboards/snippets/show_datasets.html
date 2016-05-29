@@ -59,16 +59,19 @@ Example:
                 {% endif %}
               </div>
               <div class="col-md-1">
-                  {% if resource.format == 'ODS' %}
-                    <a href="#"
-                           class="noclick btn btn-xs btn-success">{{ resource.format }}</a>
-                  {% elif resource.format == 'PDF' %}
-                    <a href="#"
-                           class="noclick btn btn-xs btn-warning">{{ resource.format }}</a>
-                  {% elif resource.format == 'GeoJSON' %}
-                    <a href="#"
-                           class="noclick btn btn-xs btn-primary">{{ resource.format }}</a>
-                  {% endif %}
+                {% if resource.format == 'ODS' %}
+                  <a href="{{ resource.url }}"
+                     class="noclick btn btn-xs btn-success">{{ resource.format }}</a>
+                {% elif resource.format == 'PDF' %}
+                  <a href="{{ resource.url }}"
+                     class="noclick btn btn-xs btn-warning">{{ resource.format }}</a>
+                {% elif resource.format == 'GeoJSON' %}
+                  <a href="{{ resource.url }}"
+                     class="noclick btn btn-xs btn-primary">{{ resource.format }}</a>
+                {% else %}
+                  <a href="{{ resource.url }}"
+                     class="noclick btn btn-xs btn-primary">{{ resource.format }}</a>
+                {% endif %}
               </div>
               <div class="col-md-7">
                 {% if resource.description %}
