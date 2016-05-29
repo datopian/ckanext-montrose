@@ -1,135 +1,164 @@
-(function(){
-	'use strict';
-	var api = {
-		get: function(action, params, api_ver=3){
-					var base_url = ckan.sandbox().client.endpoint;
-					params = $.param(params);
-					var url = base_url + '/api/' + api_ver + '/action/' + action + '?' + params;
-					return $.getJSON(url);
-		},
-		post: function(action, data, api_ver=3){
-					var base_url = ckan.sandbox().client.endpoint;
-					var url = base_url + '/api/' + api_ver + '/action/' + action;
-					return $.post(url, JSON.stringify(data), "json");
-		}
-	};
+(function () {
+  'use strict';
+  var api = {
+    get: function (action, params, api_ver=3) {
+      var base_url = ckan.sandbox().client.endpoint;
+      params = $.param(params);
+      var url = base_url + '/api/' + api_ver + '/action/' + action + '?' + params;
+      return $.getJSON(url);
+    },
+    post: function (action, data, api_ver=3) {
+      var base_url = ckan.sandbox().client.endpoint;
+      var url = base_url + '/api/' + api_ver + '/action/' + action;
+      return $.post(url, JSON.stringify(data), "json");
+    }
+  };
 
-	$(document).ready(function(){
-		var url = window.location.pathname;
-		var name = url.substr(url.lastIndexOf('/') + 1);
+  $(document).ready(function () {
+    var url = window.location.pathname;
+    var name = url.substr(url.lastIndexOf('/') + 1);
 
-		// Fetch and populate datasets dropdowns
+    // Fetch and populate datasets dropdowns
 
-		api.get('montrose_show_datasets', {id: name}).done(function(data){
-			var inputs = $('[id*=chart_dataset_]');
-			  $.each( data.result, function(idx, elem) {
-			    inputs.append(new Option(elem.title, elem.name));
-			});
+    api.get('montrose_show_datasets', {id: name}).done(function (data) {
+      var inputs = $('[id*=chart_dataset_]');
+      $.each(data.result, function (idx, elem) {
+        inputs.append(new Option(elem.title, elem.name));
+      });
 
-			// Dataset event handlers
-			var dataset_name;
-			inputs.on('change', function(){
-			  	var elem = $(this);
-			  	dataset_name = elem.find(":selected").val();
-			  	var dataset_select_id = elem.attr('id');
-			  	var resource_select_id = dataset_select_id.replace('dataset', 'resource');
-			  	var resourceview_select_id = resource_select_id.replace('resource', 'resource_view');
+      // Dataset event handlers
+      var dataset_name;
+      inputs.on('change', function () {
+        var elem = $(this);
+        dataset_name = elem.find(":selected").val();
+        var dataset_select_id = elem.attr('id');
+        var resource_select_id = dataset_select_id.replace('dataset', 'resource');
+        var resourceview_select_id = resource_select_id.replace('resource', 'resource_view');
 
-			  	// Empty all child selects
-			  	if ($('#'+resource_select_id+' option').length > 0)
-			  		$('#'+resource_select_id).find('option').not(':first').remove();
+        // Empty all child selects
+        if ($('#' + resource_select_id + ' option').length > 0)
+          $('#' + resource_select_id).find('option').not(':first').remove();
 
-			  	$('#' + resourceview_select_id + '_preview').empty();
+        $('#' + resourceview_select_id + '_preview').empty();
 
-			  	// Fetch and populate resources drop down
-			  	api.get('montrose_dataset_show_resources', {id: dataset_name}).done(
-			  		function(data){
-			  			
-			  			  var opts = $('#'+resource_select_id);
-						  $.each( data.result, function(idx, elem) {
-						    opts.append(new Option(elem.name, elem.id));
-						  });
+        // Fetch and populate resources drop down
+        api.get('montrose_dataset_show_resources', {id: dataset_name}).done(
+          function (data) {
 
-						  $('.'+resource_select_id).removeClass('hidden');
-				});
-			});
+            var opts = $('#' + resource_select_id);
+            $.each(data.result, function (idx, elem) {
+              opts.append(new Option(elem.name, elem.id));
+            });
 
-			// Resource event handlers
+            $('.' + resource_select_id).removeClass('hidden');
+          });
+      });
 
-			var resource_id;
-			var resource_inputs = $('[id*=chart_resource_]');
-			resource_inputs.on('change', function(){
+      // Resource event handlers
 
-			  	var elem = $(this);
-			  	resource_id = elem.find(":selected").val();
-			  	var resource_select_id = elem.attr('id');
-			  	var resourceview_select_id = resource_select_id.replace('resource', 'resourceview');
+      var resource_id;
+      var resource_inputs = $('[id*=chart_resource_]');
+      resource_inputs.on('change', function () {
 
-			  	if ($('#'+resourceview_select_id+' option').length > 0)
-			  		$('#'+resourceview_select_id).find('option').not(':first').remove();
+        var elem = $(this);
+        resource_id = elem.find(":selected").val();
+        var resource_select_id = elem.attr('id');
+        var resourceview_select_id = resource_select_id.replace('resource', 'resourceview');
 
-			  	$('#' + resourceview_select_id + '_preview').html();
+        if ($('#' + resourceview_select_id + ' option').length > 0)
+          $('#' + resourceview_select_id).find('option').not(':first').remove();
 
-			  	api.get('montrose_resource_show_resource_views', {id: resource_id}).done(
-			  		function(data){
+        $('#' + resourceview_select_id + '_preview').html();
 
-			  			var opts = $('#'+resourceview_select_id);
-						$.each( data.result, function(idx, elem) {
-						    opts.append(new Option(elem.title, elem.id));
-						});
+        api.get('montrose_resource_show_resource_views', {id: resource_id}).done(
+          function (data) {
 
-						$('.'+resourceview_select_id).removeClass('hidden');
-			  		});
-				});
+            var opts = $('#' + resourceview_select_id);
+            $.each(data.result, function (idx, elem) {
+              opts.append(new Option(elem.title, elem.id));
+            });
 
-
-
-			// Resource views event handlers
-
-			var resourceview_inputs = $('[id*=chart_resourceview_]');
-			resourceview_inputs.on('change', function(){
-
-			  	var elem = $(this);
-			  	var resourceview_id = elem.find(":selected").val();
-
-			  	var resourceview_select_id = elem.attr('id');
-			  	var chart_nr = resourceview_select_id.substr(resourceview_select_id.lastIndexOf('_') + 1);
-
-			  	$('#montrose_chart_' + chart_nr).val(resourceview_id)
-
-				var base_url = ckan.sandbox().client.endpoint;
-			  	var src = base_url + '/dataset/' + dataset_name + '/resource/' + resource_id + '/view/' + resourceview_id;
-
-			  	ckan.sandbox().client.getTemplate('iframe.html', {source: src})
-			  	.done(function(data){
-
-					$('#' + resourceview_select_id + '_preview').html();
-					$('#' + resourceview_select_id + '_preview').html(data);
-				});
-			});
-		});
+            $('.' + resourceview_select_id).removeClass('hidden');
+          });
+      });
 
 
-		// Map select event handler
+      // Resource views event handlers
 
-		$('#montrose_map').on('change', function(){
+      var resourceview_inputs = $('[id*=chart_resourceview_]');
+      resourceview_inputs.on('change', function () {
 
-		  	if ($('#montrose_map_main_property option').length > 0)
-		  		$('#montrose_map_main_property').empty();
+        var elem = $(this);
+        var resourceview_id = elem.find(":selected").val();
 
-			// Get resource id
-			var resource_id = $('#montrose_map option:selected').val();
-			var params = {id: resource_id};
-			api.get('montrose_resource_show_map_properties', params)
-			.done(function(data){
+        var resourceview_select_id = elem.attr('id');
+        var chart_nr = resourceview_select_id.substr(resourceview_select_id.lastIndexOf('_') + 1);
 
-	  			var opts = $('#montrose_map_main_property');
-				$.each( data.result, function(idx, elem) {
-				    opts.append(new Option(elem.text, elem.value));
-				});
-				$('.montrose_map_main_property').removeClass('hidden');
+        $('#montrose_chart_' + chart_nr).val(resourceview_id)
 
-			});
-		});
-	});
+        var base_url = ckan.sandbox().client.endpoint;
+        var src = base_url + '/dataset/' + dataset_name + '/resource/' + resource_id + '/view/' + resourceview_id;
+
+        ckan.sandbox().client.getTemplate('iframe.html', {source: src})
+          .done(function (data) {
+
+            $('#' + resourceview_select_id + '_preview').html();
+            $('#' + resourceview_select_id + '_preview').html(data);
+          });
+      });
+    });
+
+
+    // Map select event handler
+
+    $('#montrose_map').on('change', function () {
+
+      if ($('#montrose_map_main_property option').length > 0)
+        $('#montrose_map_main_property').empty();
+
+      // Get resource id
+      var resource_id = $('#montrose_map option:selected').val();
+      var params = {id: resource_id};
+      api.get('montrose_resource_show_map_properties', params)
+        .done(function (data) {
+
+          var opts = $('#montrose_map_main_property');
+          $.each(data.result, function (idx, elem) {
+            opts.append(new Option(elem.text, elem.value));
+          });
+          $('.montrose_map_main_property').removeClass('hidden');
+
+        });
+    });
+
+    //Base color change event handler
+    var secondary_element = $('#montrose_dashboard_secondary_color'),
+        lighter_color;
+    $('#montrose_dashboard_base_color').change(function () {
+      lighter_color = ColorLuminance('#' + this.value, 0.4);
+      secondary_element.val(lighter_color.substr(1));
+      secondary_element.css({'background-color': lighter_color});
+    });
+
+    function ColorLuminance(hex, lum) {
+
+      // validate hex string
+      hex = String(hex).replace(/[^0-9a-f]/gi, '');
+      if (hex.length < 6) {
+        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+      }
+      lum = lum || 0;
+
+      // convert to decimal and change luminosity
+      var rgb = "#", c, i;
+      for (i = 0; i < 3; i++) {
+        c = parseInt(hex.substr(i * 2, 2), 16);
+        c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+        rgb += ("00" + c).substr(c.length);
+      }
+
+      return rgb;
+    }
+
+  });
 })($);
