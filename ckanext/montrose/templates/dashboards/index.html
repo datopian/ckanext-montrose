@@ -3,7 +3,8 @@
 {% block styles %}
     {% resource 'montrose/main' %}
     {% resource 'montrose/map' %}
-    {% resource 'montrose/jqueryui' %}
+    {% resource 'montrose/vendor/jquery-1_12_3.js' %}
+    {% resource 'montrose/dashboard.js' %}
 {% endblock %}
 
 {%  set color = "#" + country.montrose_dashboard_base_color %}
@@ -128,7 +129,7 @@
             </div>
         </div>
 
-        <div class="all-data">
+        <div class="all-data" id="search-data">
             {% set facets = {
           'fields': c.fields_grouped,
           'search': c.search_facets,
@@ -209,24 +210,4 @@
             <div class="copyright">© {{ country.montrose_country_copyright }}</div>
         </div>
     </footer>
-
-    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
-    <script>
-        $(function () {
-            // bind change event to select
-            $('.montrose-filters').on('change', function () {
-                var url = $(this).val(); // get selected value
-                if (url) { // require a URL
-                    window.location = url; // redirect
-                }
-                return false;
-            });
-        });
-
-        function toggleResources(resourceId) {
-          $('#' + resourceId).toggleClass('hidden');
-        }
-
-    </script>
-
 {% endblock %}
