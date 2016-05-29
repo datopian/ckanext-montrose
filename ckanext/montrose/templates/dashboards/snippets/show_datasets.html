@@ -13,7 +13,6 @@ Example:
   {% snippet 'snippets/package_list.html', packages=c.datasets, datasets_group_name='new_data' %}
 
 #}
-
 {% set truncate = truncate or 300 %}
 {% set truncate_title = truncate_title or 150 %}
 {% set datasets_group_name = datasets_group_name or 'anonymous' %}
@@ -27,7 +26,8 @@ Example:
         <div class="col-md-4">
           <h4 class="data-set-title">
             <a href="#"
-               onclick="toggleResources('{{ datasets_group_name }}-resources-{{ package.id }}'); return false;">
+               onclick="toggleResources('{{ datasets_group_name }}-resources-{{ package.id }}'); return false;"
+               style="color: {{ color }}">
               {{ package.title }}
             </a>
           </h4>
