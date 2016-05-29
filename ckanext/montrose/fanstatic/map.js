@@ -82,11 +82,13 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
         //map.fitBounds(geoL.getBounds());
 
         map.on('popupopen', function (e) {
-          var px = map.project(e.popup._latlng);
-          map.setView(e.popup._latlng, 8, {animate: false});
-          px = map.project(e.popup._latlng);
-          px.y -= e.popup._container.clientHeight / 2;
-          map.panTo(map.unproject(px), {animate: true, duration: 1});
+          if (map._zoom == 10) {
+            var px = map.project(e.popup._latlng, 10);
+            px.y -= e.popup._container.clientHeight / 2;
+            map.flyTo(map.unproject(px), 10, {animate: true, duration: 1});
+          } else {
+            map.flyTo(e.popup._latlng, 10, {animate: true, duration: 1})
+          }
           $('.leaflet-popup-content-wrapper').css({'border-top': '5px solid ' + color});
         });
 

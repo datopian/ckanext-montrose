@@ -6904,7 +6904,8 @@ button.close {
 #hero_map {
     border: 0;
     width: 100%;
-    min-height: 100vh
+    min-height: 100vh;
+    z-index: 1;
 }
 
 @media (min-width: 992px) {
