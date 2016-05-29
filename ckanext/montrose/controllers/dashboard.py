@@ -220,6 +220,10 @@ class DashboardsController(PackageController):
 
         return plugins.toolkit.render('dashboards/index.html', extra_vars={'country': org,
                                                                            'dataset_type': package_type})
+        
+    def montrose_render_tpl(self, name, extra_vars=None):
+        from ckan.lib.base import render_jinja2
+        return render_jinja2(name, extra_vars)
 
 
     def _get_resourceview_resource_package(self, resource_view_id):
