@@ -55,10 +55,14 @@
     {% endfor %}
   {% endblock %}
 
-  {{ form.required_message() }}
-
   <fieldset>
-    <legend><h2>{{ _('Dashboard settings') }}</h2></legend>
+    <legend><h2>{{ _('Dashboard settings') }}<a class="btn btn-info pull-right"
+                                                target="_blank"
+                                                href="{% url_for controller='ckanext.montrose.controllers.dashboard:DashboardsController',
+                                                                 action='montrose_country_dashboard',
+                                                                 name=data.name%}" >
+                                                    View Dashboard
+                                                    </a></h2></legend>
 
     {{ form.select('montrose_dashboard_is_active', 'montrose_dashboard_is_active', _('Is dashboard active?'), options=[{'value': '1', 'text': 'Yes'}, {'value': '0', 'text': 'No'}], selected=data.montrose_dashboard_is_active) }}
 
