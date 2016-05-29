@@ -112,6 +112,9 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
             'montrose_charts': default_validators,
             'montrose_map': default_validators,
             'montrose_map_main_property': default_validators,
+            'montrose_main_color': default_validators,
+            'montrose_new_data_color': default_validators,
+            'montrose_all_data_color': default_validators,
         })
         
         charts = {}
@@ -144,6 +147,9 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
             'montrose_charts': default_validators,
             'montrose_map': default_validators,
             'montrose_map_main_property': default_validators,
+            'montrose_main_color': default_validators,
+            'montrose_new_data_color': default_validators,
+            'montrose_all_data_color': default_validators,
             'num_followers': [_not_empty],
             'package_count': [_not_empty],
         })

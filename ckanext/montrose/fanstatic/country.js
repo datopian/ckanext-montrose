@@ -107,5 +107,28 @@
 				});
 			});
 		});
+
+
+		// Map select event handler
+
+		$('#montrose_map').on('change', function(){
+
+		  	if ($('#montrose_map_main_property option').length > 0)
+		  		$('#montrose_map_main_property').empty();
+
+			// Get resource id
+			var resource_id = $('#montrose_map option:selected').val();
+			var params = {id: resource_id};
+			api.get('montrose_resource_show_map_properties', params)
+			.done(function(data){
+
+	  			var opts = $('#montrose_map_main_property');
+				$.each( data.result, function(idx, elem) {
+				    opts.append(new Option(elem.text, elem.value));
+				});
+				$('.montrose_map_main_property').removeClass('hidden');
+
+			});
+		});
 	});
 })($);

@@ -64,29 +64,23 @@
 
     {{ form.select('montrose_lang_is_active', 'montrose_lang_is_active', _('Show language selector'), options=[{'value': '1', 'text': 'Yes'}, {'value': '0', 'text': 'No'}], selected=data.montrose_lang_is_active) }}
 
+    {{ form.select('montrose_datasets_per_page', 'montrose_datasets_per_page', _('Datasets per page'), options=[
+    {'value': '5', 'text': '5'}, {'value': '10', 'text': '10'},
+    {'value': '15', 'text': '15'}, {'value': '#20', 'text': '20'},
+    {'value': '25', 'text': '25'}, {'value': '50', 'text': '50'}], selected=data.montrose_datasets_per_page) }}
+
     {{ form.markdown('montrose_country_header', label=_('Dashboard header'), id='montrose_country_header', placeholder=_('Set the dashboard header text'), value=data.montrose_country_header, error=errors.montrose_country_header) }}
 
     {{ form.markdown('montrose_country_footer', label=_('Dashboard footer'), id='montrose_country_footer', placeholder=_('Set the dashboard footer'), value=data.montrose_country_footer, error=errors.montrose_country_footer) }}
 
     {{ form.markdown('montrose_country_copyright', label=_('Dashboard copyright'), id='montrose_country_copyright', placeholder=_('Set the dashboard copyright'), value=data.montrose_country_copyright, error=errors.montrose_country_copyright) }}
 
-    <div class="control-group control-full">
-      <label class="control-label" for="montrose_dashboard_base_color">Dashboard base color</label>
-      <div class="controls ">
-        <input id="montrose_dashboard_base_color" name="montrose_dashboard_base_color" class="jscolor"
-               value="{{ data.montrose_dashboard_base_color }}">
-      </div>
-    </div>
-
-    {{ form.select('montrose_datasets_per_page', 'montrose_datasets_per_page', _('Datasets per page'), options=[
-    {'value': '5', 'text': '5'}, {'value': '10', 'text': '10'},
-    {'value': '15', 'text': '15'}, {'value': '#20', 'text': '20'},
-    {'value': '25', 'text': '25'}, {'value': '50', 'text': '50'}], selected=data.montrose_datasets_per_page) }}
-
-
-    <!-- TODO: Create snippet for rendering chart input fields -->
-
     {% if data %}
+
+    {% snippet 'organization/snippets/colors.html', data=data %}
+
+    <fieldset>
+    <legend>{{_('Map options')}} </legend>
 
       {{ form.select('montrose_map', 'montrose_map', _('Choose dashboard map view'), options=h.get_org_map_views(data.id), selected=data.montrose_map) }}
 
@@ -97,10 +91,12 @@
           </div>
       </div>
 
+    </fieldset>
+
+
       {% snippet 'organization/snippets/charts_list.html' %}
 
     {% endif %}
-    <!-- TODO: Create snippet for rendering chart input fields -->
 
   </fieldset>
 
