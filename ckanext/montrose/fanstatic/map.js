@@ -9,9 +9,6 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
   };
 
   function renderMap(elementId, countryName, mapURL, color) {
-    console.log(elementId);
-    console.log(countryName);
-    console.log(mapURL);
     var mainField = "Company Name";
     $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' + encodeURI(countryName)).done(function (data) {
       if (data['status'] == 'ZERO_RESULTS') {
@@ -90,10 +87,10 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
           px = map.project(e.popup._latlng);
           px.y -= e.popup._container.clientHeight / 2;
           map.panTo(map.unproject(px), {animate: true, duration: 1});
+          $('.leaflet-popup-content-wrapper').css({'border-top': '5px solid ' + color});
         });
 
         var select_dataset = $('#dataset');
-        $('.leaflet-popup-content-wrapper').css({'color': '#000'});
 
         select_dataset.append('<option>Select Data Set</option>');
         for (var elem in layers) {
@@ -118,7 +115,6 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
       });
 
       $(document).ready(function () {
-        console.log("ready");
         $('.leaflet-control-zoom-in').css({'color': color});
         $('.leaflet-control-zoom-out').css({'color': color});
       });
