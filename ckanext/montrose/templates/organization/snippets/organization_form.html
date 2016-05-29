@@ -58,7 +58,7 @@
   {{ form.required_message() }}
 
   <fieldset>
-    <legend>{{ _('Dashboard fields') }}</legend>
+    <legend><h2>{{ _('Dashboard settings') }}</h2></legend>
 
     {{ form.select('montrose_dashboard_is_active', 'montrose_dashboard_is_active', _('Is dashboard active?'), options=[{'value': '1', 'text': 'Yes'}, {'value': '0', 'text': 'No'}], selected=data.montrose_dashboard_is_active) }}
 
