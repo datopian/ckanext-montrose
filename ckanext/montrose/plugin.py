@@ -43,6 +43,31 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
             m.connect('country_edit', '/country/edit/{id}',
                       action='edit', ckan_icon='edit')
             
+            m.connect('/country/{action}/{id}',
+                      requirements=dict(action='|'.join([
+                          'delete',
+                          'admins',
+                          'member_new',
+                          'member_delete',
+                          'history'
+                          'followers',
+                          'follow',
+                          'unfollow',
+                      ])))
+            m.connect('country_activity', '/country/activity/{id}',
+                      action='activity', ckan_icon='time')
+            m.connect('country_read', '/country/{id}', action='read')
+            m.connect('country_about', '/country/about/{id}',
+                      action='about', ckan_icon='info-sign')
+            m.connect('country_read', '/country/{id}', action='read',
+                      ckan_icon='sitemap')
+
+            m.connect('country_members', '/country/members/{id}',
+                      action='members', ckan_icon='group')
+            m.connect('country_bulk_process',
+                      '/country/bulk_process/{id}',
+                      action='bulk_process', ckan_icon='sitemap')
+            
         # Define dashboard controller routes
         
         ctrl = 'ckanext.montrose.controllers.dashboard:DashboardsController'
