@@ -1,0 +1,44 @@
+{% for n in range(1,7) %}
+  <fieldset>
+    <legend>{{ _('Chart') }} {{ n }}</legend>
+
+    <div class="control-group control-select">
+      <label class="control-label" for="chart_dataset_{{ n }}">Select dataset</label>
+      <div class="controls ">
+        <select id="chart_dataset_{{ n }}">
+          <option value="">Choose dataset</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="control-group control-select chart_resource_{{ n }} hidden">
+      <label class="control-label" for="chart_resource_{{ n }}">Select resource</label>
+      <div class="controls ">
+        <select id="chart_resource_{{ n }}">
+          <option value="">Choose resource</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="control-group control-select chart_resourceview_{{ n }} hidden">
+      <label class="control-label" for="chart_resourceview_{{ n }}">Select resource view</label>
+      <div class="controls ">
+        <select id="chart_resourceview_{{ n }}" name="montrose_chart_{{ n }}">
+          <option value="">Choose resource view</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="control-group ">
+      <label class="control-label" for="montrose_chart_{{ n }}_subheader">Subheader</label>
+      <div class="controls ">
+        <input id="montrose_chart_{{ n }}_subheader" name="montrose_chart_{{ n }}_subheader" value=""
+               placeholder="Enter chart subheader" type="text">
+      </div>
+    </div>
+
+    <div id="chart_resourceview_{{ n }}_preview"></div>
+
+  </fieldset>
+
+{% endfor %}
