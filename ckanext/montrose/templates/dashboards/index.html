@@ -72,10 +72,13 @@
               <h2 class="hero-country-title" style="border-left: 5px solid {{ base_color }}; border-right: 5px solid {{ base_color }}; color: {{ base_color }}">{{ country.display_name }}</h2>
           </div>
       </div>
+      {% if country.montrose_map %}
+        {% set geojsonurl = h.montrose_get_resource_url(country.montrose_map) %}
+      {% endif %}
       <div
               data-module="montrose_map"
               data-module-id="hero_map"
-              data-module-mapurl="{{ h.montrose_get_resource_url(country.montrose_map) }}"
+              data-module-mapurl="{{ geojsonurl }}"
               data-module-countryname="{{ country.display_name }}"
               data-module-color="{{ base_color }}"
               id="hero_map"
