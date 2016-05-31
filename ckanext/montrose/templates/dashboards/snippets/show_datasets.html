@@ -89,6 +89,43 @@ Example:
             </div>
           </div>
         {% endif %}
+        <div class="data-block-header">
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Additional information</h5>
+            </div>
+          </div>
+          {% if package.author %}
+            <div class="row">
+              <div class="col-md-1">
+                <strong>Author:</strong>
+              </div>
+              <div class="col-md-8 additional-information">
+                {{ package.author }}
+              </div>
+            </div>
+          {% endif %}
+          {% if package.url %}
+            <div class="row">
+              <div class="col-md-1">
+                <strong>Source:</strong>
+              </div>
+              <div class="col-md-8 additional-information">
+                <a href="package.url">{{ package.url }}</a>
+              </div>
+            </div>
+          {% endif %}
+          {% if package.license_title %}
+            <div class="row">
+              <div class="col-md-1">
+                <strong>License:</strong>
+              </div>
+              <div class="col-md-8 additional-information">
+                <a href="{{ package.license_url }}">{{ package.license_title }}</a>
+              </div>
+            </div>
+          {% endif %}
+        </div>
       </div>
     </article>
   {% endfor %}
