@@ -146,7 +146,7 @@
                      {"value": "tags", "name": "Tags"},
                      {"value": "res_format", "name": "Resource Format"},
                      {"value": "license_id", "name": "Licenses"},
-                     {"value": "organization", "name": "Organizations"},],
+                     {"value": "author", "name": "Authors"},],
           'translated_fields': c.translated_fields,
           'remove_field': c.remove_field } %}
             {% set sorting = [
@@ -173,9 +173,7 @@
                         <h3 class="data-block-heading">Filter Data by:</h3>
                     </div>
                     {% for facet in facets.titles %}
-                        {{ h.snippet('dashboards/snippets/facet_list.html',
-                                                                           title=c.facet_titles[facet],
-                                                                           name=facet) }}
+                        {{ h.snippet('dashboards/snippets/facet_list.html', name=facet) }}
                     {% endfor %}
                 </div>
             </div>

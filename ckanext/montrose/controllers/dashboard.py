@@ -165,6 +165,9 @@ class DashboardsController(PackageController):
                 else:
                     facets[facet] = facet
 
+            # Add 'author' facet
+            facets['author'] = _('Authors')
+
             # Facet titles
             for plugin in p.PluginImplementations(p.IFacets):
                 facets = plugin.dataset_facets(facets, package_type)
