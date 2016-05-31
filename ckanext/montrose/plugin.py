@@ -14,6 +14,7 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
     
     plugins.implements(plugins.IRoutes, inherit=True)
     plugins.implements(plugins.IActions)
+    plugins.implements(plugins.IGroupForm, inherit=True)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IFacets, inherit=True)
@@ -22,46 +23,55 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
 
     def before_map(self, map):
 
-        map.redirect('/organization/{url:.*}', '/country/{url}',
-                     _redirect_code='301 Moved Permanently')
         map.redirect('/organization', '/country',
                      _redirect_code='301 Moved Permanently')
+        map.redirect('/organization/{url:.*}', '/country/{url}',
+                     _redirect_code='301 Moved Permanently')
         
-        org_controller = 'ckan.controllers.organization:OrganizationController'
-        with SubMapper(map, controller=org_controller) as m:
-            m.connect('organization_index', '/country', action='index')
-            m.connect('/country/list', action='list')
-            m.connect('/country/new', action='new')
-            m.connect('country_read', '/country/{id}', action='read')
-            m.connect('country_activity', '/country/activity/{id}',
-                      action='activity', ckan_icon='time')
-            m.connect('country_edit', '/country/edit/{id}',
-                      action='edit', ckan_icon='edit')
-            
-            m.connect('/country/{action}/{id}',
-                      requirements=dict(action='|'.join([
-                          'delete',
-                          'admins',
-                          'member_new',
-                          'member_delete',
-                          'history'
-                          'followers',
-                          'follow',
-                          'unfollow',
-                      ])))
-            m.connect('country_activity', '/country/activity/{id}',
-                      action='activity', ckan_icon='time')
-            m.connect('country_read', '/country/{id}', action='read')
-            m.connect('country_about', '/country/about/{id}',
-                      action='about', ckan_icon='info-sign')
-            m.connect('country_read', '/country/{id}', action='read',
-                      ckan_icon='sitemap')
+        map.redirect('/group', '/theme',
+                     _redirect_code='301 Moved Permanently')
+        map.redirect('/group/{url:.*}', '/theme/{url}',
+                     _redirect_code='301 Moved Permanently')
 
-            m.connect('country_members', '/country/members/{id}',
-                      action='members', ckan_icon='group')
-            m.connect('country_bulk_process',
-                      '/country/bulk_process/{id}',
-                      action='bulk_process', ckan_icon='sitemap')
+        
+        ctrls = ['ckanext.montrose.controllers.country:CountryController', 
+                 'ckanext.montrose.controllers.theme:ThemeController']
+        keys = ['country', 'theme']
+        for ctrl, v in zip(ctrls, keys):
+            with SubMapper(map, controller=ctrl) as m:
+                m.connect('%s_index' % v, '/{}'.format(v), action='index')
+                m.connect('/{}/list'.format(v), action='list')
+                m.connect('/{}/new'.format(v), action='new')
+                m.connect('{}_read'.format(v), '/%s/{id}' % v, action='read')
+                m.connect('{}_edit'.format(v), '/%s/edit/{id}' % v,
+                          action='edit', ckan_icon='edit')
+                
+                m.connect('/%s/{action}/{id}' % v,
+                          requirements=dict(action='|'.join([
+                              'delete',
+                              'admins',
+                              'member_new',
+                              'member_delete',
+                              'history'
+                              'followers',
+                              'follow',
+                              'unfollow',
+                          ])))
+                
+                m.connect('{}_activity'.format(v), '/%s/activity/{id}' % v,
+                          action='activity', ckan_icon='time')
+                m.connect('{}_read'.format(v), '/%s/{id}' % v, action='read')
+                m.connect('{}_about'.format(v), '/%s/about/{id}' % v,
+                          action='about', ckan_icon='info-sign')
+                m.connect('{}_read'.format(v), '/%s/{id}' % v, action='read',
+                          ckan_icon='sitemap')
+    
+                m.connect('{}_members'.format(v), '/%s/members/{id}' % v,
+                          action='members', ckan_icon='group')
+                m.connect('{}_bulk_process'.format(v),
+                          '/%s/bulk_process/{id}' % v,
+                          action='bulk_process', ckan_icon='sitemap')
+
             
         # Define dashboard controller routes
         
@@ -70,6 +80,14 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
                     action='montrose_country_dashboard')
             
         return map
+
+    ## IGroupForm
+
+    def is_fallback(self):
+        return False
+    
+    def group_types(self):
+        return ['organization']
 
     def form_to_db_schema_options(self, options):
         ''' This allows us to select different schemas for different
