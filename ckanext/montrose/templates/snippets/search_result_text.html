@@ -1,0 +1,33 @@
+
+{% if type == 'dataset' %}
+  {% set text_query = ungettext('{number} dataset found for "{query}"', '{number} datasets found for "{query}"', count) %}
+  {% set text_query_none = _('No datasets found for "{query}"') %}
+  {% set text_no_query = ungettext('{number} dataset found', '{number} datasets found', count) %}
+  {% set text_no_query_none = _('No datasets found') %}
+
+{% elif type == 'group' %}
+  {% set text_query = ungettext('{number} theme found for "{query}"', '{number} themes found for "{query}"', count) %}
+  {% set text_query_none = _('No themes found for "{query}"') %}
+  {% set text_no_query = ungettext('{number} theme found', '{number} themes found', count) %}
+  {% set text_no_query_none = _('No themes found') %}
+
+{% elif type == 'organization' %}
+  {% set text_query = ungettext('{number} country found for "{query}"', '{number} countries found for "{query}"', count) %}
+  {% set text_query_none = _('No countries found for "{query}"') %}
+  {% set text_no_query = ungettext('{number} country found', '{number} countries found', count) %}
+  {% set text_no_query_none = _('No country found') %}
+{%- endif -%}
+
+{% if query %}
+  {%- if count -%}
+    {{ text_query.format(number=h.localised_number(count), query=query) }}
+  {%- else -%}
+    {{ text_query_none.format(query=query) }}
+  {%- endif -%}
+{%- else -%}
+  {%- if count -%}
+    {{ text_no_query.format(number=h.localised_number(count)) }}
+  {%- else -%}
+    {{ text_no_query_none }}
+  {%- endif -%}
+{%- endif -%}

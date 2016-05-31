@@ -1,0 +1,15 @@
+{% ckan_extends %}
+
+{% block page_primary_action %}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li>{{ h.nav_link(_('Themes'), controller='group', action='index') }}</li>
+  <li class="active">Create a theme</li>
+{% endblock %}
+
+{% block primary_content_inner %}
+  <h1 class="{% block page_heading_class %}page-heading{% endblock %}">Create a theme</h1>
+  {% block form %}
+    {{ c.form | safe }}
+  {% endblock %}
+{% endblock %}
