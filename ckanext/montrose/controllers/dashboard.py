@@ -174,6 +174,8 @@ class DashboardsController(PackageController):
 
             c.facet_titles = facets
 
+            fq += ' +organization:"{}"'.format(name)
+
             data_dict = {
                 'q': q,
                 'fq': fq.strip(),

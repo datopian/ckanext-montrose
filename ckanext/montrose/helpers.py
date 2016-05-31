@@ -25,8 +25,9 @@ def _get_action(action, context_dict, data_dict):
 def montrose_get_newly_released_data(limit=4):
     try:
         pkg_search_results = toolkit.get_action('package_search')(data_dict={
+            'fq': ' organization:{}'.format(c.name),
             'sort': 'metadata_modified desc',
-            'rows': limit,
+            'rows': limit
         })['results']
 
     except toolkit.ValidationError, search.SearchError:
