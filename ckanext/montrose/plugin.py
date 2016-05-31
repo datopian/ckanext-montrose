@@ -14,7 +14,6 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
     
     plugins.implements(plugins.IRoutes, inherit=True)
     plugins.implements(plugins.IActions)
-    plugins.implements(plugins.IGroupForm, inherit=True)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IFacets, inherit=True)
@@ -23,10 +22,6 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
 
     def before_map(self, map):
 
-        map.redirect('/group/{url:.*}', '/country/{url}',
-                     _redirect_code='301 Moved Permanently')
-        map.redirect('/group', '/country',
-                     _redirect_code='301 Moved Permanently')
         map.redirect('/organization/{url:.*}', '/country/{url}',
                      _redirect_code='301 Moved Permanently')
         map.redirect('/organization', '/country',
@@ -75,14 +70,6 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
                     action='montrose_country_dashboard')
             
         return map
-
-    ## IGroupForm
-
-    def is_fallback(self):
-        return True
-    
-    def group_types(self):
-        return ['organization']
 
     def form_to_db_schema_options(self, options):
         ''' This allows us to select different schemas for different
