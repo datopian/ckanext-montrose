@@ -17,7 +17,7 @@
     {% set domain = h.url_for(controller='organization', action='read', id='', qualified=true) %}
     {% set domain = domain|replace("http://", "")|replace("https://", "") %}
     {% set domain = domain|replace("/organization/", "/country/") %}
-    {% set attrs = {'data-module': 'slug-preview-slug', 'data-module-prefix': domain, 'data-module-placeholder': '<organization>'} %}
+    {% set attrs = {'data-module': 'slug-preview-slug', 'data-module-prefix': domain, 'data-module-placeholder': '<country>'} %}
 
     {{ form.prepend('name', label=_('URL'), prepend='country', id='field-url', placeholder=_('my-organization'), value=data.name, error=errors.name, attrs=attrs, is_required=true) }}
 
