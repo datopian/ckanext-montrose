@@ -7,7 +7,8 @@ ckan.module('montrose_map', function ($, _) {
       ckan.montrose.dashboardmap.init(this.options.id,
                                       this.options.countryname,
                                       this.options.mapurl,
-                                      this.options.color);
+                                      this.options.color,
+                                      this.options.main_property);
     }
   }
 });

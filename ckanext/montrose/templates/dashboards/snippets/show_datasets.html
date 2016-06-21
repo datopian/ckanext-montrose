@@ -53,12 +53,12 @@ Example:
             <div class="row">
               <div class="col-md-4 resources-dropdown-name">
                 {% if resource.name %}
-                  <p>&#8226; <a href="{{ resource.url }}">{{ resource.name }}</a></p>
+                  <h5 class="resources-title"><a href="{{ resource.url }}">{{ resource.name }}</a></h5>
                 {% else %}
-                  <p>&#8226; <a href="{{ resource.url }}">Unnamed resource</a></p>
+                  <h5 class="resources-title"><a href="{{ resource.url }}">Unnamed resource</a></h5>
                 {% endif %}
               </div>
-              <div class="col-md-1">
+              <div class="col-md-2">
                 {% if resource.format == 'ODS' %}
                   <a href="{{ resource.url }}"
                      class="noclick btn btn-xs btn-success">{{ resource.format }}</a>
@@ -73,7 +73,7 @@ Example:
                      class="noclick btn btn-xs btn-primary">{{ resource.format }}</a>
                 {% endif %}
               </div>
-              <div class="col-md-7">
+              <div class="col-md-6">
                 {% if resource.description %}
                   <p>{{ resource.description }}</p>
                 {% else %}

@@ -80,7 +80,7 @@
 
     {{ form.markdown('montrose_country_copyright', label=_('Dashboard copyright'), id='montrose_country_copyright', placeholder=_('Set the dashboard copyright'), value=data.montrose_country_copyright, error=errors.montrose_country_copyright) }}
 
-    {% if data %}
+    {% if data.id %}
 
     {% snippet 'organization/snippets/colors.html', data=data %}
 
@@ -89,7 +89,7 @@
 
       {{ form.select('montrose_map', 'montrose_map', _('Choose dashboard map view'), options=h.get_org_map_views(data.id), selected=data.montrose_map) }}
 
-      <div class="control-group control-select montrose_map_main_property hidden">
+      <div class="control-group control-select montrose_map_main_property">
           <label class="control-label" for="montrose_map_main_property">Select map main property</label>
           <div class="controls ">
             <select id="montrose_map_main_property" name="montrose_map_main_property"></select>

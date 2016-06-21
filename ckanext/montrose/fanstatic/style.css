@@ -7191,6 +7191,29 @@ main:after {
     padding: 10px 15px;
 }
 
+.resources-dropdown {
+    margin: 0 -15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(0, 0, 0, .2)
+}
+
+.resources-title a:before {
+    font-family: 'Glyphicons Halflings';
+    display: inline-block;
+    content: '\e250';
+    position: relative;
+    top: 2px;
+    color: #777;
+    margin-right: 6px
+}
+
+.new-data .resources-title a:before {
+    color: #B80000
+}
+
+
 .additional-information a {
     text-decoration: underline;
 }

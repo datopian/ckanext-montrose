@@ -161,24 +161,22 @@ class CountryViews(object):
         self.maps_cache = {}
         
     def get_charts(self, name):
-        if name not in self.charts_cache:
-            result = []
-            for item in get_organization_views(name):
-                result.append({'value': item['id'], 'text': item['title']})
-                
-            self.charts_cache.update({name: result})
-            
-        return self.charts_cache.get(name)
+        allCharts = {}
+        result = []
+        for item in get_organization_views(name):
+            result.append({'value': item['id'], 'text': item['title']})
+            allCharts.update({name: result})
+
+        return allCharts.get(name) or {}
     
     def get_maps(self, name):
-        if name not in self.maps_cache:
-            result = []
-            for item in get_organization_views(name, type='Maps'):
-                result.append({'value': item['id'], 'text': 'UNNAMED' if item['name'] == '' else item['name']})
-                
-            self.maps_cache.update({name: result})
-            
-        return self.maps_cache.get(name)
+        allMaps = {}
+        result = []
+        for item in get_organization_views(name, type='Maps'):
+            result.append({'value': item['id'], 'text': 'UNNAMED' if item['name'] == '' else item['name']})
+            allMaps.update({name: result})
+
+        return allMaps.get(name) or {}
         
 country_views = CountryViews()
 
@@ -201,7 +199,7 @@ def montrose_get_geojson_properties(resource_id):
     result = []
     for k, v in geojson.get('features')[0].get('properties').iteritems():
         result.append({'value':k, 'text': v})
-        
+
     return result
            
         

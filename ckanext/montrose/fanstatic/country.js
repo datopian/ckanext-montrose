@@ -111,7 +111,7 @@
 
     // Map select event handler
 
-    $('#montrose_map').on('change', function () {
+    function changeMainPropertyValues() {
 
       if ($('#montrose_map_main_property option').length > 0)
         $('#montrose_map_main_property').empty();
@@ -124,11 +124,19 @@
 
           var opts = $('#montrose_map_main_property');
           $.each(data.result, function (idx, elem) {
-            opts.append(new Option(elem.text, elem.value));
+            opts.append(new Option(elem.value, elem.value));
           });
           $('.montrose_map_main_property').removeClass('hidden');
 
         });
+    }
+
+    if ($('#montrose_map').val()) {
+      changeMainPropertyValues();
+    }
+
+    $('#montrose_map').on('change', function () {
+      changeMainPropertyValues();
     });
 
     //Base color change event handler

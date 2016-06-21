@@ -4,12 +4,12 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
 
 (function (self, $) {
 
-  self.init = function init(elementId, countryName, mapURL, color) {
-    renderMap(elementId, countryName, mapURL, color);
+  self.init = function init(elementId, countryName, mapURL, color, mainProperty) {
+    renderMap(elementId, countryName, mapURL, color, mainProperty);
   };
 
-  function renderMap(elementId, countryName, mapURL, color) {
-    var mainField = "Company Name";
+  function renderMap(elementId, countryName, mapURL, color, mainProperty) {
+    var mainField = mainProperty;
     $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' + encodeURI(countryName)).done(function (data) {
       if (data['status'] == 'ZERO_RESULTS') {
         initLeaflet(elementId, 39, 40, 2);
