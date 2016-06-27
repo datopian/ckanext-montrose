@@ -77,7 +77,12 @@ def get_resourceview_resource_package(resource_view_id):
     data_dict = {
         'id': resource_view_id
     }
-    resource_view = toolkit.get_action('resource_view_show')({}, data_dict)
+    try:
+        resource_view = toolkit.get_action('resource_view_show')({}, data_dict)
+        
+    except toolkit.NotFound, toolkit.ObjectNotFound:
+        return None
+        
 
     data_dict = {
         'id': resource_view['resource_id']
@@ -87,7 +92,12 @@ def get_resourceview_resource_package(resource_view_id):
     data_dict = {
         'id': resource['package_id']
     }
-    package = toolkit.get_action('package_show')({}, data_dict)
+    
+    try:
+        package = toolkit.get_action('package_show')({}, data_dict)
+        
+    except toolkit.NotFound, toolkit.ObjectNotFound:
+        return None
 
     return [resource_view, resource, package]
 
