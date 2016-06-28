@@ -7,6 +7,9 @@ from urllib import urlencode
 import ckan.lib.helpers as h
 import ckan.plugins as p
 import ckan.model as model
+import ckan.logic as l
+
+from ckan.lib.base import request, response, render, abort
 
 from ckan.logic.validators import resource_id_exists, package_id_exists
 
@@ -80,7 +83,7 @@ def get_resourceview_resource_package(resource_view_id):
     try:
         resource_view = toolkit.get_action('resource_view_show')({}, data_dict)
         
-    except toolkit.NotFound, toolkit.ObjectNotFound:
+    except l.NotFound:
         return None
         
 
@@ -96,7 +99,7 @@ def get_resourceview_resource_package(resource_view_id):
     try:
         package = toolkit.get_action('package_show')({}, data_dict)
         
-    except toolkit.NotFound, toolkit.ObjectNotFound:
+    except l.NotFound:
         return None
 
     return [resource_view, resource, package]
