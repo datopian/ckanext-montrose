@@ -38,6 +38,11 @@
 	                  class='hidden' %}
 	                  
 	   {% else %}
+	   
+	      {% snippet 'organization/snippets/charts_fields.html',
+	                  n=n,
+	                  class='hidden' %}
+	                  
 	      <a class="btn btn-default pull-right" type="button" href="#"
           onclick="$('#change_chart_{{ n }}').removeClass('hidden'); $(this).addClass('hidden'); return false">
 	        Change
