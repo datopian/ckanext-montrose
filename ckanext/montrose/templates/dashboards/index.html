@@ -5,6 +5,7 @@
     {% resource 'montrose/map' %}
     {% resource 'montrose/vendor/jquery-1_12_3.js' %}
     {% resource 'montrose/dashboard.js' %}
+    {% resource 'montrose/font-awesome.css' %}
 {% endblock %}
 
 {% if country.montrose_dashboard_base_color %}
@@ -65,7 +66,7 @@
                         <li>
                             <img class="language-flag" src="/img/myanmar-flag-60x40.png" width="21" alt="BUR flag">
                             <a href="#">
-                                <span class="language-name">Bur</span>
+                                <span class="language-name">Mya</span>
                             </a>
                         </li>
                     </ul>
@@ -160,9 +161,14 @@
           </div>
         </div>
         <div class="new-data">
-            <h2 class="data-block-heading" style="color: {{ font_base_color }}">Newly Released Data</h2>
+            <h2 class="data-block-heading" style="color: {{ font_base_color }}">Newly Released Data
+            <a id="newly-released-data-btn" type="button">
+              <i class="fa fa-expand pull-right"></i>
+            </a>
+            </h2>
             <div
-                class="data-block"
+                id="newly-released-data"
+                class="hidden"
                 style="border-top: 3px solid {{ base_color }};
                        border-bottom: 3px solid {{ base_color }}">
                 {{ h.snippet('dashboards/snippets/show_datasets.html',
