@@ -16,7 +16,7 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
       } else {
         var lat = data['results'][0]['geometry']['location']['lat'],
           lng = data['results'][0]['geometry']['location']['lng'];
-        initLeaflet(elementId, lat, lng, 6);
+        initLeaflet(elementId, lat, lng, 7);
       }
     }).fail(function (data) {
       console.log(data);
