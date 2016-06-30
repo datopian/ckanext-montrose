@@ -222,7 +222,10 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
             'montrose_get_resource_url':
                 montrose_helpers.montrose_get_resource_url,
             'montrose_get_geojson_properties': 
-                montrose_helpers.montrose_get_geojson_properties
+                montrose_helpers.montrose_get_geojson_properties,
+            'montrose_get_resource_view_url':
+                lambda id, dataset: '/dataset/{0}/resource/{1}'\
+                                    .format(dataset, id)
         }
         
     ## IConfigurer
