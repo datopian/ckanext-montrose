@@ -88,9 +88,7 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
             layers.push(layer);
           }
         }).addTo(map);
-
-        map.fitBounds(geoL.getBounds());
-
+        
         map.on('popupopen', function (e) {
           if (map._zoom == 10) {
             var px = map.project(e.popup._latlng, 10);
