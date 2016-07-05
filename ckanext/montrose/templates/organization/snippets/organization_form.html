@@ -71,7 +71,7 @@
 
     {{ form.select('montrose_datasets_per_page', 'montrose_datasets_per_page', _('Datasets per page'), options=[
     {'value': '5', 'text': '5'}, {'value': '10', 'text': '10'},
-    {'value': '15', 'text': '15'}, {'value': '#20', 'text': '20'},
+    {'value': '15', 'text': '15'}, {'value': '20', 'text': '20'},
     {'value': '25', 'text': '25'}, {'value': '50', 'text': '50'}], selected=data.montrose_datasets_per_page) }}
 
     {{ form.markdown('montrose_country_header', label=_('Dashboard header'), id='montrose_country_header', placeholder=_('Set the dashboard header text'), value=data.montrose_country_header, error=errors.montrose_country_header) }}
