@@ -225,6 +225,7 @@
                                                                       color=font_all_data_color) }}
             </div>
         </div>
+          {{h.snippet('dashboards/snippets/pagination.html', current=c.page.page, per_page=c.page.items_per_page, total=c.page.item_count)}}
     </main>
     <footer>
         <div class="container">
