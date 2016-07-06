@@ -7318,3 +7318,23 @@ footer .container {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+.top-navigation {
+    font-size: 18px;
+    margin-top: 10px;
+    background-color: #FFF !important;
+}
+
+.top-navigation a {
+    color: #B80000;
+    font-weight: 600;
+}
+
+.top-navigation .list-inline {
+    margin: 15px;
+}
+
+.top-navigation .list-inline li {
+    padding-left: 15px;
+    padding-right: 15px;
+}
