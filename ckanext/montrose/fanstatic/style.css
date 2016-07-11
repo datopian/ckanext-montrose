@@ -6848,7 +6848,7 @@ button.close {
 
 @media (min-width: 768px) {
     .hero-info-select {
-        width: 400px;
+        width: 300px;
         right: 0;
         left: auto
     }
@@ -7080,15 +7080,17 @@ header {
 }
 
 .language-selector {
-    text-align: center
+    text-align: center;
+    float: right;
+    margin-top: 30px;
+    margin-right: 5px;
 }
 
 @media (min-width: 768px) {
     .language-selector {
         text-align: right;
         position: relative;
-        top: 10px;
-        right: 30px
+
     }
 }
 
@@ -7199,20 +7201,6 @@ main:after {
     border-bottom: 2px solid rgba(0, 0, 0, .2)
 }
 
-.resources-title a:before {
-    font-family: 'Glyphicons Halflings';
-    display: inline-block;
-    content: '\e250';
-    position: relative;
-    top: 2px;
-    color: #777;
-    margin-right: 6px
-}
-
-.new-data .resources-title a:before {
-    color: #B80000
-}
-
 
 .additional-information a {
     text-decoration: underline;
@@ -7320,7 +7308,7 @@ footer .container {
 /*# sourceMappingURL=style.css.map */
 
 .top-navigation {
-    font-size: 18px;
+    font-size: 22px;
     margin-top: 10px;
     background-color: #FFF !important;
 }

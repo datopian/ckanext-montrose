@@ -56,9 +56,13 @@ Example:
             <div class="row">
               <div class="col-md-4 resources-dropdown-name">
                 {% if resource.name %}
-                  <h5 class="resources-title"><a href="{{ resource.url }}">{{ resource.name }}</a></h5>
+                  <h5 class="resources-title">
+                    <i class="fa fa-caret-right fa-2" aria-hidden="true"></i>
+                    <a href="{{ resource.url }}">{{ resource.name }}</a></h5>
                 {% else %}
-                  <h5 class="resources-title"><a href="{{ resource.url }}">Unnamed resource</a></h5>
+                  <h5 class="resources-title">
+                    <i class="fa fa-caret-right fa-2" aria-hidden="true"></i>
+                    <a href="{{ resource.url }}">Unnamed resource</a></h5>
                 {% endif %}
               </div>
               <div class="col-md-2">
