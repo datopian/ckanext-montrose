@@ -246,9 +246,11 @@
 	}
 
 .leaflet-touch .leaflet-bar a {
-	width: 30px;
-	height: 30px;
-	line-height: 30px;
+	/*  IE Issues
+		width: 30px;
+		height: 30px;
+		line-height: 30px;
+	*/
 	}
 
 
