@@ -62,7 +62,10 @@ class DashboardsController(PackageController):
         c.query_error = False
         page = self._get_page_number(request.params)
 
-        limit = int(org['montrose_datasets_per_page'])
+        try:
+            limit = int(org['montrose_datasets_per_page'])
+        except KeyError, ValueError:
+            limit = 5
 
         # most search operations should reset the page counter:
         params_nopage = [(k, v) for k, v in request.params.items()
@@ -222,6 +225,7 @@ class DashboardsController(PackageController):
 
         self._setup_template_variables(context, {},
                                        package_type=package_type)
+        
 
         return plugins.toolkit.render('dashboards/index.html', extra_vars={'country': org,
                                                                            'dataset_type': package_type})
