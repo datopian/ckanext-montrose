@@ -110,23 +110,36 @@ Example:
           {% if package.author %}
             <div class="row">
               <div class="col-md-1">
-                <strong>Author:</strong>
+                <strong>{{_('Author')}}:</strong>
               </div>
               <div class="col-md-8 additional-information">
-                {{ package.author }}
+                <a href="mailto:{{package.author_email}}">{{ package.author }}</a>
               </div>
             </div>
           {% endif %}
+
+          {% if package.maintainer %}
+            <div class="row">
+              <div class="col-md-1">
+                <strong>{{_('Maintainer')}}:</strong>
+              </div>
+              <div class="col-md-8 additional-information">
+                <a href="mailto:{{package.maintainer_email}}">{{ package.maintainer }}</a>
+              </div>
+            </div>
+          {% endif %}
+
           {% if package.url %}
             <div class="row">
               <div class="col-md-1">
-                <strong>Source:</strong>
+                <strong>{{_('Source')}}:</strong>
               </div>
               <div class="col-md-8 additional-information">
                 <a href="{{ package.url }}">{{ package.url }}</a>
               </div>
             </div>
           {% endif %}
+
           {% if package.license_title %}
             <div class="row">
               <div class="col-md-1">
@@ -152,6 +165,19 @@ Example:
             {% endfor%}
 
           {% endif %}
+
+          {% if package.metadata_modified %}
+            <div class="row">
+              <div class="col-md-1">
+                <strong>{{_('Last updated')}}:</strong>
+              </div>
+              <div class="col-md-8 additional-information">
+                {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=package.metadata_modified %}
+              </div>
+            </div>
+          {% endif %}
+
+          
 
 
         </div>
