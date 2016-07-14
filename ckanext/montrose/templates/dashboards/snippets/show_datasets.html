@@ -57,11 +57,11 @@ Example:
               <div class="col-md-4 resources-dropdown-name">
                 {% if resource.name %}
                   <h5 class="resources-title">
-                    <i class="fa fa-caret-right fa-2" aria-hidden="true"></i>
+                    <i class="fa fa-caret-right fa-lg text-danger" aria-hidden="true"></i>
                     <a href="{{ resource.url }}">{{ resource.name }}</a></h5>
                 {% else %}
                   <h5 class="resources-title">
-                    <i class="fa fa-caret-right fa-2" aria-hidden="true"></i>
+                    <i class="fa fa-caret-right fa-lg text-danger" aria-hidden="true"></i>
                     <a href="{{ resource.url }}">Unnamed resource</a></h5>
                 {% endif %}
               </div>
@@ -106,6 +106,7 @@ Example:
               <h5>Additional information</h5>
             </div>
           </div>
+
           {% if package.author %}
             <div class="row">
               <div class="col-md-1">
@@ -135,6 +136,21 @@ Example:
                 <a href="{{ package.license_url }}">{{ package.license_title }}</a>
               </div>
             </div>
+          {% endif %}
+
+          {% if package.extras %}
+
+            {% for extra in package.extras %}
+            <div class="row">
+              <div class="col-md-1">
+                <strong>{{_(extra.key)}}:</strong>
+              </div>
+              <div class="col-md-8 additional-information">
+                {{ extra.value }}
+              </div>
+            </div>
+            {% endfor%}
+
           {% endif %}
 
 
