@@ -25,8 +25,6 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
 
         map.redirect('/organization', '/country',
                      _redirect_code='301 Moved Permanently')
-        map.redirect('/organization/{url:.*}', '/country/{url}',
-                     _redirect_code='301 Moved Permanently')
         
         map.redirect('/group', '/theme',
                      _redirect_code='301 Moved Permanently')
@@ -42,13 +40,13 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
                 m.connect('%s_index' % v, '/{}'.format(v), action='index')
                 m.connect('/{}/list'.format(v), action='list')
                 m.connect('/{}/new'.format(v), action='new')
+                m.connect('/delete/{}'.format(v), action='delete')
                 m.connect('{}_read'.format(v), '/%s/{id}' % v, action='read')
                 m.connect('{}_edit'.format(v), '/%s/edit/{id}' % v,
                           action='edit', ckan_icon='edit')
                 
                 m.connect('/%s/{action}/{id}' % v,
                           requirements=dict(action='|'.join([
-                              'delete',
                               'admins',
                               'member_new',
                               'member_delete',
