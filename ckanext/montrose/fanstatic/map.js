@@ -16,11 +16,11 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
       } else {
         var lat = data['results'][0]['geometry']['location']['lat'],
           lng = data['results'][0]['geometry']['location']['lng'];
-        initLeaflet(elementId, lat, lng, 7);
+        initLeaflet(elementId, lat, lng, 5);
       }
     }).fail(function (data) {
       console.log(data);
-    });
+    })
 
     function initLeaflet(elementId, lat, lng, zoom) {
       var map = new L.Map(elementId, {scrollWheelZoom: false, inertiaMaxSpeed: 200}).setView([lat, lng], zoom);
