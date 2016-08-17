@@ -5341,6 +5341,11 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
     width: 10000px
 }
 
+.media-body a {
+    color: blue;
+    text-decoration: underline;
+}
+
 .media-object.img-thumbnail {
     max-width: none
 }
