@@ -7,7 +7,7 @@ name
 #}
 {% with items = h.get_facet_items_dict(name.value) %}
     <div class="col-md-2">
-        <select class="form-control montrose-filters">
+        <select class="form-control montrose-filters  {{ country_name|lower }}">
             {% block facet_list_items %}
                 {% with items = h.get_facet_items_dict(name.value) %}
                     {% set extras={'name': c.name} %}

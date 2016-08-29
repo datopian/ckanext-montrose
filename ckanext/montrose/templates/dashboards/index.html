@@ -234,7 +234,7 @@
                         <h3 class="data-block-heading" style="color: {{ font_base_color }}">Filter Data by:</h3>
                     </div>
                     {% for facet in facets.titles %}
-                        {{ h.snippet('dashboards/snippets/facet_list.html', name=facet) }}
+                        {{ h.snippet('dashboards/snippets/facet_list.html', name=facet, country_name=country.name) }}
                     {% endfor %}
                 </div>
             </div>
