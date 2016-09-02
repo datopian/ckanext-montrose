@@ -5387,6 +5387,10 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
     vertical-align: top
 }
 
+.media-left {
+    cursor: pointer;
+}
+
 .media-middle {
     vertical-align: middle
 }
@@ -6880,10 +6884,23 @@ button.close {
 }
 
 .hero-info {
+    position: absolute;
+    right: -30px;
+    left: auto;
+    top: 410px;
+    width: 54px;
+    z-index: 99;
     border-radius: 6px;
-    padding: 10px;
+    padding: 2px;
     border: 5px solid #fff;
     background-color: rgba(255, 255, 255, .95)
+}
+
+@media screen and (max-width: 991px) {
+    .hero-info {
+        top: 905px;
+        right: -25px;
+    }
 }
 
 .hero-select {
