@@ -110,15 +110,6 @@
                   <select id="dataset" class="form-control" style="color: {{ base_color }};"></select>
               </div>
           </div>
-          <div class="media hero-info">
-              <div class="media-left">
-                  <img id="map-info-img" class="language-flag" src="/images/usedata-info-icon.svg" width="41" alt="icon">
-              </div>
-              <div class="media-body hidden">All efforts have been made to make this map accurate. However, USEDATA and its
-                  Service Providers accept no liability for any errors, omissions, or inaccuracies in the information
-                  provided on this map. © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors
-              </div>
-          </div>
       </div>
       {% if country.montrose_map %}
         {% set geojsonurl = h.montrose_get_resource_url(country.montrose_map) %}
@@ -132,7 +123,14 @@
               data-module-main_property="{{ country.montrose_map_main_property }}"
               id="hero_map"
       >
-      </div>
+        <div class="media hero-info">
+            <div class="media-left">
+                <img id="map-info-img" class="language-flag" src="/images/usedata-info-icon.svg" width="41" alt="icon">
+            </div>
+            <div class="media-body hidden">All efforts have been made to make this map accurate. However, USEDATA and its
+                Service Providers accept no liability for any errors, omissions, or inaccuracies in the information
+                provided on this map. © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors
+            </div>
     </div>
     
     </div>

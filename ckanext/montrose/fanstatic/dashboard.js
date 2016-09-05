@@ -38,7 +38,6 @@ $(function () {
             disclaimerContainer.css({
                 'width': '300px',
                 'padding': '10px',
-                'top': topPosition
             });
           } else {
             topPosition = bodyWidth <= 976 ? '905px' : '410px';
@@ -47,22 +46,8 @@ $(function () {
             disclaimerContainer.css({
                 'width': '54px',
                 'padding': '2px',
-                'top': topPosition
             });
           }
-      });
-
-      // Reposition the disclaimer container on window resize.
-      $(window).resize(function onWindowResize(event) {
-          var bodyWidth = $('body').outerWidth();
-
-          if (disclaimerText.hasClass('hidden')) {
-            topPosition = bodyWidth <= 976 ? '905px' : '410px';
-          } else {
-            topPosition = bodyWidth <= 976 ? '790px' : '295px';
-          }
-
-          disclaimerContainer.css({'top': topPosition});
       });
   });
 
