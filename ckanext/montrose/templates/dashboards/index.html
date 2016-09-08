@@ -58,11 +58,16 @@
                 </div>
 
               {% if country.montrose_lang_is_active == '1'%}
+                {% if country.montrose_secondary_language == 'en' %}
+                  {% set country_name = country.montrose_secondary_dashboard %}
+                {% else  %}
+                  {% set country_name = c.name %}
+                {% endif %}
                 <div class="col-sm-2 col-md-2 language-selector">
                     <ul class="list-inline">
                         <li>
                             <img class="language-flag" src="/img/uk-flag-23x17.png" height="17" alt="UK flag">
-                            <a href="{{ h.url_for(controller='ckanext.montrose.controllers.dashboard:DashboardsController', action='montrose_country_dashboard', name=c.name, locale='en') }}" class="language-picker-link">
+                            <a href="{{ h.url_for(controller='ckanext.montrose.controllers.dashboard:DashboardsController', action='montrose_country_dashboard', name=country_name, locale='en') }}" class="language-picker-link">
                                 <span class="language-name">En</span>
                             </a>
                         </li>
@@ -70,13 +75,33 @@
                           {% if country.montrose_secondary_language == 'my_MM' %}
                             {% set flag_url = '/img/myanmar-flag-60x40.png' %}
                             {% set country_short_name = 'Mya' %}
+                            {% set locale = 'my_MM' %}
+                            {% set country_name = country.montrose_secondary_dashboard %}
                           {% elif country.montrose_secondary_language == 'sw' %}
                             {% set flag_url = '/img/tanzania_flag.jpg' %}
                             {% set country_short_name = 'Sw' %}
+                            {% set locale = 'sw' %}
+                            {% set country_name = country.montrose_secondary_dashboard %}
+                          {% else %}
+                            {% set locale = request.environ.get('CKAN_LANG') %}
+
+                            {% if locale == 'my_MM' %}
+                              {% set flag_url = '/img/myanmar-flag-60x40.png' %}
+                              {% set country_short_name = 'Mya' %}
+                            {% elif locale == 'sw' %}
+                              {% set flag_url = '/img/tanzania_flag.jpg' %}
+                              {% set country_short_name = 'Sw' %}
+                            {% endif %}
+
+                            {% if country.montrose_secondary_language == 'en' %}
+                              {% set country_name = c.name %}
+                            {% else  %}
+                              {% set country_name = country.montrose_secondary_dashboard %}
+                            {% endif %}
                           {% endif %}
                           <li>
                               <img class="language-flag" src="{{ flag_url }}" width="21" alt="{{ country_short_name | upper }} flag">
-                              <a href="{{ h.url_for(controller='ckanext.montrose.controllers.dashboard:DashboardsController', action='montrose_country_dashboard', name=country.montrose_secondary_dashboard, locale=country.montrose_secondary_language) }}" class="language-picker-link">
+                              <a href="{{ h.url_for(controller='ckanext.montrose.controllers.dashboard:DashboardsController', action='montrose_country_dashboard', name=country_name, locale=locale) }}" class="language-picker-link">
                                   <span class="language-name">{{ country_short_name }}</span>
                               </a>
                           </li>

@@ -1,5 +1,10 @@
 [
     {
+        "code": "en",
+        "language": "English",
+        "country": "UK"
+    },
+    {
         "code": "my_MM",
         "language": "Burmese",
         "country": "Myanmar"
