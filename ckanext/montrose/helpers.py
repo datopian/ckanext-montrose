@@ -118,6 +118,7 @@ def montrose_get_all_countries():
     ''' Get all created countries (organizations) '''
 
     countries = _get_action('organization_list', {}, {'all_fields': True})
+    
     countries = map(lambda item: 
                         {
                             'value': item['name'], 
@@ -125,6 +126,10 @@ def montrose_get_all_countries():
                         }, 
                         countries
                     )
+
+    # Filter out the current country in the list
+    countries = [x for x in countries if x['value'] != c.id]
+
     countries.insert(0, {'value': 'none', 'text': 'None'})
 
     return countries
