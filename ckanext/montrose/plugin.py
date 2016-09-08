@@ -144,6 +144,8 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
             'montrose_main_color': default_validators,
             'montrose_new_data_color': default_validators,
             'montrose_all_data_color': default_validators,
+            'montrose_secondary_dashboard': default_validators,
+            'montrose_secondary_language': default_validators
         })
         
         charts = {}
@@ -180,6 +182,8 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
             'montrose_main_color': default_validators,
             'montrose_new_data_color': default_validators,
             'montrose_all_data_color': default_validators,
+            'montrose_secondary_dashboard': default_validators,
+            'montrose_secondary_language': default_validators,
             'num_followers': [_not_empty],
             'package_count': [_not_empty],
         })
@@ -223,7 +227,11 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
                 montrose_helpers.montrose_get_geojson_properties,
             'montrose_get_resource_view_url':
                 lambda id, dataset: '/dataset/{0}/resource/{1}'\
-                                    .format(dataset, id)
+                                    .format(dataset, id),
+            'montrose_get_all_countries':
+                montrose_helpers.montrose_get_all_countries,
+            'montrose_available_languages':
+                montrose_helpers.montrose_available_languages
         }
         
     ## IConfigurer

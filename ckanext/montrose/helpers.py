@@ -1,4 +1,5 @@
 import logging
+import os
 
 import ckan.plugins.toolkit as toolkit
 from datetime import datetime
@@ -14,6 +15,9 @@ from ckan.lib.base import request, response, render, abort
 from ckan.logic.validators import resource_id_exists, package_id_exists
 
 log = logging.getLogger(__name__)
+
+get_languages_path = lambda: os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                                          'language-codes.json')
 
 # TODO: Re-organize and re-factor helpers
 
@@ -109,6 +113,49 @@ def organization_list():
                       {'all_fields': True, 
                        'include_extras': True, 
                        'include_followers': True})
+
+def montrose_get_all_countries():
+    ''' Get all created countries (organizations) '''
+
+    countries = _get_action('organization_list', {}, {'all_fields': True})
+    countries = map(lambda item: 
+                        {
+                            'value': item['name'], 
+                            'text': item['display_name']
+                        }, 
+                        countries
+                    )
+    countries.insert(0, {'value': 'none', 'text': 'None'})
+
+    return countries
+
+def montrose_available_languages():   
+    ''' Read the languages listed in a json file '''
+
+    languages = []
+
+    try:
+        with open(get_languages_path()) as f:
+            try:
+                languages = json.loads(f.read())
+                log.info('Successfully loaded {} languages'.format(len(languages)))
+                
+            except ValueError as e:
+                log.error(str(e))
+                
+    except IOError as e:
+        log.error(str(e))
+
+    languages = map(lambda item: 
+                        {
+                            'value': item['code'], 
+                            'text': item['language']
+                        },
+                        languages
+                    )
+    languages.insert(0, {'value': 'none', 'text': 'None'})
+            
+    return languages
 
 def get_organization_views(name, type='chart builder'):
     data = _get_action('organization_show',{},

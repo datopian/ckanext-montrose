@@ -96,6 +96,29 @@ do::
     pip install -r dev-requirements.txt
 
 
+------------------------
+Languages Installation
+------------------------
+
+Inside the ```montrose``` directory there is a directory ```i18n``` where
+new languages are stored (ones that are not supported by CKAN). If you are 
+doing this for the first time, first you have to add the language directories 
+to CKAN's ```i18n```, where all languages are stored. Copy the directories 
+from montrose's ```i18n``` to CKAN's ```i18n``` directory. 
+
+After that, you have to compile the languages into ```.mo``` files. To do that, 
+open a terminal inside the desired language, e.g. ```i18n/de/LC_MESSAGES``` and
+run the following command:
+```
+msgfmt ckan.po -o ckan.mo
+```
+
+This will output a compiled ```.mo``` file inside the same directory.
+
+Every time the languages are updated inside montrose's ```i18n``` directory,
+you have to copy only the ```.po``` files into the CKAN's ```i18n``` directory
+and compile them with the command written above.
+
 -----------------
 Running the Tests
 -----------------

@@ -57,20 +57,30 @@
                   <h1 class="">{{ country.montrose_country_header }}</h1>
                 </div>
 
-
               {% if country.montrose_lang_is_active == '1'%}
                 <div class="col-sm-2 col-md-2 language-selector">
                     <ul class="list-inline">
-                        <li class="active">
-                            <img class="language-flag" src="/img/uk-flag-23x17.png" height="17" alt="UK flag">
-                            <span class="language-name">En</span>
-                        </li>
                         <li>
-                            <img class="language-flag" src="/img/myanmar-flag-60x40.png" width="21" alt="BUR flag">
-                            <a href="#">
-                                <span class="language-name">Mya</span>
+                            <img class="language-flag" src="/img/uk-flag-23x17.png" height="17" alt="UK flag">
+                            <a href="{{ h.url_for(controller='ckanext.montrose.controllers.dashboard:DashboardsController', action='montrose_country_dashboard', name=c.name, locale='en') }}" class="language-picker-link">
+                                <span class="language-name">En</span>
                             </a>
                         </li>
+                        {% if country.montrose_secondary_dashboard and country.montrose_secondary_dashboard != 'none' and country.montrose_secondary_language and country.montrose_secondary_language != 'none' %}
+                          {% if country.montrose_secondary_language == 'my_MM' %}
+                            {% set flag_url = '/img/myanmar-flag-60x40.png' %}
+                            {% set country_short_name = 'Mya' %}
+                          {% elif country.montrose_secondary_language == 'sw' %}
+                            {% set flag_url = '/img/tanzania_flag.jpg' %}
+                            {% set country_short_name = 'Sw' %}
+                          {% endif %}
+                          <li>
+                              <img class="language-flag" src="{{ flag_url }}" width="21" alt="{{ country_short_name | upper }} flag">
+                              <a href="{{ h.url_for(controller='ckanext.montrose.controllers.dashboard:DashboardsController', action='montrose_country_dashboard', name=country.montrose_secondary_dashboard, locale=country.montrose_secondary_language) }}" class="language-picker-link">
+                                  <span class="language-name">{{ country_short_name }}</span>
+                              </a>
+                          </li>
+                        {% endif %}
                     </ul>
                 </div>
               {% endif %}
@@ -78,10 +88,10 @@
     <nav class="top-navigation pull-right" style="background-color: {{ base_color }}">
         <div class="">
             <ul class="list-inline">
-                <li><a href="http://www.usedata.info/about-2/">About</a></li>
-                <li><a href="http://www.usedata.info/help/">Help</a></li>
-                <li><a href="http://www.usedata.info/resources/">Resources</a></li>
-                <li><a href="http://www.usedata.info/contact/">Contact</a></li>
+                <li><a href="http://www.usedata.info/about-2/">{{ _('About') }}</a></li>
+                <li><a href="http://www.usedata.info/help/">{{ _('Help') }}</a></li>
+                <li><a href="http://www.usedata.info/resources/">{{ _('Resources') }}</a></li>
+                <li><a href="http://www.usedata.info/contact/">{{ _('Contact') }}</a></li>
             </ul>
         </div>
     </nav>
@@ -127,9 +137,9 @@
             <div class="media-left">
                 <img id="map-info-img" class="language-flag" src="/images/usedata-info-icon.svg" width="41" alt="icon">
             </div>
-            <div class="media-body hidden">All efforts have been made to make this map accurate. However, USEDATA and its
+            <div class="media-body hidden">{{ _('All efforts have been made to make this map accurate. However, USEDATA and its
                 Service Providers accept no liability for any errors, omissions, or inaccuracies in the information
-                provided on this map. © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors
+                provided on this map.') }} © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> {{ _('contributors') }}
             </div>
     </div>
     
@@ -179,7 +189,7 @@
           </div>
         </div>
         <div class="new-data">
-            <h2 class="data-block-heading" style="color: {{ font_base_color }}">Newly Released Data
+            <h2 class="data-block-heading" style="color: {{ font_base_color }}">{{ _('Newly Released Data') }}
             <a id="newly-released-data-btn" type="button">
               <i class="fa fa-expand pull-right"></i>
             </a>
@@ -200,11 +210,11 @@
             {% set facets = {
           'fields': c.fields_grouped,
           'search': c.search_facets,
-          'titles': [{"value": "groups", "name": "Themes"},
-                     {"value": "tags", "name": "Tags"},
-                     {"value": "res_format", "name": "Resource Format"},
-                     {"value": "license_id", "name": "Licenses"},
-                     {"value": "author", "name": "Authors"},],
+          'titles': [{"value": "groups", "name": _('Themes')},
+                     {"value": "tags", "name": _('Tags')},
+                     {"value": "res_format", "name": _('Resource Format')},
+                     {"value": "license_id", "name": _('Licenses')},
+                     {"value": "author", "name": _('Authors')},],
           'translated_fields': c.translated_fields,
           'remove_field': c.remove_field } %}
             {% set sorting = [
@@ -229,7 +239,7 @@
             <div class="data-block-header">
                 <div class="row">
                     <div class="col-md-2">
-                        <h3 class="data-block-heading" style="color: {{ font_base_color }}">Filter Data by:</h3>
+                        <h3 class="data-block-heading" style="color: {{ font_base_color }}">{{ _('Filter Data by') }}:</h3>
                     </div>
                     {% for facet in facets.titles %}
                         {{ h.snippet('dashboards/snippets/facet_list.html', name=facet, country_name=country.name) }}
@@ -250,12 +260,12 @@
             <div class="row">
                 <div class="col-md-2 col-lg-4">
                     <ul class="list-unstyled list-footer-nav">
-                        <li><a href="http://www.usedata.info/about-2/">About</a></li>
-                        <li><a href="http://www.usedata.info/help/">Help</a></li>
-                        <li><a href="http://www.usedata.info/resources/">Resources</a></li>
-                        <li><a href="http://www.usedata.info/ ">About USEDATA</a></li>
-                        <li><a href="http://www.usedata.info/contact/">Contact</a></li>
-                        <li><a href="http://www.usedata.info/terms-of-use-2/">Terms of Use</a></li>
+                        <li><a href="http://www.usedata.info/about-2/">{{ _('About') }}</a></li>
+                        <li><a href="http://www.usedata.info/help/">{{ _('Help') }}</a></li>
+                        <li><a href="http://www.usedata.info/resources/">{{ _('Resources') }}</a></li>
+                        <li><a href="http://www.usedata.info/">{{ _('About USEDATA') }}</a></li>
+                        <li><a href="http://www.usedata.info/contact/">{{ _('Contact') }}</a></li>
+                        <li><a href="http://www.usedata.info/terms-of-use-2/">{{ _('Terms of use') }}</a></li>
                     </ul>
                 </div>
                 <div class="col-md-2 col-lg-3">

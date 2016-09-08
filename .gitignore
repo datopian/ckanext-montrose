@@ -42,3 +42,6 @@ coverage.xml
 docs/_build/
 
 idea/
+
+# .mo extensions
+.mo
