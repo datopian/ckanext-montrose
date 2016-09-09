@@ -7057,6 +7057,11 @@ button.close {
     color: #777
 }
 
+.graph-description {
+    text-align:center;
+}
+
+
 .graph-value-xl {
     font-size: 72px;
     margin-top: 15px;
