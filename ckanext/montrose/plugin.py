@@ -136,6 +136,7 @@ class MontrosePlugin(plugins.SingletonPlugin,
         schema.update({
             'montrose_country_header': default_validators,
             'montrose_country_footer': default_validators,
+            'montrose_country_description': default_validators,
             'montrose_country_copyright': default_validators,
             'montrose_lang_is_active': default_validators,
             'montrose_dashboard_base_color': default_validators,
@@ -174,6 +175,7 @@ class MontrosePlugin(plugins.SingletonPlugin,
         schema.update({
             'montrose_country_header': default_validators,
             'montrose_country_footer': default_validators,
+            'montrose_country_description': default_validators,
             'montrose_country_copyright': default_validators,
             'montrose_lang_is_active': default_validators,
             'montrose_dashboard_base_color': default_validators,
@@ -235,7 +237,11 @@ class MontrosePlugin(plugins.SingletonPlugin,
             'montrose_get_all_countries':
                 montrose_helpers.montrose_get_all_countries,
             'montrose_available_languages':
-                montrose_helpers.montrose_available_languages
+                montrose_helpers.montrose_available_languages,
+            'montrose_convert_to_list':
+                montrose_helpers.montrose_convert_to_list,
+            'montrose_get_resource_names_from_ids':
+                montrose_helpers.montrose_get_resource_names_from_ids
         }
         
     ## IConfigurer
@@ -256,4 +262,3 @@ def _get_logic_functions(module_root, logic_functions = {}):
             logic_functions[key] = value
             
     return logic_functions
-        

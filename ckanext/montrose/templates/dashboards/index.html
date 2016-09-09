@@ -38,6 +38,17 @@
   {% set font_all_data_color = "#000000" %}
 {% endif %}
 
+{% set montrose_maps = h.montrose_convert_to_list(country.montrose_map) %}
+{% set montrose_map_main_properties = h.montrose_convert_to_list(country.montrose_map_main_property) %}
+{% set montrose_geoJsonUrlList = [] %}}
+{% set montrose_resource_names = h.montrose_get_resource_names_from_ids(montrose_maps) %}
+
+{% for montrose_map in montrose_maps %}
+    {#                Apparently we can append only in an if statement#}
+    {% if montrose_geoJsonUrlList.append(h.montrose_get_resource_url(montrose_map)) %}
+    {% endif %}
+{% endfor %}
+
 {#  set base_color = "#" + country.montrose_dashboard_base_color #}
 {# set secondary_color = "#" + country.montrose_dashboard_secondary_color #}
 {# set font_base_color = "#" + country.montrose_main_color #}
@@ -46,6 +57,7 @@
 
 
 {% block page %}
+    <div class="boxed-layout">
     <header>
         <div class="container">
             <div class="row">
@@ -141,21 +153,36 @@
     <div class="hero-map-wrap">
       <div class="hero-controls">
           <div class="hero-block hero-info-select hidden" id="map-info">
+              <div class="media hero-info">
+                  <div class="media-left">
+                      <img id="map-info-img" class="language-flag" src="/images/usedata-info-icon.svg" width="41" alt="icon">
+                  </div>
+                  <div class="media-body">All efforts have been made to make this map accurate. However, USEDATA and its
+                      Service Providers accept no liability for any errors, omissions, or inaccuracies in the information
+                      provided on this map. © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors
+                  </div>
+              </div>
+              <div class="hero-select-resource" style="border: 5px solid {{ base_color }}">
+                  <select id="montrose_resource" class="form-control" style="color: {{ base_color }};">
+                  {% for montrose_map in montrose_maps %}
+                    <option
+                        value="{{ montrose_geoJsonUrlList[loop.index0] }}">{{ montrose_resource_names[loop.index0] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
               <div class="hero-select" style="border: 5px solid {{ base_color }}">
                   <select id="dataset" class="form-control" style="color: {{ base_color }};"></select>
               </div>
           </div>
       </div>
-      {% if country.montrose_map %}
-        {% set geojsonurl = h.montrose_get_resource_url(country.montrose_map) %}
-      {% endif %}
+
       <div
               data-module="montrose_map"
               data-module-id="hero_map"
-              data-module-mapurl="{{ geojsonurl }}"
+              data-module-mapurl="{{ montrose_geoJsonUrlList|join(',') }}"
               data-module-countryname="{{ country.display_name }}"
               data-module-color="{{ base_color }}"
-              data-module-main_property="{{ country.montrose_map_main_property }}"
+              data-module-main_property="{{ montrose_map_main_properties|join(',') }}"
               id="hero_map"
       >
         <div class="media hero-info">
@@ -167,7 +194,9 @@
                 provided on this map.') }} © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> {{ _('contributors') }}
             </div>
     </div>
-    
+
+    <p class="dashboard-description">{{ country.montrose_country_description }}</p>
+
     </div>
 
     <main class="container">
@@ -280,6 +309,7 @@
         </div>
           {{h.snippet('dashboards/snippets/pagination.html', current=c.page.page, per_page=c.page.items_per_page, total=c.page.item_count)}}
     </main>
+    </div>
     <footer>
         <div class="container">
             <div class="row">

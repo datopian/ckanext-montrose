@@ -111,32 +111,37 @@
 
     // Map select event handler
 
-    function changeMainPropertyValues() {
+    function changeMainPropertyValues(element) {
+      var map_main_property = $(element).parent().parent().parent()
+        .find($('select[name="montrose_map_main_property"]'));
 
-      if ($('#montrose_map_main_property option').length > 0)
-        $('#montrose_map_main_property').empty();
+      if ($(element).find('option').length > 0)
+        map_main_property.empty();
 
       // Get resource id
-      var resource_id = $('#montrose_map option:selected').val();
+      var resource_id = $(element).find('option:selected').val();
       var params = {id: resource_id};
       api.get('montrose_resource_show_map_properties', params)
         .done(function (data) {
-
-          var opts = $('#montrose_map_main_property');
+          console.log(data);
+          var opts = map_main_property;
           $.each(data.result, function (idx, elem) {
             opts.append(new Option(elem.value, elem.value));
           });
-          $('.montrose_map_main_property').removeClass('hidden');
+          map_main_property.removeClass('hidden');
 
         });
+
+
     }
 
-    if ($('#montrose_map').val()) {
-      changeMainPropertyValues();
+    var selects = $('select[name="montrose_map"]');
+    for (var i = 0; i < selects.length; i++) {
+      changeMainPropertyValues(selects[i]);
     }
 
-    $('#montrose_map').on('change', function () {
-      changeMainPropertyValues();
+    $('select[name="montrose_map"]').on('change', function () {
+      changeMainPropertyValues($(this));
     });
 
     //Base color change event handler
@@ -146,6 +151,18 @@
       lighter_color = ColorLuminance('#' + this.value, 0.4);
       secondary_element.val(lighter_color.substr(1));
       secondary_element.css({'background-color': lighter_color});
+    });
+
+    var numResources = $('.map-fields').length;
+
+    $('#new-field-btn').on('click', function () {
+      console.log("a");
+      var resourceField = $('#map-field_1').clone();
+      console.log(resourceField);
+      numResources++;
+      console.log(numResources);
+      resourceField.attr('id', 'map-field_' + numResources);
+      resourceField.appendTo($('.map-properties'));
     });
 
     function ColorLuminance(hex, lum) {

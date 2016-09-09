@@ -43,6 +43,3 @@ docs/_build/
 
 idea/
 .idea/
-
-# .mo extensions
-.mo
