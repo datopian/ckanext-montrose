@@ -3,6 +3,7 @@ import logging
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import ckan.lib.plugins as lib_plugins
+from ckan.lib.plugins import DefaultTranslation
 import ckanext.montrose.helpers as montrose_helpers
 
 from routes.mapper import SubMapper
@@ -10,7 +11,9 @@ from pylons import config
 
 log = logging.getLogger(__name__)
 
-class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationForm):
+class MontrosePlugin(plugins.SingletonPlugin, 
+                     lib_plugins.DefaultOrganizationForm,
+                     DefaultTranslation):
     
     plugins.implements(plugins.IRoutes, inherit=True)
     plugins.implements(plugins.IActions)
