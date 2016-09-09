@@ -132,6 +132,7 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
         schema.update({
             'montrose_country_header': default_validators,
             'montrose_country_footer': default_validators,
+            'montrose_country_description': default_validators,
             'montrose_country_copyright': default_validators,
             'montrose_lang_is_active': default_validators,
             'montrose_dashboard_base_color': default_validators,
@@ -168,6 +169,7 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
         schema.update({
             'montrose_country_header': default_validators,
             'montrose_country_footer': default_validators,
+            'montrose_country_description': default_validators,
             'montrose_country_copyright': default_validators,
             'montrose_lang_is_active': default_validators,
             'montrose_dashboard_base_color': default_validators,
@@ -223,7 +225,11 @@ class MontrosePlugin(plugins.SingletonPlugin, lib_plugins.DefaultOrganizationFor
                 montrose_helpers.montrose_get_geojson_properties,
             'montrose_get_resource_view_url':
                 lambda id, dataset: '/dataset/{0}/resource/{1}'\
-                                    .format(dataset, id)
+                                    .format(dataset, id),
+            'montrose_convert_to_list':
+                montrose_helpers.montrose_convert_to_list,
+            'montrose_get_resource_names_from_ids':
+                montrose_helpers.montrose_get_resource_names_from_ids
         }
         
     ## IConfigurer
