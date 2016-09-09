@@ -38,6 +38,17 @@
   {% set font_all_data_color = "#000000" %}
 {% endif %}
 
+{% set montrose_maps = h.montrose_convert_to_list(country.montrose_map) %}
+{% set montrose_map_main_properties = h.montrose_convert_to_list(country.montrose_map_main_property) %}
+{% set montrose_geoJsonUrlList = [] %}}
+{% set montrose_resource_names = h.montrose_get_resource_names_from_ids(montrose_maps) %}
+
+{% for montrose_map in montrose_maps %}
+    {#                Apparently we can append only in an if statement#}
+    {% if montrose_geoJsonUrlList.append(h.montrose_get_resource_url(montrose_map)) %}
+    {% endif %}
+{% endfor %}
+
 {#  set base_color = "#" + country.montrose_dashboard_base_color #}
 {# set secondary_color = "#" + country.montrose_dashboard_secondary_color #}
 {# set font_base_color = "#" + country.montrose_main_color #}
