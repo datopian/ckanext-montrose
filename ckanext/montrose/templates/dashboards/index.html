@@ -139,16 +139,14 @@
               </div>
           </div>
       </div>
-      {% if country.montrose_map %}
-        {% set geojsonurl = h.montrose_get_resource_url(country.montrose_map) %}
-      {% endif %}
+
       <div
               data-module="montrose_map"
               data-module-id="hero_map"
-              data-module-mapurl="{{ geojsonurl }}"
+              data-module-mapurl="{{ montrose_geoJsonUrlList|join(',') }}"
               data-module-countryname="{{ country.display_name }}"
               data-module-color="{{ base_color }}"
-              data-module-main_property="{{ country.montrose_map_main_property }}"
+              data-module-main_property="{{ montrose_map_main_properties|join(',') }}"
               id="hero_map"
       >
       </div>
