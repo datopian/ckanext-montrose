@@ -7109,6 +7109,12 @@ header {
     font-weight: 700
 }
 
+.dashboard-description {
+    text-align: justify;
+    padding-top: 1em;
+    font-size:1em;
+}
+
 .language-selector {
     text-align: center;
     float: right;
