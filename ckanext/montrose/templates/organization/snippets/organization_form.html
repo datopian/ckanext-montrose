@@ -86,19 +86,30 @@
 
     {% snippet 'organization/snippets/colors.html', data=data %}
 
-    <fieldset>
-    <legend>{{_('Map options')}} </legend>
+      <fieldset class="map-properties">
+        <legend>{{ _('Map options') }}</legend>
 
-      {{ form.select('montrose_map', 'montrose_map', _('Choose dashboard map view'), options=h.get_org_map_views(data.id), selected=data.montrose_map) }}
+        {% set montrose_maps = h.montrose_convert_to_list(data.montrose_map) %}
 
-      <div class="control-group control-select montrose_map_main_property">
-          <label class="control-label" for="montrose_map_main_property">Select map main property</label>
-          <div class="controls ">
-            <select id="montrose_map_main_property" name="montrose_map_main_property"></select>
+        {% for montrose_map in montrose_maps %}
+
+          <div id="map-field_{{ loop.index }}" class="map-fields">
+
+            {{ form.select('montrose_map', 'montrose_map', _('Resource'), options=h.get_org_map_views(data.id), selected=montrose_map) }}
+
+            <div class="control-group control-select montrose_map_main_property">
+              <label class="control-label" for="montrose_map_main_property">Property</label>
+              <div class="controls">
+                <select id="montrose_map_main_property" name="montrose_map_main_property"></select>
+              </div>
+            </div>
+            <hr>
           </div>
-      </div>
 
-    </fieldset>
+        {% endfor %}
+
+      </fieldset>
+
       <a id="new-field-btn" class="new-field-btn btn btn-default">Add field</a>
 
 
