@@ -126,6 +126,14 @@
                       provided on this map. © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors
                   </div>
               </div>
+              <div class="hero-select-resource" style="border: 5px solid {{ base_color }}">
+                  <select id="montrose_resource" class="form-control" style="color: {{ base_color }};">
+                  {% for montrose_map in montrose_maps %}
+                    <option
+                        value="{{ montrose_geoJsonUrlList[loop.index0] }}">{{ montrose_resource_names[loop.index0] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
               <div class="hero-select" style="border: 5px solid {{ base_color }}">
                   <select id="dataset" class="form-control" style="color: {{ base_color }};"></select>
               </div>
