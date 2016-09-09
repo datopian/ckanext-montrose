@@ -42,4 +42,6 @@ coverage.xml
 docs/_build/
 
 idea/
-.idea/
+.idea
+ckanext/montrose/public/test-file.geojson
+ckanext/montrose/public/test-file2.geojson
