@@ -9,8 +9,10 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
   };
 
   function renderMap(elementId, countryName, mapURL, color, mainProperty) {
-    var mapURLS = mapURL.split(',');
-    var mainProperties = mainProperty.split(',');
+    if (mapURL.length > 0) {
+      var mapURLS = mapURL.split(',');
+      var mainProperties = mainProperty.split(',');
+    }
     $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' + encodeURI(countryName)).done(function (data) {
       if (data['status'] == 'ZERO_RESULTS') {
         initLeaflet(elementId, 39, 40, 2);
@@ -113,7 +115,8 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
           select_dataset.append('<option>Select Data Set</option>');
 
           for (var elem in layers) {
-            console.log("here");
+            console.log(mainField);
+            console.log(layers[elem]);
             select_dataset.append('<option>' + layers[elem].name + '</option>');
           }
 
@@ -146,7 +149,6 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
         var select_dataset = $('#dataset');
 
         select_resource.change(function click() {
-          console.log('hello');
           var selectedIndex = $('#montrose_resource').prop('selectedIndex');
           select_dataset.children('option').remove();
           layers = [];

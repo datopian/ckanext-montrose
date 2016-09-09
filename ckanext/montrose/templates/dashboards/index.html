@@ -38,16 +38,28 @@
   {% set font_all_data_color = "#000000" %}
 {% endif %}
 
-{% set montrose_maps = h.montrose_convert_to_list(country.montrose_map) %}
-{% set montrose_map_main_properties = h.montrose_convert_to_list(country.montrose_map_main_property) %}
-{% set montrose_geoJsonUrlList = [] %}}
-{% set montrose_resource_names = h.montrose_get_resource_names_from_ids(montrose_maps) %}
+{% if country.montrose_map %}
+    {% set montrose_maps = h.montrose_convert_to_list(country.montrose_map) %}
+    {% set montrose_geoJsonUrlList = [] %}}
+    {% for montrose_map in montrose_maps %}
+        {#                Apparently we can append only in an if statement#}
+        {% if montrose_geoJsonUrlList.append(h.montrose_get_resource_url(montrose_map)) %}
+        {% endif %}
+    {% endfor %}
+{% else %}
+    {% set montrose_maps = [] %}
+    {% set montrose_geoJsonUrlList = [] %}
+{% endif %}
 
-{% for montrose_map in montrose_maps %}
-    {#                Apparently we can append only in an if statement#}
-    {% if montrose_geoJsonUrlList.append(h.montrose_get_resource_url(montrose_map)) %}
-    {% endif %}
-{% endfor %}
+{% if country.montrose_map_main_property %}
+    {% set montrose_map_main_properties = h.montrose_convert_to_list(country.montrose_map_main_property) %}
+{% endif %}
+
+
+{% if montrose_maps %}
+{% set montrose_resource_names = h.montrose_get_resource_names_from_ids(montrose_maps) %}
+{% endif %}
+
 
 {#  set base_color = "#" + country.montrose_dashboard_base_color #}
 {# set secondary_color = "#" + country.montrose_dashboard_secondary_color #}
@@ -170,7 +182,11 @@
       <div
               data-module="montrose_map"
               data-module-id="hero_map"
-              data-module-mapurl="{{ montrose_geoJsonUrlList|join(',') }}"
+              {% if montrose_geoJsonUrlList|length > 0 %}
+                data-module-mapurl="{{ montrose_geoJsonUrlList|join(',') }}"
+              {% else %}
+                data-module-mapurl="[]"
+              {% endif %}
               data-module-countryname="{{ country.display_name }}"
               data-module-color="{{ base_color }}"
               data-module-main_property="{{ montrose_map_main_properties|join(',') }}"

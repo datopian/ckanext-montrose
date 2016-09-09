@@ -112,6 +112,7 @@
     // Map select event handler
 
     function changeMainPropertyValues(element) {
+      console.log('here');
       var map_main_property = $(element).parent().parent().parent()
         .find($('select[name="montrose_map_main_property"]'));
 
@@ -140,8 +141,8 @@
       changeMainPropertyValues(selects[i]);
     }
 
-    $('select[name="montrose_map"]').on('change', function () {
-      changeMainPropertyValues($(this));
+    $('.map-properties').on('change', 'select', function (event) {
+      changeMainPropertyValues($(event.target));
     });
 
     //Base color change event handler
@@ -155,14 +156,14 @@
 
     var numResources = $('.map-fields').length;
 
+
+
     $('#new-field-btn').on('click', function () {
-      console.log("a");
       var resourceField = $('#map-field_1').clone();
-      console.log(resourceField);
       numResources++;
-      console.log(numResources);
       resourceField.attr('id', 'map-field_' + numResources);
       resourceField.appendTo($('.map-properties'));
+      changeMainPropertyValues(resourceField);
     });
 
     function ColorLuminance(hex, lum) {

@@ -96,12 +96,15 @@
       <fieldset class="map-properties">
         <legend>{{ _('Map options') }}</legend>
 
-        {% set montrose_maps = h.montrose_convert_to_list(data.montrose_map) %}
+        {% if data.montrose_map %}
+            {% set montrose_maps = h.montrose_convert_to_list(data.montrose_map) %}
+        {% else %}
+            {% set montrose_maps = [] %}
+        {% endif %}
 
+      {% if montrose_maps|length > 0 %}
         {% for montrose_map in montrose_maps %}
-
           <div id="map-field_{{ loop.index }}" class="map-fields">
-
             {{ form.select('montrose_map', 'montrose_map', _('Resource'), options=h.get_org_map_views(data.id), selected=montrose_map) }}
 
             <div class="control-group control-select montrose_map_main_property">
@@ -114,6 +117,19 @@
           </div>
 
         {% endfor %}
+      {% else %}
+          <div id="map-field_1" class="map-fields">
+            {{ form.select('montrose_map', 'montrose_map', _('Resource'), options=h.get_org_map_views(data.id)) }}
+
+            <div class="control-group control-select montrose_map_main_property">
+              <label class="control-label" for="montrose_map_main_property">Property</label>
+              <div class="controls">
+                <select id="montrose_map_main_property" name="montrose_map_main_property"></select>
+              </div>
+            </div>
+            <hr>
+          </div>
+      {% endif %}
 
       </fieldset>
 
