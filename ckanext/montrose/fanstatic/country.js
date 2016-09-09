@@ -148,6 +148,18 @@
       secondary_element.css({'background-color': lighter_color});
     });
 
+    var numResources = $('.map-fields').length;
+
+    $('#new-field-btn').on('click', function () {
+      console.log("a");
+      var resourceField = $('#map-field_1').clone();
+      console.log(resourceField);
+      numResources++;
+      console.log(numResources);
+      resourceField.attr('id', 'map-field_' + numResources);
+      resourceField.appendTo($('.map-properties'));
+    });
+
     function ColorLuminance(hex, lum) {
 
       // validate hex string
