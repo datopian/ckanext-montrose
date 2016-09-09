@@ -78,6 +78,8 @@
 
     {{ form.markdown('montrose_country_footer', label=_('Dashboard footer'), id='montrose_country_footer', placeholder=_('Set the dashboard footer'), value=data.montrose_country_footer, error=errors.montrose_country_footer) }}
 
+    {{ form.markdown('montrose_country_description', label=_('Dashboard description'), id='montrose_country_description', placeholder=('Set the dashboard description'), value=data.montrose_country_description, error=errors.montrose_country_description) }}
+
     {{ form.markdown('montrose_country_copyright', label=_('Dashboard copyright'), id='montrose_country_copyright', placeholder=_('Set the dashboard copyright'), value=data.montrose_country_copyright, error=errors.montrose_country_copyright) }}
 
     {% if data.id %}
