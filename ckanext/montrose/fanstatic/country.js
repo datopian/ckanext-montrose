@@ -112,7 +112,6 @@
     // Map select event handler
 
     function changeMainPropertyValues(element) {
-      console.log('here');
       var map_main_property = $(element).parent().parent().parent()
         .find($('select[name="montrose_map_main_property"]'));
 
@@ -124,16 +123,12 @@
       var params = {id: resource_id};
       api.get('montrose_resource_show_map_properties', params)
         .done(function (data) {
-          console.log(data);
           var opts = map_main_property;
           $.each(data.result, function (idx, elem) {
             opts.append(new Option(elem.value, elem.value));
           });
           map_main_property.removeClass('hidden');
-
         });
-
-
     }
 
     var selects = $('select[name="montrose_map"]');
@@ -142,7 +137,9 @@
     }
 
     $('.map-properties').on('change', 'select', function (event) {
-      changeMainPropertyValues($(event.target));
+        if ($(event.target).attr('id') == 'montrose_map') {
+          changeMainPropertyValues($(event.target));
+        }
     });
 
     //Base color change event handler
@@ -156,14 +153,16 @@
 
     var numResources = $('.map-fields').length;
 
-
-
     $('#new-field-btn').on('click', function () {
       var resourceField = $('#map-field_1').clone();
       numResources++;
       resourceField.attr('id', 'map-field_' + numResources);
       resourceField.appendTo($('.map-properties'));
       changeMainPropertyValues(resourceField);
+    });
+
+    $('.map-properties').on('click', 'a', function (e) {
+      $(e.target).parent().remove();
     });
 
     function ColorLuminance(hex, lum) {

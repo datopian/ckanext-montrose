@@ -115,8 +115,6 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
           select_dataset.append('<option>Select Data Set</option>');
 
           for (var elem in layers) {
-            console.log(mainField);
-            console.log(layers[elem]);
             select_dataset.append('<option>' + layers[elem].name + '</option>');
           }
 
