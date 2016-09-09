@@ -153,15 +153,6 @@
     <div class="hero-map-wrap">
       <div class="hero-controls">
           <div class="hero-block hero-info-select hidden" id="map-info">
-              <div class="media hero-info">
-                  <div class="media-left">
-                      <img id="map-info-img" class="language-flag" src="/images/usedata-info-icon.svg" width="41" alt="icon">
-                  </div>
-                  <div class="media-body">All efforts have been made to make this map accurate. However, USEDATA and its
-                      Service Providers accept no liability for any errors, omissions, or inaccuracies in the information
-                      provided on this map. © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors
-                  </div>
-              </div>
               <div class="hero-select-resource" style="border: 5px solid {{ base_color }}">
                   <select id="montrose_resource" class="form-control" style="color: {{ base_color }};">
                   {% for montrose_map in montrose_maps %}
@@ -185,6 +176,7 @@
               data-module-main_property="{{ montrose_map_main_properties|join(',') }}"
               id="hero_map"
       >
+      </div>
         <div class="media hero-info">
             <div class="media-left">
                 <img id="map-info-img" class="language-flag" src="/images/usedata-info-icon.svg" width="41" alt="icon">
@@ -193,6 +185,7 @@
                 Service Providers accept no liability for any errors, omissions, or inaccuracies in the information
                 provided on this map.') }} © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> {{ _('contributors') }}
             </div>
+        </div>
     </div>
 
     <p class="dashboard-description">{{ country.montrose_country_description }}</p>
@@ -203,41 +196,41 @@
         <div class="graphs">
           <div class="row">
             {% if country.montrose_chart_1 %}
-                {% snippet 'dashboards/snippets/show_charts.html', 
+                {% snippet 'dashboards/snippets/show_charts.html',
                     resource_view_id=country.montrose_chart_1,
-                    subheader=country.montrose_chart_1_subheader 
+                    subheader=country.montrose_chart_1_subheader
                 %}
             {% endif %}
             {% if country.montrose_chart_2 %}
-                {% snippet 'dashboards/snippets/show_charts.html', 
+                {% snippet 'dashboards/snippets/show_charts.html',
                     resource_view_id=country.montrose_chart_2,
-                    subheader=country.montrose_chart_2_subheader 
+                    subheader=country.montrose_chart_2_subheader
                 %}
             {% endif %}
             {% if country.montrose_chart_3 %}
-                {% snippet 'dashboards/snippets/show_charts.html', 
+                {% snippet 'dashboards/snippets/show_charts.html',
                     resource_view_id=country.montrose_chart_3,
-                    subheader=country.montrose_chart_3_subheader 
+                    subheader=country.montrose_chart_3_subheader
                 %}
             {% endif %}
               </div>
           <div class="row">
             {% if country.montrose_chart_4 %}
-                {% snippet 'dashboards/snippets/show_charts.html', 
+                {% snippet 'dashboards/snippets/show_charts.html',
                     resource_view_id=country.montrose_chart_4,
-                    subheader=country.montrose_chart_4_subheader 
+                    subheader=country.montrose_chart_4_subheader
                 %}
             {% endif %}
             {% if country.montrose_chart_5 %}
-                {% snippet 'dashboards/snippets/show_charts.html', 
+                {% snippet 'dashboards/snippets/show_charts.html',
                     resource_view_id=country.montrose_chart_5,
-                    subheader=country.montrose_chart_5_subheader 
+                    subheader=country.montrose_chart_5_subheader
                 %}
             {% endif %}
             {% if country.montrose_chart_6 %}
-                {% snippet 'dashboards/snippets/show_charts.html', 
+                {% snippet 'dashboards/snippets/show_charts.html',
                     resource_view_id=country.montrose_chart_6,
-                    subheader=country.montrose_chart_6_subheader 
+                    subheader=country.montrose_chart_6_subheader
                 %}
             {% endif %}
           </div>
