@@ -278,12 +278,15 @@ def montrose_get_geojson_properties(resource_id):
 
 
 def montrose_convert_to_list(resources):
+    if not resources.startswith('{'):
+        return [resources]
     resources = resources[1:len(resources) - 1].split(',')
     for i in range(len(resources)):
         if resources[i].startswith('"'):
             resources[i] = resources[i][1:len(resources[i]) - 1]
 
     return resources
+
 
 def montrose_get_resource_names_from_ids(resource_ids):
     resource_names = []
