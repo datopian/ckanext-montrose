@@ -57,6 +57,7 @@
 
 
 {% block page %}
+    <div class="boxed-layout">
     <header>
         <div class="container">
             <div class="row">
@@ -266,6 +267,7 @@
         </div>
           {{h.snippet('dashboards/snippets/pagination.html', current=c.page.page, per_page=c.page.items_per_page, total=c.page.item_count)}}
     </main>
+    </div>
     <footer>
         <div class="container">
             <div class="row">

@@ -1313,7 +1313,8 @@ html {
 body {
     font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
-    line-height: 1.42857143
+    line-height: 1.42857143;
+    border: solid lightgrey;
 }
 
 button, input, select, textarea {
@@ -1663,6 +1664,9 @@ dd {
     .container {
         width: 750px
     }
+    .boxed-layout {
+        width: 750px
+    }
 }
 
 abbr[data-original-title], abbr[title] {
@@ -1760,7 +1764,7 @@ pre {
     border-radius: 4px
 }
 
-.container, .container-fluid {
+.container, .container-fluid, .boxed-layout {
     margin-right: auto;
     margin-left: auto
 }
@@ -1774,8 +1778,13 @@ pre code {
 }
 
 .container, .container-fluid {
-    padding-left: 15px;
-    padding-right: 15px
+    /*padding-left: 15px;*/
+    padding-right: 5px;
+}
+
+.boxed-layout {
+    border-left: solid lightgrey;
+    border-right: solid lightgrey;
 }
 
 .pre-scrollable {
@@ -1786,11 +1795,19 @@ pre code {
     .container {
         width: 970px
     }
+
+    .boxed-layout {
+        width: 970px
+    }
 }
 
 @media (min-width: 1200px) {
     .container {
-        width: 1290px
+        width: 1290px;
+    }
+
+    .boxed-layout {
+        width: 1290px;
     }
 }
 
@@ -5113,8 +5130,8 @@ a.badge:focus, a.badge:hover, a.label:focus, a.label:hover {
 
 .container .jumbotron, .container-fluid .jumbotron {
     border-radius: 6px;
-    padding-left: 15px;
-    padding-right: 15px
+    /*padding-left: 15px;*/
+    /*padding-right: 15px*/
 }
 
 .jumbotron .container {
@@ -6855,7 +6872,11 @@ button.close {
 
 .hero-map-wrap{
     border-top: 3px solid rgba(0, 0, 0, .15);
-    border-bottom: 3px solid rgba(0, 0, 0, .15);
+}
+
+.graphs {
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
 .hero-controls, .leaflet-control-container {
@@ -6864,6 +6885,8 @@ button.close {
     margin-right: auto;
     position: relative
 }
+
+
 
 .hero-info-select {
     width: 100%;
@@ -6939,7 +6962,7 @@ button.close {
     }
 
     #hero_map {
-        min-height: 50vh
+        min-height: 50vh;
     }
 }
 
@@ -7113,6 +7136,9 @@ header {
     text-align: justify;
     padding-top: 1em;
     font-size:1em;
+    display:block;
+    padding-left:1em;
+    padding-right:1em;
 }
 
 .language-selector {
