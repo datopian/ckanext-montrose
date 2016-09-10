@@ -100,24 +100,53 @@ do::
 Languages Installation
 ------------------------
 
-Inside the ```montrose``` directory there is a directory ```i18n``` where
-new languages are stored (ones that are not supported by CKAN). If you are 
-doing this for the first time, first you have to add the language directories 
-to CKAN's ```i18n```, where all languages are stored. Copy the directories 
-from montrose's ```i18n``` to CKAN's ```i18n``` directory. 
+In order to use languages that are not supported by CKAN, you have to install
+them manually. Open up a terminal inside the CKAN's source directory, and type
+the following command to initialize a new catalog for a language:
 
-After that, you have to compile the languages into ```.mo``` files. To do that, 
-open a terminal inside the desired language, e.g. ```i18n/de/LC_MESSAGES``` and
-run the following command:
 ```
-msgfmt ckan.po -o ckan.mo
+python setup.py init_catalog --locale YOUR_LANGUAGE
+```
+where ```YOUR_LANGUAGE``` is the locale of the language. This command will 
+create a ```.po``` file inside ```ckan/i18n/YOUR_LANGUAGE/LC_MESSAGES``` 
+which contains the strings for the language. 
+
+Next you have to compile tha language into a binary format with the following
+command:
+
+```
+python setup.py compile_catalog --locale YOUR_LANGUAGE
+```
+where ```YOUR_LANGUAGE``` is the locale of the language. This command will 
+create a ```.mo``` file, and the one which CKAN will read the strings from.
+
+The created languages will contain the strings in English. In order to
+translate the already defined strings, and extend the catalog with new ones,
+you need to follow the next steps.
+
+Right now there are only two languages inside this extension, Burmese and
+Swahili. They are located in the ```i18n``` directory which is in the
+```montrose``` directory. Inside it are listed all languages installed.
+
+For instance, to translate the Burmese language, open up the ```.po``` file
+located in ```i18n/my_MM/LC_MESSAGES``` with [Poedit](https://poedit.net/).
+Once you are done translating the language, save it. After that, open up a
+terminal and inside the extension's source directory, and type the following
+command to compile the catalog:
+
+```
+python setup.py compile_catalog --locale my_MM
 ```
 
-This will output a compiled ```.mo``` file inside the same directory.
+Every time you install or compile the language, in order to see the changes in
+the web portal, you have to restart the server where CKAN is running.
 
-Every time the languages are updated inside montrose's ```i18n``` directory,
-you have to copy only the ```.po``` files into the CKAN's ```i18n``` directory
-and compile them with the command written above.
+To translate a totaly new language, first you need to follow the steps defined
+above for adding a language to CKAN, and after that, you have to add the
+language to the extension as well, inside the ```i18n``` directory.
+
+More information on translating extensions can be found on the offical
+documentation on CKAN.
 
 -----------------
 Running the Tests
