@@ -33,7 +33,7 @@ msgstr ""
 #: ckanext/montrose/controllers/dashboard.py:160
 #: ckanext/montrose/templates/dashboards/index.html:239
 msgid "Tags"
-msgstr ""
+msgstr "လိုင္စင္"
 
 #: ckanext/montrose/controllers/dashboard.py:161
 msgid "Formats"
@@ -42,12 +42,12 @@ msgstr ""
 #: ckanext/montrose/controllers/dashboard.py:162
 #: ckanext/montrose/templates/dashboards/index.html:241
 msgid "Licenses"
-msgstr ""
+msgstr "လုိင္စင္မ်ား"
 
 #: ckanext/montrose/controllers/dashboard.py:172
 #: ckanext/montrose/templates/dashboards/index.html:242
 msgid "Authors"
-msgstr ""
+msgstr "စာတမ္းျပဳစုသူမ်ား"
 
 #: ckanext/montrose/controllers/dashboard.py:221
 msgid "Parameter \"{parameter_name}\" is not an integer"
@@ -76,28 +76,28 @@ msgstr ""
 #: ckanext/montrose/templates/group/index.html:6
 #: ckanext/montrose/templates/group/index.html:18
 msgid "Themes"
-msgstr ""
+msgstr "ေခါင္းစီးအေၾကာင္းအရာမ်ား"
 
 #: ckanext/montrose/templates/header.html:13
 #: ckanext/montrose/templates/dashboards/index.html:116
 #: ckanext/montrose/templates/dashboards/index.html:288
 msgid "About"
-msgstr "test"
+msgstr "ဒက္ရွ္ဘုတ္အေၾကာင္း"
 
 #: ckanext/montrose/templates/dashboards/index.html:117
 #: ckanext/montrose/templates/dashboards/index.html:289
 msgid "Help"
-msgstr ""
+msgstr "အကူအညီရယူရန္"
 
 #: ckanext/montrose/templates/dashboards/index.html:118
 #: ckanext/montrose/templates/dashboards/index.html:290
 msgid "Resources"
-msgstr ""
+msgstr "အရင္းအျမစ္မ်ား"
 
 #: ckanext/montrose/templates/dashboards/index.html:119
 #: ckanext/montrose/templates/dashboards/index.html:292
 msgid "Contact"
-msgstr ""
+msgstr "ဆက္သြယ္ရန္"
 
 #: ckanext/montrose/templates/dashboards/index.html:165
 msgid ""
@@ -112,11 +112,11 @@ msgstr ""
 
 #: ckanext/montrose/templates/dashboards/index.html:217
 msgid "Newly Released Data"
-msgstr ""
+msgstr "အသစ္ထုတ္ျပန္ထားေသာ အခ်က္အလက္မ်ား"
 
 #: ckanext/montrose/templates/dashboards/index.html:240
 msgid "Resource Format"
-msgstr ""
+msgstr "အရင္းအျမစ္ဆိုင္ရာပံုစံ"
 
 #: ckanext/montrose/templates/dashboards/index.html:246
 msgid "Relevance"
@@ -144,15 +144,15 @@ msgstr ""
 
 #: ckanext/montrose/templates/dashboards/index.html:267
 msgid "Filter Data by"
-msgstr ""
+msgstr "စီစစ္ထားေသာ အခ်က္အလက္မ်ား"
 
 #: ckanext/montrose/templates/dashboards/index.html:291
 msgid "About USEDATA"
-msgstr ""
+msgstr "USEDATA အေၾကာင္း"
 
 #: ckanext/montrose/templates/dashboards/index.html:293
 msgid "Terms of use"
-msgstr ""
+msgstr "ဝက္(ဘ္)ဆိုဒ္ အသံုးျပဳခြင့္ စည္းမ်ဥ္းမ်ား"
 
 #: ckanext/montrose/templates/dashboards/snippets/resource_view.html:10
 msgid "This resource view is not available at the moment."
@@ -168,11 +168,11 @@ msgstr ""
 
 #: ckanext/montrose/templates/dashboards/snippets/search_form.html:3
 msgid "Search datasets..."
-msgstr ""
+msgstr "အခ်က္အလက္တြဲမ်ား ရွာရန္"
 
 #: ckanext/montrose/templates/dashboards/snippets/search_form.html:12
 msgid "Data"
-msgstr ""
+msgstr "အခ်က္အလက္မ်ား "
 
 #: ckanext/montrose/templates/dashboards/snippets/search_form.html:35
 msgid "There was an error while searching."
@@ -184,7 +184,7 @@ msgstr ""
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:41
 msgid "View dataset"
-msgstr ""
+msgstr "အခ်က္အလက္တြဲ ၾကည့္ရႈရန္"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:65
 msgid "Unnamed resource"
@@ -196,7 +196,7 @@ msgstr ""
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:91
 msgid "View resource"
-msgstr ""
+msgstr "အရင္းအျမစ္ ၾကည့္ရႈရန္"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:99
 msgid "This dataset does not contain any resources yet."
@@ -208,23 +208,23 @@ msgstr ""
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:113
 msgid "Author"
-msgstr ""
+msgstr "စာတမ္းျပဳစုသူ"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:124
 msgid "Maintainer"
-msgstr ""
+msgstr "ထိန္းသိမ္းသူ"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:135
 msgid "Source"
-msgstr ""
+msgstr "မူရင္း"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:146
 msgid "License"
-msgstr ""
+msgstr "လိုင္စင္"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:172
 msgid "Last updated"
-msgstr ""
+msgstr "ေနာက္ဆံုးျဖည့္စြက္ထားျခင္း"
 
 #: ckanext/montrose/templates/group/edit_base.html:3
 #: ckanext/montrose/templates/group/edit_base.html:11
