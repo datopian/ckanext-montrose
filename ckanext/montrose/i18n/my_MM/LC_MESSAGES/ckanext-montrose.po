@@ -100,15 +100,12 @@ msgid "Contact"
 msgstr "ဆက္သြယ္ရန္"
 
 #: ckanext/montrose/templates/dashboards/index.html:165
-msgid ""
-"All efforts have been made to make this map accurate. However, USEDATA "
-"and its Service Providers accept no liability for any errors, omissions, "
-"or inaccuracies in the information provided on this map."
-msgstr ""
+msgid "All efforts have been made to make this map accurate. However, USEDATA and its Service Providers accept no liability for any errors, omissions, or inaccuracies in the information provided on this map."
+msgstr "ဤေျမပံုအား တိတိက်က်ျဖစ္ေစရန္ အစြမ္းကုန္ႀကိဳးစားထားပါသည္။ သို႔ရာတြင္ ဤေျမပံုပါသတင္းအခ်က္အလက္မ်ားတြင္ မွားယြင္းမႈမ်ား၊ ခ်န္လွပ္ထားခဲ့သည့္အရာမ်ားႏွင့္ မတိက်သည့္အခ်က္အလက္မ်ား ပါရွိပါက USEDATA ႏွင့္ ဝန္ေဆာင္မႈေပးသည့္အဖြဲ႔အစည္းမ်ားအေနျဖင့္ တာဝန္မယူပါ။ "
 
 #: ckanext/montrose/templates/dashboards/index.html:167
 msgid "contributors"
-msgstr ""
+msgstr "ပါဝင္ကူညီသူမ်ား"
 
 #: ckanext/montrose/templates/dashboards/index.html:217
 msgid "Newly Released Data"
@@ -160,15 +157,15 @@ msgstr ""
 
 #: ckanext/montrose/templates/dashboards/snippets/resource_view.html:12
 msgid "Click here for more information."
-msgstr ""
+msgstr "ေနာက္ထပ္သိရွိလိုပါက ဤေနရာကို ႏွိပ္ပါ။ "
 
 #: ckanext/montrose/templates/dashboards/snippets/resource_view.html:19
 msgid "Download resource"
-msgstr ""
+msgstr "အရင္းအျမစ္အား ေဒါင္းလုတ္ဆြဲရယူရန္"
 
 #: ckanext/montrose/templates/dashboards/snippets/search_form.html:3
 msgid "Search datasets..."
-msgstr "အခ်က္အလက္တြဲမ်ား ရွာရန္"
+msgstr "ရွာေဖြေရးအခ်က္အလက္စံုမ်ား"
 
 #: ckanext/montrose/templates/dashboards/snippets/search_form.html:12
 msgid "Data"
@@ -176,11 +173,11 @@ msgstr "အခ်က္အလက္မ်ား "
 
 #: ckanext/montrose/templates/dashboards/snippets/search_form.html:35
 msgid "There was an error while searching."
-msgstr ""
+msgstr "ရွာေဖြေနစဥ္ တစ္ခုခုမွားေနသည္။ "
 
 #: ckanext/montrose/templates/dashboards/snippets/search_form.html:35
 msgid "Please try again."
-msgstr ""
+msgstr "ေက်းဇူးျပဳ၍ ထပ္ႀကိဳးစားၾကည့္ပါ။"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:41
 msgid "View dataset"
@@ -188,11 +185,11 @@ msgstr "အခ်က္အလက္တြဲ ၾကည့္ရႈရန္"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:65
 msgid "Unnamed resource"
-msgstr ""
+msgstr "အမည္မသိ အရင္းအျမစ္"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:87
 msgid "This resource does not contain any description."
-msgstr ""
+msgstr "ဤအရင္းအျမစ္တြင္ ေဖာ္ျပခ်က္မပါရွိပါ။"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:91
 msgid "View resource"
@@ -200,11 +197,11 @@ msgstr "အရင္းအျမစ္ ၾကည့္ရႈရန္"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:99
 msgid "This dataset does not contain any resources yet."
-msgstr ""
+msgstr "ဤအခ်က္အလက္စံုတြင္ အရင္းအျမစ္မ်ားမရွိေသးပါ။"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:106
 msgid "Additional information"
-msgstr ""
+msgstr "ေနာက္ထပ္သတင္းအခ်က္အလက္မ်ား"
 
 #: ckanext/montrose/templates/dashboards/snippets/show_datasets.html:113
 msgid "Author"
