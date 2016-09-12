@@ -300,3 +300,15 @@ def montrose_smart_truncate(text, length=800):
     if length > len(text):
         return text
     return text[:length].rsplit(' ', 1)[0]
+
+def montrose_get_secondary_language(organization):
+    countries = _get_action('organization_list', {}, {'all_fields': True})
+
+    for country in countries:
+        if country['name'] == organization:
+            country_id = country['id']
+            break
+
+    country = _get_action('organization_show', {}, {'id': country_id})
+
+    return country['montrose_secondary_language']

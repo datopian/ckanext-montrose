@@ -249,7 +249,9 @@ class MontrosePlugin(plugins.SingletonPlugin,
             'montrose_get_resource_names_from_ids':
                 montrose_helpers.montrose_get_resource_names_from_ids,
             'montrose_smart_truncate':
-                montrose_helpers.montrose_smart_truncate
+                montrose_helpers.montrose_smart_truncate,
+            'montrose_get_secondary_language':
+                montrose_helpers.montrose_get_secondary_language
         }
         
     ## IConfigurer
