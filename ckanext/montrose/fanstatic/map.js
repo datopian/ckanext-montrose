@@ -112,7 +112,7 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
 
           var select_dataset = $('#dataset');
           var select_resource = $('#montrose_resource');
-          select_dataset.append('<option>Select Data Set</option>');
+          select_dataset.append('<option>Select Data Point</option>');
 
           for (var elem in layers) {
             select_dataset.append('<option>' + layers[elem].name + '</option>');
