@@ -7,11 +7,16 @@
 
 {% block content_action %}
 	{{super()}}
-
-
+  
+  {% if c.group_dict.montrose_secondary_language and c.group_dict.montrose_secondary_language == 'en' %}
+    {% set locale = h.montrose_get_secondary_language(c.group_dict.montrose_secondary_dashboard) %}
+  {% else %}
+    {% set locale = 'en' %}
+  {% endif %}
 
   <a class="btn" href="{% url_for controller='ckanext.montrose.controllers.dashboard:DashboardsController',
                                                                  action='montrose_country_dashboard',
+                                                                 locale=locale,
                                                                  name=c.group_dict.name%}" target="_blank"><i class="icon-globe"></i> View dashboard</a>
     
 

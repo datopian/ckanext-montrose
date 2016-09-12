@@ -57,10 +57,18 @@
   {% endblock %}
 
   <fieldset>
+
+    {% if data.montrose_secondary_language and data.montrose_secondary_language == 'en' %}
+      {% set locale = h.montrose_get_secondary_language(data.montrose_secondary_dashboard) %}
+    {% else %}
+      {% set locale = 'en' %}
+    {% endif %}
+
     <legend><h2>{{ _('Dashboard settings') }}<a class="btn btn-info pull-right"
                                                 target="_blank"
                                                 href="{% url_for controller='ckanext.montrose.controllers.dashboard:DashboardsController',
                                                                  action='montrose_country_dashboard',
+                                                                 locale=locale,
                                                                  name=data.name%}" >
                                                     View Dashboard
                                                     </a></h2></legend>
