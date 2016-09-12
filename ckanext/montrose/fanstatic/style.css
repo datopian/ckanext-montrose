@@ -7158,6 +7158,24 @@ header {
     color: rgb(85, 26, 139);
 }
 
+#survey_popup {
+    padding: 1.5em;
+    min-width: 20%;
+    max-width: 30%;
+    min-height: 200px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+}
+
+#survey_popup > .survey_link {
+    float: right;
+}
+
+#survey_popup > .survey_text {
+    word-wrap:break-word;
+}
+
 .language-selector {
     text-align: center;
     float: right;

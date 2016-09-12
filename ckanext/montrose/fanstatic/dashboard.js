@@ -8,58 +8,84 @@ $(function () {
   });
 
  $(document).ready(function(){
-      var disclaimerText = $('.hero-info .media-body');
-      var disclaimerContainer = $('.media.hero-info');
 
-      $('#newly-released-data-btn').on('click', function(){
-        console.log('detected click');
-        if($('#newly-released-data').hasClass('hidden')){
-            $('#newly-released-data-btn').html('');
-            $('#newly-released-data').removeClass('hidden');
-            $('#newly-released-data-btn').html('<i class="fa fa-compress pull-right"></i>');
+     var disclaimerText = $('.hero-info .media-body');
+     var disclaimerContainer = $('.media.hero-info');
 
-        }
-        else{
-            $('#newly-released-data-btn').html('');
-            $('#newly-released-data').addClass('hidden');
-            $('#newly-released-data-btn').html('<i class="fa fa-expand pull-right"></i>');
-        }
-      });
+     $('#newly-released-data-btn').on('click', function () {
+         console.log('detected click');
+         if ($('#newly-released-data').hasClass('hidden')) {
+             $('#newly-released-data-btn').html('');
+             $('#newly-released-data').removeClass('hidden');
+             $('#newly-released-data-btn').html('<i class="fa fa-compress pull-right"></i>');
 
-      // Click handler for the disclaimer icon.
-      $('.hero-info > .media-left').click(function onMapDisclaimerClick(event) {
-          var bodyWidth = $('body').outerWidth();
-          var topPosition;
+         }
+         else {
+             $('#newly-released-data-btn').html('');
+             $('#newly-released-data').addClass('hidden');
+             $('#newly-released-data-btn').html('<i class="fa fa-expand pull-right"></i>');
+         }
+     });
 
-          if (disclaimerText.hasClass('hidden')) {
-            topPosition = bodyWidth <= 976 ? '790px' : '295px';
+     // Click handler for the disclaimer icon.
+     $('.hero-info > .media-left').click(function onMapDisclaimerClick(event) {
+         var bodyWidth = $('body').outerWidth();
+         var topPosition;
 
-            disclaimerText.removeClass('hidden');
-            disclaimerContainer.css({
-                'width': '300px',
-                'padding': '10px',
-            });
-          } else {
-            topPosition = bodyWidth <= 976 ? '905px' : '410px';
+         if (disclaimerText.hasClass('hidden')) {
+             topPosition = bodyWidth <= 976 ? '790px' : '295px';
 
-            disclaimerText.addClass('hidden');
-            disclaimerContainer.css({
-                'width': '54px',
-                'padding': '2px',
-            });
-          }
-      });
+             disclaimerText.removeClass('hidden');
+             disclaimerContainer.css({
+                 'width': '300px',
+                 'padding': '10px',
+             });
+         } else {
+             topPosition = bodyWidth <= 976 ? '905px' : '410px';
 
-      _setActiveLanguage();
+             disclaimerText.addClass('hidden');
+             disclaimerContainer.css({
+                 'width': '54px',
+                 'padding': '2px',
+             });
+         }
+     });
 
-       // Enable toggling of Extension descriptions
-      $('.dashboard-description .more-link').click(function (e) {
-        e.preventDefault(); // Prevents other scripts from triggering window.scroll();
-        $(this).parent().parent().parent().children('.description-short').toggleClass('hidden');
-        $(this).parent().parent().parent().children('.description-full').toggleClass('hidden');
-      });
+     _setActiveLanguage();
 
-      _setFocusOnMontroseFilters();
+     // Enable toggling of Extension descriptions
+     $('.dashboard-description .more-link').click(function (e) {
+         e.preventDefault(); // Prevents other scripts from triggering window.scroll();
+         $(this).parent().parent().parent().children('.description-short').toggleClass('hidden');
+         $(this).parent().parent().parent().children('.description-full').toggleClass('hidden');
+     });
+
+     if ($('#survey_popup').length) {
+         var survey_popup = $('#survey_popup').popup({
+             type: 'overlay',
+             outline: true,
+             scrolllock: true,
+             transition: 'all 0.3s',
+             closeelement: '#survey_popup_close',
+             blur: false,
+             onclose: function () {
+                 Cookies.set('survey_popup_link', $('.survey_link').attr('href'), { expires: 365 });
+             }
+         });
+         var survey_popup_link = $('.survey_link').attr('href');
+
+         cookie = Cookies.get('survey_popup_link');
+
+         if (undefined == cookie) {
+             survey_popup.popup('show');
+         } else if (cookie != survey_popup_link) {
+             Cookies.set('survey_popup_link', survey_popup_link, { expires: 365 });
+             console.log('here');
+             survey_popup.popup('show');
+         }
+     }
+
+    _setFocusOnMontroseFilters();
   });
 
 });

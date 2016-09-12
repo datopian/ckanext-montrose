@@ -150,7 +150,10 @@ class MontrosePlugin(plugins.SingletonPlugin,
             'montrose_new_data_color': default_validators,
             'montrose_all_data_color': default_validators,
             'montrose_secondary_dashboard': default_validators,
-            'montrose_secondary_language': default_validators
+            'montrose_secondary_language': default_validators,
+            'montrose_survey_enabled': default_validators,
+            'montrose_survey_text': default_validators,
+            'montrose_survey_link': default_validators,
         })
         
         charts = {}
@@ -190,6 +193,9 @@ class MontrosePlugin(plugins.SingletonPlugin,
             'montrose_all_data_color': default_validators,
             'montrose_secondary_dashboard': default_validators,
             'montrose_secondary_language': default_validators,
+            'montrose_survey_enabled': default_validators,
+            'montrose_survey_text': default_validators,
+            'montrose_survey_link': default_validators,
             'num_followers': [_not_empty],
             'package_count': [_not_empty],
         })

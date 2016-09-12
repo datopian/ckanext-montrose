@@ -1,0 +1,12 @@
+<fieldset>
+    <legend>{{ _('Dashboard Survey') }}</legend>
+
+    <div class="control-group control-full">
+        {{ form.select('montrose_survey_enabled', 'montrose_survey_enabled', _('Is survey enabled?'), options=[{'value': '1', 'text': 'Yes'}, {'value': '0', 'text': 'No'}], selected=data.montrose_survey_enabled) }}
+
+        {{ form.markdown('montrose_survey_text', label=_('Survey Text'), id='montrose_survey_text', placeholder=('Set the survey text'), value=data.montrose_survey_text, error=errors.montrose_survey_text) }}
+
+        {{ form.markdown('montrose_survey_link', label=_('Survey Link'), id='montrose_survey_link', placeholder=('Set the survey link'), value=data.montrose_survey_link, error=errors.montrose_survey_link) }}
+    </div>
+
+</fieldset>
