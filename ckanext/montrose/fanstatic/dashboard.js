@@ -59,7 +59,7 @@ $(function () {
         $(this).parent().parent().parent().children('.description-full').toggleClass('hidden');
       });
 
-
+      _setFocusOnMontroseFilters();
   });
 
 });
@@ -90,5 +90,54 @@ function _setActiveLanguage() {
     }
 
     languageElement.className = 'active';
+  }
+}
+
+function _setFocusOnMontroseFilters() {
+  var baseColor = $('.data-block-header')[0].style.background;
+  var rule = ['border-color: ' + baseColor + ';',
+              'box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 3px ' + baseColor + ';'].join('');
+  var country = window.location.pathname.split('/').reverse()[1];
+
+  // Check whether there is already a rule set for the current country
+  if (!_ruleExists('.' + country + ':focus')) {
+    _addCssRule('.form-control.montrose-filters:focus', rule);
+  }
+}
+
+function _addCssRule(selector, rule) {
+  if (document.styleSheets) {
+    if (!document.styleSheets.length) {
+      var head = document.getElementsByTagName('head')[0];
+      head.appendChild(bc.createEl('style'));
+    }
+
+    var i = document.styleSheets.length-1;
+    var ss = document.styleSheets[i];
+    var l = 0;
+
+    if (ss.cssRules) {
+      l = ss.cssRules.length;
+    } else if (ss.rules) {
+      // IE
+      l = ss.rules.length;
+    }
+
+    if (ss.insertRule) {
+      ss.insertRule(selector + ' {' + rule + '}', l);
+    } else if (ss.addRule) {
+      // IE
+      ss.addRule(selector, rule, l);
+    }
+  }
+};
+
+function _ruleExists(selector) {
+  var rules = document.styleSheets[5].rules || document.styleSheets[5].cssRules;
+
+  for (var i = 0; i < rules.length; i++) {
+    if (rules[i].selectorText === selector) {
+      return true;
+    }
   }
 }
