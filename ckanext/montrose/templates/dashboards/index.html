@@ -165,7 +165,7 @@
     <div class="hero-map-wrap">
       <div class="hero-controls">
           <div class="hero-block hero-info-select hidden" id="map-info">
-              <div class="hero-select-resource" style="border: 5px solid {{ base_color }}">
+              <div class="hero-select" style="border: 5px solid {{ base_color }}">
                   <select id="montrose_resource" class="form-control" style="color: {{ base_color }};">
                   {% for montrose_map in montrose_maps %}
                     <option
@@ -204,9 +204,16 @@
       </div>
 
     </div>
-
-    <p class="dashboard-description">{{ country.montrose_country_description }}</p>
-
+        <div class="description-short">
+            <p class="dashboard-description">{{ h.montrose_smart_truncate(country.montrose_country_description) }}{% if country.montrose_country_description|length > 800 %}..
+                    <a href="#" class="more-link">Read more</a>
+                {% endif %}
+            </p>
+        </div>
+        <div class="description-full hidden">
+            <p class="dashboard-description">{{ country.montrose_country_description }}
+                <a href="#" class="more-link">Read less</a></p>
+        </div>
     </div>
 
     <main class="container">

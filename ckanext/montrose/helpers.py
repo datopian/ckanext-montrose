@@ -294,3 +294,9 @@ def montrose_get_resource_names_from_ids(resource_ids):
         print resource_id
         resource_names.append(_get_action('resource_show', {}, {'id': resource_id})['name'])
     return resource_names
+
+
+def montrose_smart_truncate(text, length=800):
+    if length > len(text):
+        return text
+    return text[:length].rsplit(' ', 1)[0]

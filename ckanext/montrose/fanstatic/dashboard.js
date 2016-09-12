@@ -51,6 +51,15 @@ $(function () {
       });
 
       _setActiveLanguage();
+
+       // Enable toggling of Extension descriptions
+      $('.dashboard-description .more-link').click(function (e) {
+        e.preventDefault(); // Prevents other scripts from triggering window.scroll();
+        $(this).parent().parent().parent().children('.description-short').toggleClass('hidden');
+        $(this).parent().parent().parent().children('.description-full').toggleClass('hidden');
+      });
+
+
   });
 
 });

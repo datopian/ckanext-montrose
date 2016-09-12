@@ -7153,6 +7153,11 @@ header {
     padding-right:1em;
 }
 
+.dashboard-description .more-link {
+    font-weight: bold;
+    color: rgb(85, 26, 139);
+}
+
 .language-selector {
     text-align: center;
     float: right;
