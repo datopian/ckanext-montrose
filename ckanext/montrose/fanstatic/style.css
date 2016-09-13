@@ -6972,7 +6972,19 @@ button.close {
     }
 
     #hero_map {
-        min-height: 73vh;
+        min-height: 73vmin;
+    }
+}
+
+@media (min-height: 700px) {
+    #hero_map {
+        min-height: 65vmin;
+    }
+}
+
+@media (min-height: 1000px) {
+    #hero_map {
+        min-height: 73vmin;
     }
 }
 
@@ -7151,6 +7163,8 @@ header {
     display:block;
     padding-left:1em;
     padding-right:1em;
+    padding-bottom: 1em;
+    border-bottom: solid lightgrey;
 }
 
 .dashboard-description .more-link {
