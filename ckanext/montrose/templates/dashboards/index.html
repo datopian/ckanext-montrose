@@ -218,12 +218,12 @@
         </div>
     </div>
     {% if country.montrose_survey_enabled == '1' %}
-        <div id="survey_popup">
-            <h4>Survey</h4>
+        <div id="survey_popup" class="hidden">
+            <h4>Feedback Survey</h4>
             <hr>
             <p class="survey_text">{{ country.montrose_survey_text }}</p>
-            <button id="survey_popup_close" class="btn btn-default">Close</button>
-            <a href="{{ country.montrose_survey_link }}" class="survey_link btn btn-success" target="_blank">Go to survey</a>
+            <button id="survey_popup_close" class="btn btn-default">No, thanks</button>
+            <a href="{{ country.montrose_survey_link }}" id="survey_link_button" class="survey_link btn btn-success" target="_blank">Yes, I'll give feedback</a>
         </div>
     {% endif %}
 

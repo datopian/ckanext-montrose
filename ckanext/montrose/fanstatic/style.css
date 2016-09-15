@@ -6877,6 +6877,7 @@ button.close {
 
 .hero-map-wrap{
     border-top: 3px solid rgba(0, 0, 0, .15);
+    border-bottom: 3px solid rgba(0, 0, 0, .15);
 }
 
 .graphs {
@@ -6970,21 +6971,17 @@ button.close {
     .hero-country {
         bottom: -50vh
     }
+}
 
+@media screen and (max-width: 1920px) {
     #hero_map {
-        min-height: 73vmin;
+        min-height: 75vmin;
     }
 }
 
-@media (min-height: 700px) {
+@media screen and (max-width: 1366px) {
     #hero_map {
-        min-height: 65vmin;
-    }
-}
-
-@media (min-height: 1000px) {
-    #hero_map {
-        min-height: 73vmin;
+        min-height: 67vmin;
     }
 }
 
@@ -7155,7 +7152,7 @@ header {
 }
 
 .dashboard-description {
-    text-align: justify;
+    text-align: center;
     -ms-word-wrap:break-word;
     word-wrap:break-word;
     padding-top: 1em;

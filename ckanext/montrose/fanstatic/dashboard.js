@@ -77,13 +77,19 @@ $(function () {
          cookie = Cookies.get('survey_popup_link');
 
          if (undefined == cookie) {
+             $('#survey_popup').removeClass('hidden');
              survey_popup.popup('show');
          } else if (cookie != survey_popup_link) {
              Cookies.set('survey_popup_link', survey_popup_link, { expires: 365 });
-             console.log('here');
+             $('#survey_popup').removeClass('hidden');
              survey_popup.popup('show');
          }
      }
+
+     $('#survey_link_button').click(function() {
+         Cookies.set('survey_popup_link', survey_popup_link, { expires: 365 });
+         $('#survey_popup').popup('hide');
+     });
 
     _setFocusOnMontroseFilters();
   });
