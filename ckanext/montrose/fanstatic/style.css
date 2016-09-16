@@ -6975,13 +6975,13 @@ button.close {
 
 @media screen and (max-width: 1920px) {
     #hero_map {
-        min-height: 75vmin;
+        min-height: 73vmin;
     }
 }
 
 @media screen and (max-width: 1366px) {
     #hero_map {
-        min-height: 67vmin;
+        min-height: 65vmin;
     }
 }
 
