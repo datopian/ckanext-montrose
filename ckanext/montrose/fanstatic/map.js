@@ -40,8 +40,11 @@ this.ckan.montrose.dashboardmap = this.ckan.dashboardmap || {};
 
       map.addLayer(osm);
 
-      // Initialize markers
-      initDatasetMarkers(mapURLS[0], mainProperties[0]);
+      if (mapURLS && mainProperties) {
+
+        // Initialize markers
+        initDatasetMarkers(mapURLS[0], mainProperties[0]);
+      }
 
       function initDatasetMarkers(mapURL, mainField) {
 
