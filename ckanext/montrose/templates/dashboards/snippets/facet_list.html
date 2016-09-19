@@ -18,9 +18,9 @@ name
                             {% set label = label_function(item) if label_function else item.display_name %}
                             {% set label_truncated = h.truncate(label, 22) if not label_function else label %}
                             {% if item.active %}
-                                <option selected="selected" value="{{ href }}">{{ label_truncated }}</option>
+                                <option selected="selected" value="{{ href }}">{{ label }}</option>
                             {% else %}
-                                <option value="{{ href }}">{{ label_truncated }}</option>
+                                <option value="{{ href }}">{{ label }}</option>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
