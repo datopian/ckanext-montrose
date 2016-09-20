@@ -251,7 +251,9 @@ class MontrosePlugin(plugins.SingletonPlugin,
             'montrose_smart_truncate':
                 montrose_helpers.montrose_smart_truncate,
             'montrose_get_secondary_language':
-                montrose_helpers.montrose_get_secondary_language
+                montrose_helpers.montrose_get_secondary_language,
+            'montrose_get_current_url':
+                montrose_helpers.montrose_get_current_url
         }
         
     ## IConfigurer

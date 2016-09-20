@@ -312,3 +312,22 @@ def montrose_get_secondary_language(organization):
     country = _get_action('organization_show', {}, {'id': country_id})
 
     return country['montrose_secondary_language']
+
+def montrose_get_current_url(page, exclude_param=''):
+    params = request.params.items()
+
+    url = h.url_for(controller=c.controller, action=c.action, name=c.name)
+
+    for k, v in params:
+        if k == exclude_param:
+            params.remove((k, v))
+
+    params = [(k, v.encode('utf-8') if isinstance(v, basestring) else str(v))
+              for k, v in params]
+
+    if (params):
+        url = url + u'?page=' + str(page) + '&' + urlencode(params)
+    else:
+        url = url + u'?page=' + str(page)
+
+    return url
