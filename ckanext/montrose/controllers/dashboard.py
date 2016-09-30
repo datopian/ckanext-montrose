@@ -46,6 +46,9 @@ class DashboardsController(PackageController):
     def montrose_country_dashboard(self, name):
         org = get_action('organization_show')({}, {'id': name, 'include_extras': True})
 
+        if 'montrose_dashboard_is_active' in org and org['montrose_dashboard_is_active'] == '0':
+            return plugins.toolkit.render('dashboards/snippets/not_active.html')
+
         from ckan.lib.search import SearchError
 
         package_type = 'dataset'
