@@ -19,6 +19,8 @@ class MontrosePlugin(plugins.SingletonPlugin):
 
         map.redirect('/organization', '/country',
                      _redirect_code='301 Moved Permanently')
+        map.redirect('/organization/{url:.*}', '/country/{url}',
+                     _redirect_code='301 Moved Permanently')
         
         map.redirect('/group', '/theme',
                      _redirect_code='301 Moved Permanently')
