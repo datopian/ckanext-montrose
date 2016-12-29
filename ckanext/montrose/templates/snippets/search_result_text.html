@@ -6,10 +6,10 @@
   {% set text_no_query_none = _('No datasets found') %}
 
 {% elif type == 'group' %}
-  {% set text_query = ungettext('{number} theme found for "{query}"', '{number} themes found for "{query}"', count) %}
-  {% set text_query_none = _('No themes found for "{query}"') %}
-  {% set text_no_query = ungettext('{number} theme found', '{number} themes found', count) %}
-  {% set text_no_query_none = _('No themes found') %}
+  {% set text_query = ungettext('{number} topic found for "{query}"', '{number} topics found for "{query}"', count) %}
+  {% set text_query_none = _('No topics found for "{query}"') %}
+  {% set text_no_query = ungettext('{number} topic found', '{number} topics found', count) %}
+  {% set text_no_query_none = _('No topics found') %}
 
 {% elif type == 'organization' %}
   {% set text_query = ungettext('{number} country found for "{query}"', '{number} countries found for "{query}"', count) %}

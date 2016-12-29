@@ -3,12 +3,12 @@
 {% block page_primary_action %}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li>{{ h.nav_link(_('Themes'), controller='group', action='index') }}</li>
-  <li class="active">Create a theme</li>
+  <li>{{ h.nav_link(_('Topics'), controller='group', action='index') }}</li>
+  <li class="active">Create a topic</li>
 {% endblock %}
 
 {% block primary_content_inner %}
-  <h1 class="{% block page_heading_class %}page-heading{% endblock %}">Create a theme</h1>
+  <h1 class="{% block page_heading_class %}page-heading{% endblock %}">Create a topic</h1>
   {% block form %}
     {{ c.form | safe }}
   {% endblock %}

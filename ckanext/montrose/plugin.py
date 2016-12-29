@@ -22,15 +22,15 @@ class MontrosePlugin(plugins.SingletonPlugin):
         map.redirect('/organization/{url:.*}', '/country/{url}',
                      _redirect_code='301 Moved Permanently')
         
-        map.redirect('/group', '/theme',
+        map.redirect('/group', '/topic',
                      _redirect_code='301 Moved Permanently')
-        map.redirect('/group/{url:.*}', '/theme/{url}',
+        map.redirect('/group/{url:.*}', '/topic/{url}',
                      _redirect_code='301 Moved Permanently')
 
         
         ctrls = ['ckanext.montrose.controllers.country:CountryController', 
-                 'ckanext.montrose.controllers.theme:ThemeController']
-        keys = ['country', 'theme']
+                 'ckanext.montrose.controllers.topic:TopicController']
+        keys = ['country', 'topic']
         for ctrl, v in zip(ctrls, keys):
             with SubMapper(map, controller=ctrl) as m:
                 m.connect('%s_index' % v, '/{}'.format(v), action='index')
