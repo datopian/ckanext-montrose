@@ -90,7 +90,7 @@ Development Installation
 To install ckanext-montrose for development, activate your CKAN virtualenv and
 do::
 
-    git clone https://github.com/visar/ckanext-montrose.git
+    git clone git@github.com:ViderumGlobal/ckanext-montrose.git
     cd ckanext-montrose
     python setup.py develop
     pip install -r dev-requirements.txt
