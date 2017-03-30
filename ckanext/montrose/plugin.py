@@ -19,13 +19,11 @@ class MontrosePlugin(plugins.SingletonPlugin):
 
         map.redirect('/organization', '/country',
                      _redirect_code='301 Moved Permanently')
-        map.redirect('/organization/{url:.*}', '/country/{url}',
-                     _redirect_code='301 Moved Permanently')
+
         
         map.redirect('/group', '/topic',
                      _redirect_code='301 Moved Permanently')
-        map.redirect('/group/{url:.*}', '/topic/{url}',
-                     _redirect_code='301 Moved Permanently')
+
 
         
         ctrls = ['ckanext.montrose.controllers.country:CountryController', 
@@ -33,10 +31,10 @@ class MontrosePlugin(plugins.SingletonPlugin):
         keys = ['country', 'topic']
         for ctrl, v in zip(ctrls, keys):
             with SubMapper(map, controller=ctrl) as m:
+                m.connect('/delete/{}'.format(v), action='delete')
                 m.connect('%s_index' % v, '/{}'.format(v), action='index')
                 m.connect('/{}/list'.format(v), action='list')
                 m.connect('/{}/new'.format(v), action='new')
-                m.connect('/delete/{}'.format(v), action='delete')
                 m.connect('{}_read'.format(v), '/%s/{id}' % v, action='read')
                 m.connect('{}_edit'.format(v), '/%s/edit/{id}' % v,
                           action='edit', ckan_icon='edit')
