@@ -33,5 +33,7 @@
       </p>
     {% endif %}
   {% endblock %}
-
+  {% block page_pagination %}
+    {{ super() }}
+  {% endblock %}
 {% endblock %}
